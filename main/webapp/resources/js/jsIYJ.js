@@ -2,7 +2,7 @@
 const main = new Vue({
 	el : '#mainVue',
 	data : {
-		display:[{show:false},{show:false}],
+		display:[{show:false},{show:false},{show:false},{show:false},{show:false},{show:false},{show:false},{show:false},{show:false},{show:false},{show:false}],
 		list:[],
 		detail:[],
 		items:[]

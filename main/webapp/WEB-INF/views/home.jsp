@@ -84,18 +84,33 @@ $(window).scroll(function(){
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-cog"></i>
-                    <span >구매</span>
+                    <span >소모품 구매</span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">소모품구매</h6>
                         <a class="collapse-item" onClick="getBkinds()" >구매하기</a>
-                        <a class="collapse-item" >장바구니</a>
-                         <a class="collapse-item" >구매함</a>
+                        <a class="collapse-item" onClick="myCartView()" >장바구니</a>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities2"
+                    aria-expanded="true" aria-controls="collapseUtilities2">
+                    <i class="fas fa-fw fa-wrench"></i>
+                    <span>주문관리</span>
+                </a>
+                <div id="collapseUtilities2" class="collapse" aria-labelledby="headingUtilities2"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header" onClick="orderManage()">주문관리</h6>
+                        <div class="collapse-item"  onClick="orderList()">주문함</div>
+                        <div class="collapse-item"  onClick="shipList()">배송조회</div>
                     </div>
                 </div>
             </li>
 
+            <hr class="sidebar-divider">
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
@@ -107,13 +122,30 @@ $(window).scroll(function(){
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">전자결재</h6>
-                        <div class="collapse-item" >받은결재함</div>
-                        <div class="collapse-item" >결재함</div> <!--승인결재, 미승인결재, 새결재하기(모달창) -->
+                        <div class="collapse-item" onClick="orderApprovalPage()">주문결재 신청</div>
+                        <div class="collapse-item" onClick="anyApprovalPage()">일반결재 신청</div>
+                        <div class="collapse-item" onClick="receiveApprovalPage()">받은결재함</div>
+                        <div class="collapse-item" onClick="sendApprovalPage()">보낸결재함</div>
 
                     </div>
                 </div>
             </li>
-
+         
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities3"
+                    aria-expanded="true" aria-controls="collapseUtilities3">
+                    <i class="fas fa-fw fa-wrench"></i>
+                    <span>회계</span>
+                </a>
+                <div id="collapseUtilities3" class="collapse" aria-labelledby="headingUtilities3"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">accountancy</h6>
+                        <div class="collapse-item" onClick="taxbillPage()">세금계산서 조회</div>
+                        <div class="collapse-item" onClick="budgetPage()">예산조회</div>
+                    </div>
+                </div>
+            </li>
             <!-- Divider -->
             <hr class="sidebar-divider">
 
@@ -137,30 +169,6 @@ $(window).scroll(function(){
                 </div>
             </li>
 
-            <!-- Nav Item - Charts -->
-            <li class="nav-item">
-                <a class="nav-link" href="charts.html">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Charts</span></a>
-            </li>
-
-            <!-- Nav Item - Tables -->
-            <li class="nav-item">
-                <a class="nav-link" href="tables.html">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Tables</span></a>
-            </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
-
-            <!-- Sidebar Toggler (Sidebar) -->
-            <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
-            </div>
-
-
-
         </ul>
         <!-- End of Sidebar -->
 
@@ -179,19 +187,7 @@ $(window).scroll(function(){
                     </button>
 
                     <!-- Topbar Search -->
-                    <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                                aria-label="Search" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-
+                  
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 
@@ -373,6 +369,7 @@ $(window).scroll(function(){
         <div id="layoutSidenav_content">
 		<main style="height: 100%; width: 100%;">
 			<div id="mainVue" style="height: 100%; width: 100%;">
+<!------------------------------------------------------------------------------------------>
 				<template v-if="display[0].show">
                 <div class="container-fluid">
 
@@ -471,11 +468,11 @@ $(window).scroll(function(){
 
                 </div>
 				</template>
-
-<!-- ---------------------------------------구매하기--------------------------- -->
-				<div  style="height: 100%; width: 95%; margin-left:5%">
+<!-------------------------------------------IYJ-------------------------------------------->			
 				<template v-if="display[1].show">
-									
+				<div  style="height: 100%; width: 95%; margin-left:5%">
+
+																				
 									<div id="sidebarLayer"
 										style="position: absolute; right:0.4%; top: 50px; width: 100px; height: 100px; border: 1px solid #ddd; text-align: center; background-color: #FFFFFF; z-index: 1000;">
 									<div>My Cart</div>																					
@@ -541,29 +538,26 @@ $(window).scroll(function(){
 									</div>
 								</div>
 
-							
-							</template>
 							</div>
-
-
-						</div>
+				</template>
+				<template v-if="display[2].show"></template>
+<!-------------------------------------------CJH-------------------------------------------->				
+				<template v-if="display[3].show"></template>
+				<template v-if="display[4].show"></template>
+<!-------------------------------------------NSB-------------------------------------------->				
+				<template v-if="display[5].show"></template>
+				<template v-if="display[6].show"></template>
+<!-------------------------------------------HSM-------------------------------------------->
+				<template v-if="display[7].show"></template>
+				<template v-if="display[8].show"></template>
+<!-------------------------------------------JES-------------------------------------------->
+				<template v-if="display[9].show"></template>
+				<template v-if="display[10].show"></template>
+<!------------------------------------------------------------------------------------------>
+			</div>
 		</main>
-	</div>
-
-                <!-- /.container-fluid -->
-
-            </div>
-            <!-- End of Main Content -->
-
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2021</span>
-                    </div>
-                </div>
-            </footer>
-            <!-- End of Footer -->
+		</div>
+		</div>
 
         </div>
         <!-- End of Content Wrapper -->
@@ -617,7 +611,7 @@ $(window).scroll(function(){
 </script> 
 	
 	<script src="${pageContext.request.contextPath}/resources/vue/vue.js"></script>
-	 <script src="${pageContext.request.contextPath}/resources/js/jsIYJ.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/jsIYJ.js"></script>
 	<!-- Bootstrap core JavaScript-->
     <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/bootstrap.bundle.min.js"></script>
