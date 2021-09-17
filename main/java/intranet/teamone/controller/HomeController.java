@@ -25,4 +25,8 @@ public class HomeController {
 		return "home";
 	}
 	
+	@GetMapping("/test")
+	public String sdfsw() {
+		return "testset";
+	}
 }

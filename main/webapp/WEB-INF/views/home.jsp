@@ -15,14 +15,14 @@
 
     <!-- Custom fonts for this template-->
    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
-    <link href="resources/css/all.min.css" rel="stylesheet" type="text/css">
-    <link href="resources/css/IYJ.css" rel="stylesheet" type="text/css">
+    
+    <link href="${pageContext.request.contextPath}/resources/css/IYJ.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
-<link href="resources/css/styles.css" rel="stylesheet" />
+<link href="${pageContext.request.contextPath}/resources/css/styles.css" rel="stylesheet" />
     <!-- Custom styles for this template-->
-    <link href="resources/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/css/sb-admin-2.min.css" rel="stylesheet">
   <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.js"></script>
   
  
@@ -617,23 +617,16 @@ $(window).scroll(function(){
 </script> 
 	
 	<script src="${pageContext.request.contextPath}/resources/vue/vue.js"></script>
-	 <script src="resources/js/jsIYJ.js"></script>
+	 <script src="${pageContext.request.contextPath}/resources/js/jsIYJ.js"></script>
 	<!-- Bootstrap core JavaScript-->
-    <script src="resources/js/jquery.min.js"></script>
-    <script src="resources/js/bootstrap.bundle.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="resources/js/jquery.easing.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/jquery.easing.min.js"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="resources/js/sb-admin-2.min.js"></script>
-
-    <!-- Page level plugins -->
-    <script src="resources/js/Chart.min.js"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="resources/js/chart-area-demo.js"></script>
-    <script src="resources/js/chart-pie-demo.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/sb-admin-2.min.js"></script>
 
 
 
