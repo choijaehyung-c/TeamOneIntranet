@@ -1,4 +1,4 @@
-package intranet.teamone.mapper;
+package mrone.teamone.mapper;
 
 public interface PurchaseInterface {
 
