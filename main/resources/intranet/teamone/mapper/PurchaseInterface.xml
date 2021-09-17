@@ -5,15 +5,15 @@
 
 <mapper namespace="intranet.teamone.mapper.PurchaseInterface">
 	<select id="getBkind" resultType="intranet.teamone.bean.ProductBean">
-		SELECT * FROM BKIND WHERE BK_CODE!='GB'
+		SELECT * FROM CHLCHL.BKIND WHERE BK_CODE!='GB'
 	</select>
 	
 	<select id="getCateName" parameterType="string" resultType="intranet.teamone.bean.ProductBean">		
-		SELECT CATE_NAME, CATE FROM PR WHERE PR_SPBKIND=#{code} GROUP BY CATE_NAME, CATE
+		SELECT CATE_NAME, CATE FROM CHLCHL.PRODUCT WHERE PR_SPBKIND=#{code} GROUP BY CATE_NAME, CATE
 	</select>
 	
 	<select id="getCateItem" parameterType="string" resultType="intranet.teamone.bean.ProductBean">
-		SELECT * FROM PR WHERE CATE=#{cate}
+		SELECT * FROM CHLCHL.PRODUCT WHERE CATE=#{cate}
 	</select>
 	
 </mapper>
