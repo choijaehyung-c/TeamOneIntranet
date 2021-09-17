@@ -6,7 +6,7 @@ const main = new Vue({
 		list:[],
 		list2:[],
 		list3:[],
-		detail:[],//모달정보들여기에 담기
+		detail:[]//모달정보들여기에 담기
 	},
 	methods:{
 		changePage:function(page){

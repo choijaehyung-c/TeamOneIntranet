@@ -81,8 +81,9 @@
         </div>
 
     </div>
-	<script src="${pageContext.request.contextPath}/resources/js/jsNSB.js"></script>
+   
 	<script src="${pageContext.request.contextPath}/resources/js/accessNSB.js"></script>
+	
 </body>
 
 </html>
