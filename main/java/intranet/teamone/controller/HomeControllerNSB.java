@@ -50,16 +50,10 @@ public class HomeControllerNSB {
 		return mav;
 	}
 	
-	@GetMapping("/apiTest")
-	public String asdasdasd() {
-		return "clientApiCJH";
+	@GetMapping("/home")
+	public String mainPage() {
+		return "homeNSB";
 	}
-	
-	@GetMapping("/dTest")
-	public String dfgdfg() {
-		return "delivery";
-	}
-	
 	
 	/*
 	 * @GetMapping("/test") public ModelAndView test() { mav = new ModelAndView();

@@ -82,24 +82,18 @@ public class Authentication {
 						if(tf = dao.insAccessHistory(ah)) {
 							System.out.println("기록성공");
 							mav.setViewName("redirect:/");
-							if(ah.getAh_table().equals("AHM")) {
-								ck.setValue("mro"+enc.aesEncode(ah.getAh_code(),"session"));
-								pu.setAttribute("type","mro");
-							}else {
-								ck.setValue("sup"+enc.aesEncode(ah.getAh_code(),"session"));
-								pu.setAttribute("type",enc.aesEncode(ah.getAh_sdspcode(),ah.getAh_code()));
-								
+								ck.setValue("mro"+enc.aesEncode(ah.getAh_code(),"session"));						
 							}
 							ck.setMaxAge(60*60*12); // 쿠키 유효기간 설정 (초 단위) : 반나절
 							pu.setAttribute("userSs",enc.aesEncode(ah.getAh_code(),"session"));
 						}
 					}
-				}
 				if(!tf){
 					mav.setViewName("accessForm");
 					mav.addObject("message","alert('로그인실패');");
 				}
-			}
+				}			
+			
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
