@@ -9,8 +9,8 @@ public class ProductBean {
 	private String pr_code;
 	private String pr_name;
 	private String pr_image;
-	private String pr_price;
-	private String pr_tax;
+	private int pr_price;
+	private int pr_tax;
 	private String pr_info;
 	private String pr_spbkind;
 	private String pr_stcode;
