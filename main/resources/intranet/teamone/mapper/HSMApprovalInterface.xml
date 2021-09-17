@@ -6,7 +6,10 @@
 <mapper namespace="intranet.teamone.mapper.HSMApprovalInterface">
 	
 	<select id="getApprovalList" parameterType="intranet.teamone.bean.ApprovalBean" resultType="intranet.teamone.bean.ApprovalBean">
-		SELECT * FROM AP WHERE AP_TODPCODE = #{ap_todpcode} AND AP_TOOFCODE = #{ap_toofcode}
+		SELECT AP_CODE, AP_OSCODE, AP_FROMDPCODE, AP_FROMOFCODE, AP_DATE, CG_NAME, DP_NAME 
+		FROM AP INNER JOIN CG ON AP.AP_CGTYPE = CG.CG_TYPE
+        		INNER JOIN DP ON AP.AP_FROMDPCODE = DP.DP_CODE  AND AP.AP_FROMOFCODE = DP.DP_OFCODE 
+		WHERE AP_TODPCODE = #{ap_todpcode} AND AP_TOOFCODE = #{ap_toofcode}
 	</select>
 	
 	

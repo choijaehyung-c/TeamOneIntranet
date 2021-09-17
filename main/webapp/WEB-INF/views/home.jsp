@@ -611,7 +611,7 @@ $(window).scroll(function(){
 </script> 
 	
 	<script src="${pageContext.request.contextPath}/resources/vue/vue.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/jsIYJ.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/hsmvuejs.js"></script>
 	<!-- Bootstrap core JavaScript-->
     <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/bootstrap.bundle.min.js"></script>
