@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="intranet.teamone.mapper.PurchaseInterface">
+	<select id="getBkind" resultType="intranet.teamone.bean.ProductBean">
+		SELECT * FROM BKIND WHERE BK_CODE!='GB'
+	</select>
+	
+	<select id="getCateName" parameterType="string" resultType="intranet.teamone.bean.ProductBean">		
+		SELECT CATE_NAME, CATE FROM PR WHERE PR_SPBKIND=#{code} GROUP BY CATE_NAME, CATE
+	</select>
+	
+	<select id="getCateItem" parameterType="string" resultType="intranet.teamone.bean.ProductBean">
+		SELECT * FROM PR WHERE CATE=#{cate}
+	</select>
+	
+</mapper>

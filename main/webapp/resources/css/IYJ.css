@@ -1,0 +1,52 @@
+@charset "UTF-8";
+
+
+.tabs {
+  display: flex;
+  position: relative;
+  text-align: center;
+  width: 270px;
+  height: 70px;
+  background-color: #fff;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+.tabs .tab {
+  width: 90px;
+  height: 100%;
+  margin-top: 10px;
+  text-align: center;
+  color: #06345a;
+  cursor: pointer;
+  z-index: 2;
+}
+.tabs .border {
+  position: absolute;
+  width: 90px;
+  height: 8px;
+  background: rgb(77, 77, 19);
+  bottom: 0;
+  z-index: 2;
+  transition: 0.4s;
+}
+.tabs .background {
+  z-index: 1;
+  position: absolute;
+  width: 90px;
+  height: 100%;
+  background: rgb(253, 209, 62);
+  bottom: 0;
+  transition: 0.4s;
+}
+
+div, ul, li {-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;padding:0;margin:0}
+a {text-decoration:none;}
+
+.quickmenu {position:absolute;width:90px;top:50%;margin-top:-50px;right:10px;background:#fff;}
+.quickmenu ul {position:relative;float:left;width:100%;display:inline-block;*display:inline;border:1px solid #ddd;}
+.quickmenu ul li {float:left;width:100%;border-bottom:1px solid #ddd;text-align:center;display:inline-block;*display:inline;}
+.quickmenu ul li a {position:relative;float:left;width:100%;height:30px;line-height:30px;text-align:center;color:#999;font-size:9.5pt;}
+.quickmenu ul li a:hover {color:#000;}
+.quickmenu ul li:last-child {border-bottom:0;}
+
+.content {position:relative;min-height:1000px;}
