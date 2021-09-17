@@ -22,7 +22,7 @@ public class HomeController {
 	
 	@GetMapping("/home")
 	public String mainPage() {
-		return "home";
+		return "homeNSB";
 	}
 	
 	@GetMapping("/test")

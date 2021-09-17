@@ -4,7 +4,7 @@
 <html lang="en">
 
 <head>
-
+<!-- 노승백이 해보는중 -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -46,12 +46,12 @@
                                     <form class="user">
                                         <div class="form-group">
                                             <input type="email" class="form-control form-control-user"
-                                                id="exampleInputEmail" aria-describedby="emailHelp"
+                                             name="ah_epcode"   id="exampleInputEmail" aria-describedby="emailHelp"
                                                 placeholder="Access Code...">
                                         </div>
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user"
-                                                id="exampleInputPassword" placeholder="Password">
+                                             name="ah_pwd"   id="exampleInputPassword" placeholder="Password">
                                         </div>
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
@@ -60,7 +60,7 @@
                                                     Me</label>
                                             </div>
                                         </div>
-                                        <a href="index.html" class="btn btn-primary btn-user btn-block">
+                                        <a onclick="readyAccessIntranet('1','/AccessIntranet')" class="btn btn-primary btn-user btn-block">
                                             Login
                                         </a>
                                         <hr>
@@ -81,17 +81,8 @@
         </div>
 
     </div>
-
-    <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
-
+	<script src="${pageContext.request.contextPath}/resources/js/jsNSB.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/accessNSB.js"></script>
 </body>
 
 </html>
