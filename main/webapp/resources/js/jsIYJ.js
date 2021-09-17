@@ -29,26 +29,56 @@ const main = new Vue({
             this.items[i].pr_tax = this.items[i].pr_tax.toLocaleString();
          }			
       },
-		addCart:function(prcode,index){
+		addCart:function(prcode,index,spcode,price,tax,img){
 			let count = document.getElementsByName("quantity")[index].value;
-			let value = prcode + ': '+ count +'개';
-			let name = 'addCart';
+			let pr_price = (price+tax)*count;
+			let value = prcode +','+ spcode +':'+ count + '/' +pr_price+ '+' +img; //split(',')는 상품코드와 공급사코드 (':')갯수 ('/')는 가격
+			let name = 'addCart-';
+			let cart = document.getElementById("space");
+			let html ="";
 			
-			if(checkCookie('addCart')){
-				for (i = 0; i <5; i++) {
-					 name += i;
-					setCookie(name, value, 7);
-					alert("장바구니에 담겼습니다.");
-					break;
-					
-				}				
-			}else{
-					setCookie(name, value, 7);
+			
+			//중복된 상품이 있으면, 그 상품의 count만 up해주기
+			let cookie=setCookie(name + prcode, value, 7);
+				alert('장바구니에 담겼습니다.');
+
+			let item = getCookie(name+prcode)
+				if(item!=""){
+					html += "<img src='"+item.split('+')[1]+"' style='width:90px;'/>";
+					html += "<div>"+item.split(',')[0]+"</div>";
+					html += "<div>" + item.split(':')[1].split('/')[0]+"개</div>";
 				}
+			
+																													
+				cart.innerHTML += html;		
+						
+			//if(checkCookie(cookie)){
+				//cart.innerHTML += html;
+			//}
+
 		}
 	}
 	
 });
+
+
+function getCookie(cname) {
+	var name = cname + "=";
+	var decodedCookie = decodeURIComponent(document.cookie);
+	var ca = decodedCookie.split(';');
+
+	for (var i = 0; i < ca.length; i++) {
+		var c = ca[i];
+		while (c.charAt(0) == ' ') {
+			c = c.substring(1);
+		}
+
+		if (c.indexOf(name) == 0) {
+			return c.substring(name.length, c.length);
+		}
+	}
+	return "";
+} 
 //쿠키 생성
 function setCookie(name,value,day){
 	var date = new Date();//현재 날짜
@@ -61,12 +91,6 @@ function setCookie(name,value,day){
 	document.cookie = mycookie; // 쿠키생성
 }
 
-function makeName(){
-	let name = 'addCart';
-	for(i=0;i<5; i++){
-		name += [i]; 
-	}return name;
-}
 //쿠키삭제
 function delCookie(name,value){
 	var date = new Date();
@@ -81,17 +105,21 @@ function delCookie(name,value){
 	document.cookie = setCookie;
 }
 
+
 //쿠키유무 확인
 function checkCookie(name){
 	var cookies = document.cookie.split(';');
 	//console.log(cookies);
-	var contain = false;
+	
+	let val ="";
 			
 	for(var i in cookies){
-		if(cookies[i].indexOf(name)>-1){
-			contain = true;	
+		if(i.indexOf(name)){
+			val += i;
+			console.log(val);
 	}			
- }return contain;			
+ }
+	return val;			
 }
 
 function mainPage(){
@@ -123,25 +151,3 @@ function cateItemList(data){
 
 
 
-
-function postAjaxJson(jobCode, fn, rType, clientData = "") {
-	let ajax = new XMLHttpRequest();
-	ajax.onreadystatechange = function() {
-		if (ajax.readyState == 4 && ajax.status == 200) {
-			if (rType == 'j') {
-				window[fn](JSON.parse(ajax.responseText));
-			} else if (rType == 's') {
-				window[fn](ajax.responseText);
-			}
-		}
-	}
-	ajax.open("POST", jobCode);
-	ajax.setRequestHeader("Content-type", "application/json; charset=utf-8");
-	ajax.send(clientData);
-	/*
-	대부분 이것으로 사용, 제이슨 타입으로 파람 넘김
-	백엔드에서 빈으로 받을꺼면 clientData={키:밸류,키:밸류}
-	그 빈안에 <>리스트 타입이 있다면 {키:밸류,키:밸류,키:[]밸류}
-	백엔드 컨트롤러에서는 @RequestBody로 받으면됨
-	*/
-}
