@@ -2,6 +2,7 @@ package intranet.teamone.auth;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import intranet.teamone.bean.AccessBean;
@@ -12,6 +13,7 @@ import intranet.teamone.bean.AccessHistoryBean;
 public class AuthDao {
 
 	@Autowired
+	@Qualifier("intranetDB")
 	SqlSessionTemplate sql;
 	
 	// 해당 아이디 단일 로그인 체크
