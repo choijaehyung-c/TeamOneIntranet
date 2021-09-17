@@ -20,7 +20,7 @@
 
 	<bean id="TEAMONE_DB" class="com.zaxxer.hikari.HikariConfig"> <!-- selelct 만 가능함 -->
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
-		<property name="jdbcUrl" value="jdbc:oracle:thin:@cleverc.online:1521:xe" />
+		<property name="jdbcUrl" value="jdbc:oracle:thin:@mrone.hoonzzang.com:1521:xe" />
 		<property name="username" value="CHLC" />
 		<property name="password" value="234WER" />
 	</bean>
@@ -28,8 +28,8 @@
 	<bean id="MRONE" class="com.zaxxer.hikari.HikariConfig"> <!-- selelct 만 가능함 -->
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
 		<property name="jdbcUrl" value="jdbc:oracle:thin:@cleverc.online:1521:xe" />
-		<property name="username" value="CHLCHL" />
-		<property name="password" value="234WER" />
+		<property name="username" value="GUEST1" />
+		<property name="password" value="1234" />
 	</bean>
 	
 	<!-- HikariCP -->
