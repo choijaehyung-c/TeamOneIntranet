@@ -9,12 +9,12 @@
 <body>
 
 <div id="vueZone1">
-<select>
-      <option :key="i" :value="d.v" v-for="(d, i) in list">{{ d.v }}</option>
+<select name='fruits'>
+      <option v-for="dd in list" :value="dd.v" >{{ dd.v }}</option>
 </select>
 </div>
 
 <script src="${pageContext.request.contextPath}/resources/vue/vue.js"></script>
-<script type="${pageContext.request.contextPath}/resources/"></script>
+<script src="${pageContext.request.contextPath}/resources/js/jsCJH.js"></script>
 </body>
 </html>
