@@ -20,19 +20,19 @@
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
-<link href="${pageContext.request.contextPath}/resources/css/styles.css" rel="stylesheet" />
+	<link href="${pageContext.request.contextPath}/resources/css/styles.css" rel="stylesheet" />
     <!-- Custom styles for this template-->
     <link href="${pageContext.request.contextPath}/resources/css/sb-admin-2.min.css" rel="stylesheet">
-  <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.js"></script>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.js"></script> 
   
  
 
 <script>
 
 $(window).scroll(function(){
-	var scrollTop = $(document).scrollTop()+200;
-	if (scrollTop < 300) {
-	 scrollTop = 300;
+	var scrollTop = $(document).scrollTop()+100;
+	if (scrollTop < 150) {
+	 scrollTop = 150;
 	}
 	$("#sidebarLayer").stop();
 	$("#sidebarLayer").animate( { "top" : scrollTop });
@@ -58,7 +58,10 @@ $(window).scroll(function(){
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3" href="home.jsp">ICIA Technology <sup>2</sup></div>
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-people" viewBox="0 0 16 16">
+  <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>
+</svg>
+                <div class="sidebar-brand-text mx-3" href="home.jsp"><i class="bi bi-rss-fill">ICIA Technology </i><sup>2</sup></div>
             </div>
 
             <!-- Divider -->
@@ -83,7 +86,9 @@ $(window).scroll(function(){
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-fw fa-cog"></i>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+  <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+</svg>
                     <span >소모품 구매</span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -97,7 +102,10 @@ $(window).scroll(function(){
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities2"
                     aria-expanded="true" aria-controls="collapseUtilities2">
-                    <i class="fas fa-fw fa-wrench"></i>
+                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-credit-card" viewBox="0 0 16 16">
+  <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v1h14V4a1 1 0 0 0-1-1H2zm13 4H1v5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V7z"/>
+  <path d="M2 10a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-1z"/>
+</svg>
                     <span>주문관리</span>
                 </a>
                 <div id="collapseUtilities2" class="collapse" aria-labelledby="headingUtilities2"
@@ -115,7 +123,9 @@ $(window).scroll(function(){
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-fw fa-wrench"></i>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope-fill" viewBox="0 0 16 16">
+  <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.697v7.104l5.803-3.558L0 4.697zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757zm3.436-.586L16 11.801V4.697l-5.803 3.546z"/>
+</svg>
                     <span>전자결재</span>
                 </a>
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
@@ -134,7 +144,9 @@ $(window).scroll(function(){
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities3"
                     aria-expanded="true" aria-controls="collapseUtilities3">
-                    <i class="fas fa-fw fa-wrench"></i>
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-currency-dollar" viewBox="0 0 16 16">
+  <path d="M4 10.781c.148 1.667 1.513 2.85 3.591 3.003V15h1.043v-1.216c2.27-.179 3.678-1.438 3.678-3.3 0-1.59-.947-2.51-2.956-3.028l-.722-.187V3.467c1.122.11 1.879.714 2.07 1.616h1.47c-.166-1.6-1.54-2.748-3.54-2.875V1H7.591v1.233c-1.939.23-3.27 1.472-3.27 3.156 0 1.454.966 2.483 2.661 2.917l.61.162v4.031c-1.149-.17-1.94-.8-2.131-1.718H4zm3.391-3.836c-1.043-.263-1.6-.825-1.6-1.616 0-.944.704-1.641 1.8-1.828v3.495l-.2-.05zm1.591 1.872c1.287.323 1.852.859 1.852 1.769 0 1.097-.826 1.828-2.2 1.939V8.73l.348.086z"/>
+</svg>
                     <span>회계</span>
                 </a>
                 <div id="collapseUtilities3" class="collapse" aria-labelledby="headingUtilities3"
@@ -158,7 +170,10 @@ $(window).scroll(function(){
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                     aria-expanded="true" aria-controls="collapsePages">
-                    <i class="fas fa-fw fa-folder"></i>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-plus" viewBox="0 0 16 16">
+  <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+  <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
+</svg>
                     <span>관리</span>
                 </a>
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
@@ -332,8 +347,13 @@ $(window).scroll(function(){
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                        
+                            <a class="nav-link dropdown-toggle" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-person-square" viewBox="0 0 16 16">
+  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+  <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm12 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1v-1c0-1-1-4-6-4s-6 3-6 4v1a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12z"/>
+</svg>           
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
                                 
                             </a>
@@ -473,9 +493,10 @@ $(window).scroll(function(){
 				<template v-if="display[1].show">
 							<div  style="height: 100%; width: 95%; margin-left:5%">
 									<div id="sidebarLayer"
-										style="position: absolute; right:0.4%; top: 80px; width: 100px;  border: 1px solid #ddd; text-align: center; background-color: #FFFFFF; z-index: 1000;">
+										style="position: absolute; right:0.4%; top: 80px; width: 120px;  border: 1px solid #ddd; text-align: center; background-color: #FFFFFF; z-index: 1000;">
 									<div>My Cart<br><br>
 										<div id="space"></div>
+										<div id="add" style="display:none; border:1px solid #000;" @click="addCart()">담기</div>
 									</div>	
 																												
 									</div>
@@ -523,10 +544,10 @@ $(window).scroll(function(){
 													
 														<input name="quantity" 
 															class="form-control text-center input-quantity input-spin-none"
-															type="number" min="1" max="10" value="0" style="max-width: 50px">
+															type="number" min="1" max="10" value="1" style="max-width: 50px">
 													</div>
 													<div class="mt-2">
-													<div class="btn btn-sm btn-primary d-lg-block mt-lg-2" @click="addCart(item.pr_code,index,item.pr_spcode,item.pr_price,item.pr_tax,item.pr_image)">
+													<div class="btn btn-sm btn-primary d-lg-block mt-lg-2" @click="addSideBar(item.pr_code,index,item.pr_spcode,item.pr_price,item.pr_tax,item.pr_image,item.pr_name)">
 														<svg
 															class="svg-inline--fa fa-cart-plus fa-w-18"
 															aria-hidden="true" focusable="false" data-prefix="fas"
@@ -546,7 +567,58 @@ $(window).scroll(function(){
 							</div>
 							</template>
 							
-				<template v-if="display[2].show"></template>
+				<template v-if="display[2].show">
+					<div  style="height: 100%; width: 100%;">
+						<div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-2 text-gray-800">Shopping Cart</h1>
+                    <p class="mb-4">※장바구니는 7일까지만 보관이 됩니다.</p>
+
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Cart List</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4"><div class="row"><div class="col-sm-12"><table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                                    <thead>
+										<tr role="row">
+											<th class="sorting sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+												aria-sort="ascending" aria-label="Image: activate to sort column descending" style="width: 100px;">
+											Image </th>
+											<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+												aria-label="Supply Code: activate to sort column ascending" style="width: 100px;">
+											Supply Code</th>
+											<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+												aria-label="Item: activate to sort column ascending" style="width: 100px;">
+											Item</th>
+											<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+												aria-label="Item Code: activate to sort column ascending" style="width: 80px;">
+											Item Code</th>
+											<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+												aria-label="Quantity: activate to sort column ascending" style="width: 40px;">
+											Quantity</th>
+											<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+												aria-label="Total Price: activate to sort column ascending" style="width: 100px;">
+											Total Price</th>
+										</tr>
+									</thead>
+                                    
+                                    <tbody id = "table">        
+                                  
+                                     </tbody>
+                                </table></div></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+										
+					</div>
+				
+				</template>
 <!-------------------------------------------CJH-------------------------------------------->				
 				<template v-if="display[3].show"></template>
 				<template v-if="display[4].show"></template>
@@ -596,25 +668,6 @@ $(window).scroll(function(){
         </div>
     </div>
 
-<script type="text/javascript"> 
-
-	function scroll_follow(id) {
-		$(window).scroll(function() //스크롤이 움직일때마다 이벤트 발생
-		{
-			var position = $(window).scrollTop(); // 현재 스크롤바의 위치값을 반환합니다.
-			$(id).stop().animate({
-				top : position + "px"
-			}, 1); //해당 오브젝트 위치값 재설정
-		});
-	}
-	scroll_follow("#scroll");
-	//스크롤이 생기도록 <br> 을 여러게 넣은 부분..
-	$(document).ready(function() {
-		for (var i = 0; i < 200; i++) {
-			$('#brr').html($('#brr').html() + "<br>" + i);
-		}
-	});
-</script> 
 	
 	<script src="${pageContext.request.contextPath}/resources/vue/vue.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/js.js"></script>

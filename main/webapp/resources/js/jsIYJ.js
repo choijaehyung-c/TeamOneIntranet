@@ -29,39 +29,76 @@ const main = new Vue({
             this.items[i].pr_tax = this.items[i].pr_tax.toLocaleString();
          }			
       },
-		addCart:function(prcode,index,spcode,price,tax,img){
+		addSideBar:function(prcode,index,spcode,price,tax,img,prname){
 			let count = document.getElementsByName("quantity")[index].value;
+			let add = document.getElementById("add");
 			let pr_price = (price+tax)*count;
-			let value = prcode +','+ spcode +':'+ count + '/' +pr_price+ '+' +img; //split(',')는 상품코드와 공급사코드 (':')갯수 ('/')는 가격
-			let name = 'addCart-';
+			let value = prcode +','+ prname+ '>' + spcode +':'+ count + '&' +pr_price+ '#' +img; //split(',')는 상품코드와 공급사코드 (':')갯수 ('/')는 가격
 			let cart = document.getElementById("space");
 			let html ="";
+				
+				html += "<div id='setDiv'>"
+				html += "<img src='"+img+"' style='width:90px;'/>";
+				html += "<div style='font-size:12px;'>"+prname+"</div><span style='font-size:10px;'>("+prcode+")</span>";
+				html += "<div style='font-size:12px;'>" + count +"개</div>";
+				html += `<div name="delCart" onClick="delCarts()" style='font-size:13px; cursor:pointer;'>[삭제]</div>`;
+				html +=	"<input type='hidden' value='"+value+"' name='ckval'/>";
+				html += "<input type='hidden' value='"+prcode+"' name='prcode'/></div>";
 			
-			
-			//중복된 상품이 있으면, 그 상품의 count만 up해주기
-			let cookie=setCookie(name + prcode, value, 7);
-				alert('장바구니에 담겼습니다.');
-
-			let item = getCookie(name+prcode)
-				if(item!=""){
-					html += "<img src='"+item.split('+')[1]+"' style='width:90px;'/>";
-					html += "<div>"+item.split(',')[0]+"</div>";
-					html += "<div>" + item.split(':')[1].split('/')[0]+"개</div>";
-				}
-			
-																													
-				cart.innerHTML += html;		
+				add.style.display= "block";
+				cart.innerHTML +=html;
+		},
+		addCart:function(){				
+				var val =[];
+				var pr = [];								
+				const values = document.getElementsByName("ckval");
+				const prcode = document.getElementsByName("prcode");
+				const name = 'addCart-';	
+				
+				for(r=0; r<prcode.length; r++){
+					let prr = prcode[r].value;
+					let vall = values[r].value;
+					pr.push(prr);
+					val.push(vall);
+					
+					setCookie(name + pr[r], val[r], 7);
 						
-			//if(checkCookie(cookie)){
-				//cart.innerHTML += html;
-			//}
-
-		}
-	}
+				}
+				alert('장바구니에 담겼습니다.');
+				
+								
+		},
+		getCartPage:function(){
+			let table = document.getElementById("table");			
+			let html='';
+			let ck = document.cookie.split(';');
+			let cookie='';
+			
+		//이름찾는 
+		for(var i in ck) {
+            if(ck[i].search('addCart-')!=-1) {
+				//alert(ck[i].search('addCart-')); //모든 쿠키를 확인해서 쿠키당 addCart가 들어가면 1을반환 없으면 0을반환  
+                cookie = ck[i]								
+           	   	//alert(cookie);
+				
+				
+				html += "<tr class='odd'>";
+				html += "<td>"+"<img src='"+cookie.split('#')[1]+"' style='width:150px;'/>"+ "</td>"; //이미지
+				html += "<td>"+ cookie.split('>')[1].split(':')[0]+"</td>"; // 공급사 코드
+				html += "<td>"+cookie.split(',')[1].split('>')[0]+ "</td>"; //상품 이름
+				html += "<td>"+cookie.split('-')[1].split('=')[0]+"</td>"; //상품코드
+				html += "<td>"+cookie.split(':')[1].split('&')[0]+"</td>"; //갯수
+				html += "<td>"+cookie.split('&')[1].split('#')[0]+"</td></tr>"; //총가격
+				
+																																								
+			}	 
+		}table.innerHTML = html;
+	}		
+}
 	
 });
 
-
+//쿠키확인
 function getCookie(cname) {
 	var name = cname + "=";
 	var decodedCookie = decodeURIComponent(document.cookie);
@@ -121,7 +158,7 @@ function checkCookie(name){
  }
 	return val;			
 }
-
+//onLoad
 function mainPage(){
 	main.changePage(0);
 }
@@ -130,6 +167,13 @@ function mainPage(){
 function getBkinds(){
 	main.changePage(1);
 	main.getBkindPage();
+
+}
+
+//장바구니 버튼 (사이드바)
+function myCartView(){
+	main.changePage(2);
+	main.getCartPage();
 }
 
 //상위 카테고리 목록 불러오기
@@ -148,6 +192,12 @@ function cateItemList(data){
 	main.items= data;
 }
 
-
+//사이드 장바구니 삭제
+function delCarts(){
+	//index번호랑 맞춰서 삭제하기..
+	let set = document.getElementById("setDiv");
+	//let set = index + value;
+	set.remove();
+}
 
 
