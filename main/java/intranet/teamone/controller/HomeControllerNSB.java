@@ -36,16 +36,16 @@ public class HomeControllerNSB {
 	}
 	
 	@PostMapping("/AccessIntranet")
-	public ModelAndView accessMro(@ModelAttribute AccessHistoryBean ah,HttpServletResponse res) {
+	public ModelAndView accessIntranet(@ModelAttribute AccessHistoryBean ah,HttpServletResponse res) {
 		Cookie ck = new Cookie("keykey",null);
-		mav = auth.accessMroCtl(ah,ck);
+		mav = auth.accessIntranetCtl(ah,ck);
 		if(ck.getValue()!=null) res.addCookie(ck);
 		return mav;
 	}
 	
-	@PostMapping("/AccessOutMro")
-	public ModelAndView accessOutMro(@ModelAttribute AccessHistoryBean ah,@CookieValue(value = "keykey", required = false) Cookie ck,HttpServletResponse res) {
-		mav = auth.accessOutMroCtl(ah,ck);
+	@PostMapping("/AccessOutIntranet")
+	public ModelAndView accessOutIntranet(@ModelAttribute AccessHistoryBean ah,@CookieValue(value = "keykey", required = false) Cookie ck,HttpServletResponse res) {
+		mav = auth.accessOutIntranetCtl(ah,ck);
 		res.addCookie(ck);
 		return mav;
 	}

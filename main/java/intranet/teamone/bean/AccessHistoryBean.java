@@ -4,9 +4,7 @@ import lombok.Data;
 
 @Data
 public class AccessHistoryBean {
-	private String ah_table;//type
-	private String ah_sdspcode;//spcode
-	private String ah_code;//id
+	private String ah_epcode;//id
 	private String ah_publicip;
 	private String ah_privateip;
 	private String ah_browser;

@@ -94,7 +94,7 @@ function readyAccessIntranet(data, jc) {
 		}
 	}*/
 	if (data == '1') {
-		getAjax("https://api.ipify.org?format=json","sendAccessInfo","j");
+		getAjax("https://api.ipify.org?format=json","sendAccessInfo","j");		
 	}else{
 		getAjax("https://api.ipify.org?format=json","accessOut","j");
 	}
@@ -118,7 +118,6 @@ function sendAccessInfo(Ip){
 	f.appendChild(publicIp);
 	f.appendChild(privateIp);
 	f.appendChild(browser);
-	f.appendChild(type);
 	
 	document.body.appendChild(f);
 	f.submit();
@@ -140,7 +139,7 @@ function accessOut(Ip){
 	f.submit();
 }
 
-function typeChange(){
+/*function typeChange(){
 	
 	if($("input[name='ah_table']:checked").val()=="AHS"){
 		$('#insertPoint').html(
@@ -151,4 +150,4 @@ function typeChange(){
 	}
 	
 	
-}
+}*/

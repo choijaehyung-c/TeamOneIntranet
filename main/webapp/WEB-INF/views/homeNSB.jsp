@@ -40,9 +40,6 @@ $(window).scroll(function(){
 
 </script>
 
-
-
-
 </head>
 
 <body id="page-top" onLoad="mainPage()">
@@ -584,7 +581,7 @@ $(window).scroll(function(){
                 <div class="modal-body">로그아웃할거야?</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary"  onclick = "readyAccessIntranet('-1','/AccessOutIntranet')" href="login.html">Logout</a>
+                    <a class="btn btn-primary"  onclick = "readyAccessIntranet('-1','/AccessOutIntranet')" >Logout</a>
                 </div>
             </div>
         </div>
@@ -612,6 +609,7 @@ $(window).scroll(function(){
 	
 	<script src="${pageContext.request.contextPath}/resources/vue/vue.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/jsNSB.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/accessNSB.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/js.js"></script>
 	<!-- Bootstrap core JavaScript-->
     <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
