@@ -44,6 +44,7 @@ const main = new Vue({
 function receiveApprovalPage(){
 	let sendJsonData = { ap_todpcode: "MT", ap_toofcode: "INC01H" };
 	let clientData = JSON.stringify(sendJsonData);
+	alert(clientData);
 	postAjaxJson('rest/GetApprovalList', 'getApprovalListPush', 'j', clientData);
 }
 

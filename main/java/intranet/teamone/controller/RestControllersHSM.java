@@ -22,6 +22,7 @@ public class RestControllersHSM {
 
 	@PostMapping("/GetApprovalList")
 	public List<ApprovalBean> getApprovalList(@RequestBody ApprovalBean ab){
+		System.out.println("ddfsdfdsfd");
 		return ase.getApprovalList(ab);
 	}
 	
