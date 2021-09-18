@@ -492,18 +492,25 @@ $(window).scroll(function(){
 				
 				<template v-if="display[1].show">
 							<div  style="height: 100%; width: 95%; margin-left:5%">
-									<div id="sidebarLayer"
+								<div class="menu_wrap">
+									<ul v-for="li in list" class="dep1">
+										<li>
+											<a href="#" @click="getCateName(li.bk_code)">{{li.bk_name}}</a>
+												<ul v-for="ll in detail" class="dep2">
+													<li>
+														<a href="#" @click="getCateItem(ll.cate)">{{ll.cate_name}}</a>
+													</li>
+												</ul>
+										</li>
+									</ul>
+								</div>
+								
+								<div id="sidebarLayer"
 										style="position: absolute; right:0.4%; top: 80px; width: 120px;  border: 1px solid #ddd; text-align: center; background-color: #FFFFFF; z-index: 1000;">
 									<div>My Cart<br><br>
 										<div id="space"></div>
 										<div id="add" style="display:none; border:1px solid #000;" @click="addCart()">담기</div>
-									</div>	
-																												
-									</div>
-							<span style="margin-right:10px;" v-for="li in list" @click="getCateName(li.bk_code)">{{li.bk_name}}</span>
-								
-								<div style="margin-top:50px;">
-								<div v-for="ll in detail" @click="getCateItem(ll.cate)">{{ll.cate_name}}</div>
+									</div>																					
 								</div>
 
 								<div class="row" v-for="(item,index) in items" style="margin-bottom:10px;">
