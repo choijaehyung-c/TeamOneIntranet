@@ -24,6 +24,7 @@
     <!-- Custom styles for this template-->
     <link href="${pageContext.request.contextPath}/resources/css/sb-admin-2.min.css" rel="stylesheet">
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.js"></script> 
+
   
  
 
@@ -37,6 +38,28 @@ $(window).scroll(function(){
 	$("#sidebarLayer").stop();
 	$("#sidebarLayer").animate( { "top" : scrollTop });
 	});
+	
+
+/* When the user clicks on the button, 
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+
 
 </script>
 
@@ -504,8 +527,9 @@ $(window).scroll(function(){
 										</li>
 									</ul>
 								</div>
-								
-								<div id="sidebarLayer"
+
+
+									<div id="sidebarLayer"
 										style="position: absolute; right:0.4%; top: 80px; width: 120px;  border: 1px solid #ddd; text-align: center; background-color: #FFFFFF; z-index: 1000;">
 									<div>My Cart<br><br>
 										<div id="space"></div>
@@ -674,6 +698,8 @@ $(window).scroll(function(){
             </div>
         </div>
     </div>
+    
+
 
 	
 	<script src="${pageContext.request.contextPath}/resources/vue/vue.js"></script>

@@ -31,17 +31,17 @@ const main = new Vue({
       },
 		addSideBar:function(prcode,index,spcode,price,tax,img,prname){
 			let count = document.getElementsByName("quantity")[index].value;
-			let add = document.getElementById("add");
+			let add = document.getElementById("add"); //담기버튼
 			let pr_price = (price+tax)*count;
 			let value = prcode +','+ prname+ '>' + spcode +':'+ count + '&' +pr_price+ '#' +img; //split(',')는 상품코드와 공급사코드 (':')갯수 ('/')는 가격
 			let cart = document.getElementById("space");
 			let html ="";
 				
-				html += "<div id='setDiv'>"
+				html += `<div id="setDiv${index}">`
 				html += "<img src='"+img+"' style='width:90px;'/>";
 				html += "<div style='font-size:12px;'>"+prname+"</div><span style='font-size:10px;'>("+prcode+")</span>";
 				html += "<div style='font-size:12px;'>" + count +"개</div>";
-				html += `<div name="delCart" onClick="delCarts()" style='font-size:13px; cursor:pointer;'>[삭제]</div>`;
+				html += `<div id="delCart" onClick="delCarts(${index})" style='font-size:13px; cursor:pointer;'>[삭제]</div>`;
 				html +=	"<input type='hidden' value='"+value+"' name='ckval'/>";
 				html += "<input type='hidden' value='"+prcode+"' name='prcode'/></div>";
 			
@@ -193,11 +193,15 @@ function cateItemList(data){
 }
 
 //사이드 장바구니 삭제
-function delCarts(){
+function delCarts(index){
 	//index번호랑 맞춰서 삭제하기..
-	let set = document.getElementById("setDiv");
-	//let set = index + value;
-	set.remove();
+	let set = document.getElementById("setDiv${index}");
+    $(`#setDiv${index}`).remove();
+	for(i=0;i<set.length;i++){
+		if(set[i]==index){
+			set.splice(i);
+		}
+	}
 }
 
 
