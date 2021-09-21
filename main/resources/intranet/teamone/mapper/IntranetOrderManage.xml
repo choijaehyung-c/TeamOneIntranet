@@ -4,5 +4,10 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
  <mapper namespace="intranet.teamone.mapper.IntranetOrderManage">
- 
+ 	
+ 	<select id="getRelationOscode" parameterType="intranet.teamone.bean.MroneOrderBean" resultType="string">
+ 		SELECT RL_IOSCODE FROM RL WHERE RL_REGION = #{os_region} AND RL_MOSCODE = #{os_code}
+ 	</select>
+ 	
+ 	
  </mapper>
