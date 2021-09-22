@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import intranet.teamone.bean.MroneOrderBean;
+import intranet.teamone.bean.MroneOrderDetailBean;
 
 @Repository
 public class OrderManageDAO {
@@ -32,11 +33,11 @@ public class OrderManageDAO {
 	}
 	
 	List<MroneOrderBean> getRefundCompleteList(String os_region){
-		return mSql.selectList("getRefundList",os_region);
+		return mSql.selectList("getRefundCompleteList",os_region);
 	}
 	
 	List<MroneOrderBean> getExchangeList(String os_region){
-		return mSql.selectList("getRefundList",os_region);
+		return mSql.selectList("getExchangeList",os_region);
 	}
 	
 	List<MroneOrderBean> getExchangeCompleteList(String os_region){
@@ -49,5 +50,9 @@ public class OrderManageDAO {
 	
 	String getRelationOscode(MroneOrderBean mo) {
 		return iSql.selectOne("getRelationOscode",mo);
+	}
+	
+	List<MroneOrderDetailBean> getOrderDetail(String os_code){
+		return mSql.selectList("getOrderDetail",os_code);
 	}
 }

@@ -102,9 +102,10 @@ $(window).scroll(function(){
                 <div id="collapseUtilities2" class="collapse" aria-labelledby="headingUtilities2"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header" onClick="orderManage()">주문관리</h6>
+                        <h6 class="collapse-header" >주문관리</h6>
                         <div class="collapse-item"  onClick="orderList()">주문 내역</div>
-                        <div class="collapse-item"  onClick="asList()">반품/교환 내역</div>
+                        <div class="collapse-item"  onClick="refundList()">반품 내역</div>
+                        <div class="collapse-item"  onClick="exchangeList()">교환 내역</div>
                     </div>
                 </div>
             </li>
@@ -542,15 +543,112 @@ $(window).scroll(function(){
 				<template v-if="display[2].show"></template>
 <!-------------------------------------------CJH-------------------------------------------->				
 				<template v-if="display[3].show">
+				     <div id="modalBack" v-if="modal.show" :style="styleObject">
+							<div style="width:70%; max-height:80%; background: #fff; transform:translate(-50%,-50%);
+							border-radius: 10px; padding: 20px; z-index:1; position: absolute; top:50%; left:50%; overflow:auto;">
+							<button @click="modalClose()" type="button"
+										class="btn btn-dark" style="float: right;">닫기</button>
+								<table class="dataTable-table" id="modalTable">
+								     <thead>
+                                        <tr>
+                                            <th style="width: 30%;"><a>상품명</a></th>
+                                            <th style="width: 45%;"><a>상품정보</a></th>
+                                            <th style="width: 7.5%;"><a>가격</a></th>
+                                            <th style="width: 7.5%;"><a>카테고리</a></th>
+                                            <th style="width: 10%;"><a>원산지</a></th>                                          
+                                        </tr>
+                                    </thead>
+									<tbody>
+										<tr v-for="(item,index) in modalList" @click="insReason(index,item.rd_prcode)">
+											<td>{{item.pr_name}}</td>
+											<td>{{item.pr_info}}</td>
+											<td></td>
+											<td></td>
+											<td>{{item.pr_origin}}</td>
+										</tr>
+									</tbody>
+								</table>
+								<div style="text-align: center">
+									<button class="btn btn-dark" @click="sendAsResponse(modalList[0].rd_recode,'RA','r')">수락</button>
+									<button class="btn btn-dark" @click="sendAsResponse(modalList[0].rd_recode,'FF','r')">거절</button>
+
+								</div>
+							</div>
+						</div>
+				<div style="z-index: 3;">
 					<div class="tabs">
 					  <ul>
 						<li class="litab activeT" @click="changeTab(0)">주문 리스트</li>
 						<li class="litab" @click="changeTab(1)">완료 리스트</li>
 					  </ul>
 					</div>
-					<div v-if="display2[0].show">111
+					<div v-if="display2[0].show">
+					
+					<div style="margin:1%; padding:1%; box-shadow: 0px 0px 10px #222;" v-for="ios in list3">
+								<p style="color:#000; font-weight:bold;">내부 주문 번호 {{ios}}</p><br>
+									<table id="datatablesSimple" class="dataTable-table">
+	 										<thead>
+												<tr>
+													<th style="width: 12%; text-align:center;"><a>외부 주문 번호</a></th>
+													<th style="width: 10%; text-align:center;"><a>상태</a></th>
+													<th style="width: 40%; text-align:center;"><a>상품명</a></th>
+													<th style="width: 17%; text-align:center;"><a>날짜</a></th>
+													<th colspan="3" style="width: 21%; text-align:center;"><a>Click!</a></th>
+
+												</tr>
+												</thead> 
+
+											<tbody style="text-align:center;">
+												<tr v-for="order in list" v-if="order.ios == ios">
+													<td @click="getOrderDetail(order.os_code)">{{order.os_code}}</td>
+													<td @click="getOrderDetail(order.os_code)">{{order.os_stname}}</td>
+													<td @click="getOrderDetail(order.os_code)">{{order.os_summary}}</td>
+													<td @click="getOrderDetail(order.os_code)">{{order.os_date}}</td>
+													<td><div v-if="order.os_state==='OA'">구매 확정</div></td>
+													<td><div v-if="order.os_state==='OA'">교환/반품</div></td>
+													<td><div v-if="order.os_state==='OA'">배송 조회</div></td>
+												</tr>
+											</tbody>
+											
+											
+										</table>		
 					</div>
-					<div v-if="display2[1].show">222
+					
+					</div>
+					<div v-if="display2[1].show">
+					<div style="margin:1%; padding:1%; box-shadow: 0px 0px 10px #222;" v-for="ios in list2">
+								<p style="color:#000; font-weight:bold;">내부 주문 번호 {{ios}}</p><br>
+									<table id="datatablesSimple" class="dataTable-table">
+	 										<thead>
+												<tr>
+													<th style="width: 15%;"><a>외부 주문 번호</a></th>
+													<th style="width: 15%;"><a>상태</a></th>
+													<th style="width: 50%;"><a>상품명</a></th>
+													<th style="width: 20%;"><a>날짜</a></th>
+						
+												</tr>
+												</thead> 
+
+											<tbody>
+												<tr v-for="order in list1" v-if="order.ios == ios">
+													<td>{{order.os_code}}</td>
+													<td>{{order.os_state}}</td>
+													<td>{{order.os_summary}}</td>
+													<td>{{order.os_date}}</td>
+													
+													<!-- <td style="text-align: center">
+														<button @click="mroResponseNewProduct(rnp.pr_code, 'PC')"
+															type="button" class="btn btn-dark">등록</button>
+														<button @click="mroResponseNewProduct(rnp.pr_code, 'AF')"
+															type="button" class="btn btn-dark">거절</button>
+													</td> -->
+												</tr>
+											</tbody>
+											
+											
+										</table>		
+					</div>
+					</div>
 					</div>
 				</template>
 				<template v-if="display[4].show">
@@ -560,9 +658,141 @@ $(window).scroll(function(){
 						<li class="litab" @click="changeTab(1)">완료 리스트</li>
 					  </ul>
 					</div>
-					<div v-if="display2[0].show">aaa
+					<div v-if="display2[0].show">
+					<div style="margin:1%; padding:1%; box-shadow: 0px 0px 10px #222;" v-for="ios in list3">
+								<p style="color:#000; font-weight:bold;">내부 주문 번호 {{ios}}</p><br>
+									<table id="datatablesSimple" class="dataTable-table">
+	 										<thead>
+												<tr>
+													<th style="width: 15%;"><a>외부 주문 번호</a></th>
+													<th style="width: 15%;"><a>상태</a></th>
+													<th style="width: 50%;"><a>상품명</a></th>
+													<th style="width: 20%;"><a>날짜</a></th>
+												</tr>
+												</thead> 
+
+											<tbody>
+												<tr v-for="order in list" v-if="order.ios == ios">
+													<td>{{order.os_code}}</td>
+													<td>{{order.os_state}}</td>
+													<td>{{order.os_summary}}</td>
+													<td>{{order.os_date}}</td>
+													<!-- <td style="text-align: center">
+														<button @click="mroResponseNewProduct(rnp.pr_code, 'PC')"
+															type="button" class="btn btn-dark">등록</button>
+														<button @click="mroResponseNewProduct(rnp.pr_code, 'AF')"
+															type="button" class="btn btn-dark">거절</button>
+													</td> -->
+												</tr>
+											</tbody>
+											
+											
+										</table>		
 					</div>
-					<div v-if="display2[1].show">bbb
+					</div>
+					<div v-if="display2[1].show">
+					<div style="margin:1%; padding:1%; box-shadow: 0px 0px 10px #222;" v-for="ios in list2">
+								<p style="color:#000; font-weight:bold;">내부 주문 번호 {{ios}}</p><br>
+									<table id="datatablesSimple" class="dataTable-table">
+	 										<thead>
+												<tr>
+													<th style="width: 15%;"><a>외부 주문 번호</a></th>
+													<th style="width: 15%;"><a>상태</a></th>
+													<th style="width: 50%;"><a>상품명</a></th>
+													<th style="width: 20%;"><a>날짜</a></th>
+												</tr>
+												</thead> 
+
+											<tbody>
+												<tr v-for="order in list1" v-if="order.ios == ios">
+													<td>{{order.os_code}}</td>
+													<td>{{order.os_state}}</td>
+													<td>{{order.os_summary}}</td>
+													<td>{{order.os_date}}</td>
+													<!-- <td style="text-align: center">
+														<button @click="mroResponseNewProduct(rnp.pr_code, 'PC')"
+															type="button" class="btn btn-dark">등록</button>
+														<button @click="mroResponseNewProduct(rnp.pr_code, 'AF')"
+															type="button" class="btn btn-dark">거절</button>
+													</td> -->
+												</tr>
+											</tbody>
+											
+											
+										</table>		
+					</div>
+					</div>
+				</template>
+				<template v-if="display[11].show">
+					<div class="tabs">
+					  <ul>
+						<li class="litab activeT" @click="changeTab(0)">주문 리스트</li>
+						<li class="litab" @click="changeTab(1)">완료 리스트</li>
+					  </ul>
+					</div>
+					<div v-if="display2[0].show">
+					<div style="margin:1%; padding:1%; box-shadow: 0px 0px 10px #222;" v-for="ios in list3">
+								<p style="color:#000; font-weight:bold;">내부 주문 번호 {{ios}}</p><br>
+									<table id="datatablesSimple" class="dataTable-table">
+	 										<thead>
+												<tr>
+													<th style="width: 15%;"><a>외부 주문 번호</a></th>
+													<th style="width: 15%;"><a>상태</a></th>
+													<th style="width: 50%;"><a>상품명</a></th>
+													<th style="width: 20%;"><a>날짜</a></th>
+												</tr>
+												</thead> 
+
+											<tbody>
+												<tr v-for="order in list" v-if="order.ios == ios">
+													<td>{{order.os_code}}</td>
+													<td>{{order.os_state}}</td>
+													<td>{{order.os_summary}}</td>
+													<td>{{order.os_date}}</td>
+													<!-- <td style="text-align: center">
+														<button @click="mroResponseNewProduct(rnp.pr_code, 'PC')"
+															type="button" class="btn btn-dark">등록</button>
+														<button @click="mroResponseNewProduct(rnp.pr_code, 'AF')"
+															type="button" class="btn btn-dark">거절</button>
+													</td> -->
+												</tr>
+											</tbody>
+											
+											
+										</table>		
+					</div>
+					</div>
+					<div v-if="display2[1].show">
+					<div style="margin:1%; padding:1%; box-shadow: 0px 0px 10px #222;" v-for="ios in list2">
+								<p style="color:#000; font-weight:bold;">내부 주문 번호 {{ios}}</p><br>
+									<table id="datatablesSimple" class="dataTable-table">
+	 										<thead>
+												<tr>
+													<th style="width: 15%;"><a>외부 주문 번호</a></th>
+													<th style="width: 15%;"><a>상태</a></th>
+													<th style="width: 50%;"><a>상품명</a></th>
+													<th style="width: 20%;"><a>날짜</a></th>
+												</tr>
+												</thead> 
+
+											<tbody>
+												<tr v-for="order in list1" v-if="order.ios == ios">
+													<td>{{order.os_code}}</td>
+													<td>{{order.os_state}}</td>
+													<td>{{order.os_summary}}</td>
+													<td>{{order.os_date}}</td>
+													<!-- <td style="text-align: center">
+														<button @click="mroResponseNewProduct(rnp.pr_code, 'PC')"
+															type="button" class="btn btn-dark">등록</button>
+														<button @click="mroResponseNewProduct(rnp.pr_code, 'AF')"
+															type="button" class="btn btn-dark">거절</button>
+													</td> -->
+												</tr>
+											</tbody>
+											
+											
+										</table>		
+					</div>
 					</div>
 				</template>
 <!-------------------------------------------NSB-------------------------------------------->				
