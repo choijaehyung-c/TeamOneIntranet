@@ -544,35 +544,63 @@ $(window).scroll(function(){
 <!-------------------------------------------CJH-------------------------------------------->				
 				<template v-if="display[3].show">
 				     <div id="modalBack" v-if="modal.show" :style="styleObject">
-							<div style="width:70%; max-height:80%; background: #fff; transform:translate(-50%,-50%);
-							border-radius: 10px; padding: 20px; z-index:1; position: absolute; top:50%; left:50%; overflow:auto;">
+							<div style="width:70%; max-height:80%; background: #fff; transform:translate(-50%,0%);
+							border-radius: 10px; padding: 20px; z-index:1; position: absolute; margin-top:3%; left:50%; overflow:auto;">
 							<button @click="modalClose()" type="button"
-										class="btn btn-dark" style="float: right;">닫기</button>
+										class="btn btn-dark" style="float: right;">닫기</button><br>
 								<table class="dataTable-table" id="modalTable">
 								     <thead>
                                         <tr>
-                                            <th style="width: 30%;"><a>상품명</a></th>
-                                            <th style="width: 45%;"><a>상품정보</a></th>
-                                            <th style="width: 7.5%;"><a>가격</a></th>
-                                            <th style="width: 7.5%;"><a>카테고리</a></th>
-                                            <th style="width: 10%;"><a>원산지</a></th>                                          
+                                            <th style="width: 10%; text-align:center;"><a>이미지</a></th>
+                                            <th style="width: 27%; text-align:center;"><a>상품명</a></th>
+                                            <th style="width: 37%; text-align:center;"><a>상품정보</a></th>
+                                            <th style="width: 10%; text-align:center;"><a>가격(원)</a></th>
+                                            <th style="width: 6%; text-align:center;"><a>수량</a></th>
+                                            <th style="width: 10%; text-align:center;"><a>원산지</a></th>                                          
                                         </tr>
                                     </thead>
-									<tbody>
-										<tr v-for="(item,index) in modalList" @click="insReason(index,item.rd_prcode)">
-											<td>{{item.pr_name}}</td>
-											<td>{{item.pr_info}}</td>
-											<td></td>
-											<td></td>
-											<td>{{item.pr_origin}}</td>
+									<tbody><!-- OD_PRSPCODE,OD_OSCODE AS "OS_ORIGIN",OD_PRCODE,OD_QUANTITY,PR_NAME,PR_IMAGE,PR_PRICE,PR_TAX,PR_INFO,PR_ORIGIN,OD_STCODE -->
+										<tr v-for="(item,index) in modalList">
+											<td><img :src="item.pr_image" width="100%" height="100%" alt="no search image"></td>
+											<td style="text-align:center; vertical-align:middle;">{{item.pr_name}}</td>
+											<td style="text-align:center; vertical-align:middle;">{{item.pr_info}}</td>
+											<td style="text-align:center; vertical-align:middle;">{{item.perPrice}}</td>
+											<td style="text-align:center; vertical-align:middle;">{{item.od_quantity}}</td>
+											<td style="text-align:center; vertical-align:middle;">{{item.pr_origin}}</td>
 										</tr>
+										<tr><td colspan="6" style="text-align:center; vertical-align:middle;"> 총 가격(VAT포함) : {{modalList.ttPrice}} 원</td></tr>
 									</tbody>
 								</table>
-								<div style="text-align: center">
-									<button class="btn btn-dark" @click="sendAsResponse(modalList[0].rd_recode,'RA','r')">수락</button>
-									<button class="btn btn-dark" @click="sendAsResponse(modalList[0].rd_recode,'FF','r')">거절</button>
-
-								</div>
+							</div>
+						</div>
+				     <div id="modalBack" v-if="modalcjh.show" :style="styleObject">
+							<div style="width:70%; max-height:80%; background: #fff; transform:translate(-50%,0%);
+							border-radius: 10px; padding: 20px; z-index:1; position: absolute; margin-top:3%; left:50%; overflow:auto;">
+							<button @click="modalcjhClose()" type="button"
+										class="btn btn-dark" style="float: right;">닫기</button><br>
+								<table class="dataTable-table" id="modalTable">
+								     <thead>
+                                        <tr>
+                                            <th style="width: 10%; text-align:center;"><a>이미지</a></th>
+                                            <th style="width: 27%; text-align:center;"><a>상품명</a></th>
+                                            <th style="width: 37%; text-align:center;"><a>상품정보</a></th>
+                                            <th style="width: 10%; text-align:center;"><a>가격(원)</a></th>
+                                            <th style="width: 6%; text-align:center;"><a>수량</a></th>
+                                            <th style="width: 10%; text-align:center;"><a>반품/교환</a></th>                                          
+                                        </tr>
+                                    </thead>
+									<tbody><!-- OD_PRSPCODE,OD_OSCODE AS "OS_ORIGIN",OD_PRCODE,OD_QUANTITY,PR_NAME,PR_IMAGE,PR_PRICE,PR_TAX,PR_INFO,PR_ORIGIN,OD_STCODE -->
+										<tr v-for="(item,index) in modalList" @click="insReason(index,item.od_prcode)">
+											<td><img :src="item.pr_image" width="100%" height="100%" alt="no search image"></td>
+											<td style="text-align:center; vertical-align:middle;">{{item.pr_name}}</td>
+											<td style="text-align:center; vertical-align:middle;">{{item.pr_info}}</td>
+											<td style="text-align:center; vertical-align:middle;">{{item.perPrice}}</td>
+											<td style="text-align:center; vertical-align:middle;">{{item.od_quantity}}</td>
+											<td style="text-align:center; vertical-align:middle;"><input style="zoom:2.0;" type="checkbox" /></td>
+										</tr>
+										<tr><td colspan="6" style="text-align:center; vertical-align:middle;"> 총 가격(VAT포함) : {{modalList.ttPrice}} 원</td></tr>
+									</tbody>
+								</table>
 							</div>
 						</div>
 				<div style="z-index: 3;">
@@ -601,12 +629,12 @@ $(window).scroll(function(){
 											<tbody style="text-align:center;">
 												<tr v-for="order in list" v-if="order.ios == ios">
 													<td @click="getOrderDetail(order.os_code)">{{order.os_code}}</td>
-													<td @click="getOrderDetail(order.os_code)">{{order.os_stname}}</td>
+														<td @click="getOrderDetail(order.os_code)">{{order.os_stname}}</td>
 													<td @click="getOrderDetail(order.os_code)">{{order.os_summary}}</td>
 													<td @click="getOrderDetail(order.os_code)">{{order.os_date}}</td>
-													<td><div v-if="order.os_state==='OA'">구매 확정</div></td>
-													<td><div v-if="order.os_state==='OA'">교환/반품</div></td>
-													<td><div v-if="order.os_state==='OA'">배송 조회</div></td>
+													<td><div v-if="order.os_state==='OA'">구매 확정</div><div v-else>-</div></td>
+													<td><div v-if="order.os_state==='OA'" @click="getOrderDetail2(order.os_code)">교환/반품</div><div v-else>-</div></td>
+													<td><div v-if="order.os_state==='OA'">배송 조회</div><div v-else>-</div></td>
 												</tr>
 											</tbody>
 											
@@ -630,18 +658,11 @@ $(window).scroll(function(){
 												</thead> 
 
 											<tbody>
-												<tr v-for="order in list1" v-if="order.ios == ios">
+												<tr v-for="order in list1" v-if="order.ios == ios" @click="getOrderDetail(order.os_code)">
 													<td>{{order.os_code}}</td>
-													<td>{{order.os_state}}</td>
+													<td>{{order.os_stname}}</td>
 													<td>{{order.os_summary}}</td>
 													<td>{{order.os_date}}</td>
-													
-													<!-- <td style="text-align: center">
-														<button @click="mroResponseNewProduct(rnp.pr_code, 'PC')"
-															type="button" class="btn btn-dark">등록</button>
-														<button @click="mroResponseNewProduct(rnp.pr_code, 'AF')"
-															type="button" class="btn btn-dark">거절</button>
-													</td> -->
 												</tr>
 											</tbody>
 											
@@ -652,6 +673,36 @@ $(window).scroll(function(){
 					</div>
 				</template>
 				<template v-if="display[4].show">
+					<div id="modalBack" v-if="modal.show" :style="styleObject">
+							<div style="width:70%; max-height:80%; background: #fff; transform:translate(-50%,0%);
+							border-radius: 10px; padding: 20px; z-index:1; position: absolute; margin-top:3%; left:50%; overflow:auto;">
+							<button @click="modalClose()" type="button"
+										class="btn btn-dark" style="float: right;">닫기</button><br>
+								<table class="dataTable-table" id="modalTable">
+								     <thead>
+                                        <tr>
+                                            <th style="width: 10%; text-align:center;"><a>이미지</a></th>
+                                            <th style="width: 27%; text-align:center;"><a>상품명</a></th>
+                                            <th style="width: 37%; text-align:center;"><a>상품정보</a></th>
+                                            <th style="width: 10%; text-align:center;"><a>가격(원)</a></th>
+                                            <th style="width: 6%; text-align:center;"><a>수량</a></th>
+                                            <th style="width: 10%; text-align:center;"><a>원산지</a></th>                                          
+                                        </tr>
+                                    </thead>
+									<tbody><!-- OD_PRSPCODE,OD_OSCODE AS "OS_ORIGIN",OD_PRCODE,OD_QUANTITY,PR_NAME,PR_IMAGE,PR_PRICE,PR_TAX,PR_INFO,PR_ORIGIN,OD_STCODE -->
+										<tr v-for="(item,index) in modalList">
+											<td><img :src="item.pr_image" width="100%" height="100%" alt="no search image"></td>
+											<td style="text-align:center; vertical-align:middle;">{{item.pr_name}}</td>
+											<td style="text-align:center; vertical-align:middle;">{{item.pr_info}}</td>
+											<td style="text-align:center; vertical-align:middle;">{{item.perPrice}}</td>
+											<td style="text-align:center; vertical-align:middle;">{{item.od_quantity}}</td>
+											<td style="text-align:center; vertical-align:middle;">{{item.pr_origin}}</td>
+										</tr>
+										<tr><td colspan="6" style="text-align:center; vertical-align:middle;"> 총 가격(VAT포함) : {{modalList.ttPrice}} 원</td></tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
 					<div class="tabs">
 					  <ul>
 						<li class="litab activeT" @click="changeTab(0)">주문 리스트</li>
@@ -672,17 +723,11 @@ $(window).scroll(function(){
 												</thead> 
 
 											<tbody>
-												<tr v-for="order in list" v-if="order.ios == ios">
+												<tr v-for="order in list" v-if="order.ios == ios" @click="getOrderDetail(order.os_code)">
 													<td>{{order.os_code}}</td>
-													<td>{{order.os_state}}</td>
+													<td>{{order.os_stname}}</td>
 													<td>{{order.os_summary}}</td>
 													<td>{{order.os_date}}</td>
-													<!-- <td style="text-align: center">
-														<button @click="mroResponseNewProduct(rnp.pr_code, 'PC')"
-															type="button" class="btn btn-dark">등록</button>
-														<button @click="mroResponseNewProduct(rnp.pr_code, 'AF')"
-															type="button" class="btn btn-dark">거절</button>
-													</td> -->
 												</tr>
 											</tbody>
 											
@@ -700,21 +745,16 @@ $(window).scroll(function(){
 													<th style="width: 15%;"><a>상태</a></th>
 													<th style="width: 50%;"><a>상품명</a></th>
 													<th style="width: 20%;"><a>날짜</a></th>
+						
 												</tr>
 												</thead> 
 
 											<tbody>
-												<tr v-for="order in list1" v-if="order.ios == ios">
+												<tr v-for="order in list1" v-if="order.ios == ios" @click="getOrderDetail(order.os_code)">
 													<td>{{order.os_code}}</td>
-													<td>{{order.os_state}}</td>
+													<td>{{order.os_stname}}</td>
 													<td>{{order.os_summary}}</td>
 													<td>{{order.os_date}}</td>
-													<!-- <td style="text-align: center">
-														<button @click="mroResponseNewProduct(rnp.pr_code, 'PC')"
-															type="button" class="btn btn-dark">등록</button>
-														<button @click="mroResponseNewProduct(rnp.pr_code, 'AF')"
-															type="button" class="btn btn-dark">거절</button>
-													</td> -->
 												</tr>
 											</tbody>
 											
@@ -724,6 +764,36 @@ $(window).scroll(function(){
 					</div>
 				</template>
 				<template v-if="display[11].show">
+				     <div id="modalBack" v-if="modal.show" :style="styleObject">
+							<div style="width:70%; max-height:80%; background: #fff; transform:translate(-50%,0%);
+							border-radius: 10px; padding: 20px; z-index:1; position: absolute; margin-top:3%; left:50%; overflow:auto;">
+							<button @click="modalClose()" type="button"
+										class="btn btn-dark" style="float: right;">닫기</button><br>
+								<table class="dataTable-table" id="modalTable">
+								     <thead>
+                                        <tr>
+                                            <th style="width: 10%; text-align:center;"><a>이미지</a></th>
+                                            <th style="width: 27%; text-align:center;"><a>상품명</a></th>
+                                            <th style="width: 37%; text-align:center;"><a>상품정보</a></th>
+                                            <th style="width: 10%; text-align:center;"><a>가격(원)</a></th>
+                                            <th style="width: 6%; text-align:center;"><a>수량</a></th>
+                                            <th style="width: 10%; text-align:center;"><a>원산지</a></th>                                          
+                                        </tr>
+                                    </thead>
+									<tbody><!-- OD_PRSPCODE,OD_OSCODE AS "OS_ORIGIN",OD_PRCODE,OD_QUANTITY,PR_NAME,PR_IMAGE,PR_PRICE,PR_TAX,PR_INFO,PR_ORIGIN,OD_STCODE -->
+										<tr v-for="(item,index) in modalList">
+											<td><img :src="item.pr_image" width="100%" height="100%" alt="no search image"></td>
+											<td style="text-align:center; vertical-align:middle;">{{item.pr_name}}</td>
+											<td style="text-align:center; vertical-align:middle;">{{item.pr_info}}</td>
+											<td style="text-align:center; vertical-align:middle;">{{item.perPrice}}</td>
+											<td style="text-align:center; vertical-align:middle;">{{item.od_quantity}}</td>
+											<td style="text-align:center; vertical-align:middle;">{{item.pr_origin}}</td>
+										</tr>
+										<tr><td colspan="6" style="text-align:center; vertical-align:middle;"> 총 가격(VAT포함) : {{modalList.ttPrice}} 원</td></tr>
+									</tbody>
+								</table>
+							</div>
+						</div>					
 					<div class="tabs">
 					  <ul>
 						<li class="litab activeT" @click="changeTab(0)">주문 리스트</li>
@@ -744,17 +814,11 @@ $(window).scroll(function(){
 												</thead> 
 
 											<tbody>
-												<tr v-for="order in list" v-if="order.ios == ios">
+												<tr v-for="order in list" v-if="order.ios == ios" @click="getOrderDetail(order.os_code)">
 													<td>{{order.os_code}}</td>
-													<td>{{order.os_state}}</td>
+													<td>{{order.os_stname}}</td>
 													<td>{{order.os_summary}}</td>
 													<td>{{order.os_date}}</td>
-													<!-- <td style="text-align: center">
-														<button @click="mroResponseNewProduct(rnp.pr_code, 'PC')"
-															type="button" class="btn btn-dark">등록</button>
-														<button @click="mroResponseNewProduct(rnp.pr_code, 'AF')"
-															type="button" class="btn btn-dark">거절</button>
-													</td> -->
 												</tr>
 											</tbody>
 											
@@ -772,25 +836,18 @@ $(window).scroll(function(){
 													<th style="width: 15%;"><a>상태</a></th>
 													<th style="width: 50%;"><a>상품명</a></th>
 													<th style="width: 20%;"><a>날짜</a></th>
+						
 												</tr>
 												</thead> 
 
 											<tbody>
-												<tr v-for="order in list1" v-if="order.ios == ios">
+												<tr v-for="order in list1" v-if="order.ios == ios" @click="getOrderDetail(order.os_code)">
 													<td>{{order.os_code}}</td>
-													<td>{{order.os_state}}</td>
+													<td>{{order.os_stname}}</td>
 													<td>{{order.os_summary}}</td>
 													<td>{{order.os_date}}</td>
-													<!-- <td style="text-align: center">
-														<button @click="mroResponseNewProduct(rnp.pr_code, 'PC')"
-															type="button" class="btn btn-dark">등록</button>
-														<button @click="mroResponseNewProduct(rnp.pr_code, 'AF')"
-															type="button" class="btn btn-dark">거절</button>
-													</td> -->
 												</tr>
 											</tbody>
-											
-											
 										</table>		
 					</div>
 					</div>

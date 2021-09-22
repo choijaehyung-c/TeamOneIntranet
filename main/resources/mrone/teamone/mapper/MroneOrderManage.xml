@@ -30,7 +30,11 @@
  	</select>
  	
  	<select id="getPrnameAndCount" parameterType="string" resultType="string">
- 		SELECT PR_NAME FROM CHLCHL.ORDERSDETAIL INNER JOIN CHLCHL.PRODUCT ON PRODUCT.PR_SPCODE = ORDERSDETAIL.OD_PRSPCODE AND PRODUCT.PR_CODE = ORDERSDETAIL.OD_PRCODE WHERE OD_OSCODE = #{os_code}
+ 		SELECT PR_NAME FROM CHLCHL.ORDERSDETAIL 
+ 		INNER JOIN CHLCHL.PRODUCT 
+ 		ON PRODUCT.PR_SPCODE = ORDERSDETAIL.OD_PRSPCODE 
+ 		AND PRODUCT.PR_CODE = ORDERSDETAIL.OD_PRCODE 
+ 		WHERE OD_OSCODE = #{os_code} AND PR_STCODE = 'PC'
  	</select>
   	
  	<select id="getOrderDetail" parameterType="string" resultType="intranet.teamone.bean.MroneOrderDetailBean">

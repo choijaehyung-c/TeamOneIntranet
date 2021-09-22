@@ -24,7 +24,6 @@ public class RestControllersCJH {
 
 	@PostMapping("/getOrderList")
 	public List<MroneOrderBean> getOrderList() throws Exception{
-		System.out.println("test");
 		return ome.getOrderList();
 	}
 	
