@@ -615,13 +615,13 @@ $(window).scroll(function(){
 											Item Code</th>
 											<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
 												aria-label="Item Code: activate to sort column ascending" style="width: 80px;">
-											Price</th>
+											Price<br>(VAT포함)</th>
 											<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
 												aria-label="Quantity: activate to sort column ascending" style="width: 40px;">
 											Quantity</th>
 											<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
 												aria-label="Total Price: activate to sort column ascending" style="width: 100px;">
-											Total Price</th>
+											Total Price<br>(VAT포함)</th>
 										</tr>
 									</thead>
                                     
