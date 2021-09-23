@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import intranet.teamone.auth.Authentication;
+import intranet.teamone.bean.AccessHistoryBean;
 import intranet.teamone.utils.Encryption;
 
 /**
@@ -50,19 +52,6 @@ public class HomeController {
 		res.addCookie(ck);
 		return mav;
 	}
-	
-	@GetMapping("/home")
-	public String mainPage() {
-		return "homeNSB";
-	}
-	
-	/*
-	 * @GetMapping("/test") public ModelAndView test() { mav = new ModelAndView();
-	 * mav.addObject("testdata",td.test2()); mav.setViewName("/test"); return mav; }
-	 */
-	
-}
-
 	
 	
 	@GetMapping("/")
