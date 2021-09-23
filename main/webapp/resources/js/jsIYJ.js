@@ -80,7 +80,7 @@ const main = new Vue({
 								
 		},
 		getCartPage:function(){
-			let table = document.getElementById("table");			
+            let table = document.getElementById("table");            
 			let html='';
 			let ck = document.cookie.split(';');
 			let cookie='';
@@ -108,7 +108,7 @@ const main = new Vue({
 				
 																																								
 			}	 
-		}table.innerHTML = html;
+        }table.innerHTML = html;
 	},
 	searchItem:function(){
 	let word = document.getElementsByName("word")[0].value;
