@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import intranet.teamone.bean.DeliveryBean;
 import intranet.teamone.bean.MroneOrderBean;
 import intranet.teamone.bean.MroneOrderDetailBean;
 
@@ -39,5 +40,9 @@ public class OrderManageServiceEntrance {
 	
 	public List<MroneOrderDetailBean> getOrderDetail(String os_code){
 		return omc.getOrderDetail(os_code);
+	}
+	
+	public DeliveryBean getDelivery(String os_code) {
+		return omc.getDelivery(os_code);
 	}
 }

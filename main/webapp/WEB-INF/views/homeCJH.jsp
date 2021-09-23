@@ -543,6 +543,48 @@ $(window).scroll(function(){
 				<template v-if="display[2].show"></template>
 <!-------------------------------------------CJH-------------------------------------------->				
 				<template v-if="display[3].show">
+				     <div id="modalBack" v-if="modalcjh2.show" :style="styleObject">
+							<div style="width:70%; max-height:80%; background: #fff; transform:translate(-50%,0%);
+							border-radius: 10px; padding: 20px; z-index:1; position: absolute; margin-top:3%; left:50%; overflow:auto;">
+							<button @click="modalcjh2Close()" type="button"
+										class="btn btn-dark" style="float: right;">닫기</button><br>
+								<table class="dataTable-table">
+									<tr>
+										<td style="text-align:center; vertical-align:middle;">운송장 번호</td>
+										<td style="text-align:center; vertical-align:middle;">{{modalList.dl_code}}</td>
+										<td style="text-align:center; vertical-align:middle;">주문서 번호</td>
+										<td style="text-align:center; vertical-align:middle;">{{modalList.dl_oscode}}</td>
+									</tr>
+									<tr>
+										<td style="text-align:center; vertical-align:middle;">배송 기사</td>
+										<td style="text-align:center; vertical-align:middle;">{{modalList.dv_name}}</td>
+										<td style="text-align:center; vertical-align:middle;">연락처</td>
+										<td style="text-align:center; vertical-align:middle;">{{modalList.dv_hp}}</td>
+									</tr>
+									<tr>
+										<td style="text-align:center; vertical-align:middle;" colspan="4" v-if="modalList.dl_dscode == 1">상품준비중</td>
+										<td style="text-align:center; vertical-align:middle;" colspan="4" v-else-if="modalList.dl_dscode == 2">배송중</td>
+										<td style="text-align:center; vertical-align:middle;" colspan="4" v-else>배송완료</td>
+									</tr>
+								</table>
+								<table class="dataTable-table">
+								     <thead>
+                                        <tr>
+                                            <th style="width: 25%; text-align:center;"><a>x좌표</a></th>
+                                            <th style="width: 25%; text-align:center;"><a>y좌표</a></th>
+                                            <th style="width: 50%; text-align:center;"><a>날짜</a></th>
+                                        </tr>
+                                    </thead>
+									<tbody>
+										<tr v-for="item in modalList.lc">
+											<td style="text-align:center; vertical-align:middle;">{{item.lc_x}}</td>
+											<td style="text-align:center; vertical-align:middle;">{{item.lc_y}}</td>
+											<td style="text-align:center; vertical-align:middle;">{{item.lc_date}}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+					 </div>
 				     <div id="modalBack" v-if="modal.show" :style="styleObject">
 							<div style="width:70%; max-height:80%; background: #fff; transform:translate(-50%,0%);
 							border-radius: 10px; padding: 20px; z-index:1; position: absolute; margin-top:3%; left:50%; overflow:auto;">
@@ -559,7 +601,7 @@ $(window).scroll(function(){
                                             <th style="width: 10%; text-align:center;"><a>원산지</a></th>                                          
                                         </tr>
                                     </thead>
-									<tbody><!-- OD_PRSPCODE,OD_OSCODE AS "OS_ORIGIN",OD_PRCODE,OD_QUANTITY,PR_NAME,PR_IMAGE,PR_PRICE,PR_TAX,PR_INFO,PR_ORIGIN,OD_STCODE -->
+									<tbody>
 										<tr v-for="(item,index) in modalList">
 											<td><img :src="item.pr_image" width="100%" height="100%" alt="no search image"></td>
 											<td style="text-align:center; vertical-align:middle;">{{item.pr_name}}</td>
@@ -634,7 +676,7 @@ $(window).scroll(function(){
 													<td @click="getOrderDetail(order.os_code)">{{order.os_date}}</td>
 													<td><div v-if="order.os_state==='OA'">구매 확정</div><div v-else>-</div></td>
 													<td><div v-if="order.os_state==='OA'" @click="getOrderDetail2(order.os_code)">교환/반품</div><div v-else>-</div></td>
-													<td><div v-if="order.os_state==='OA'">배송 조회</div><div v-else>-</div></td>
+													<td><div v-if="order.os_state==='OA'" @click="getDelivery(order.os_code)">배송 조회</div><div v-else>-</div></td>
 												</tr>
 											</tbody>
 											

@@ -43,6 +43,12 @@ const main = new Vue({
 			this.dupCheck = [];
 			this.modalcjh.show = false;
 		},
+		modalcjh2Open:function(){
+			this.modalcjh2.show = true;
+		},
+		modalcjh2Close:function(){
+			this.modalcjh2.show = false;
+		},
 		listPush:function(jsondata){
 			this.list = jsondata;
 		},
@@ -106,10 +112,21 @@ const main = new Vue({
 			newCell1.innerHTML = `<input type="text" name="od_note" style="width:100%;" placeholder="사유 입력"/>`;
 			newCell2.innerHTML = `<div id="del${index}" onclick="delReason(${index})">삭제</div>`;
 			this.dupCheck.push(index);
-		},
+		},getDelivery:function(code){
+			postAjaxJson('rest/getDelivery','getDeliveryInfo','j',code);
+		}
 	}
 	
 });
+
+function getDeliveryInfo(jsondata){
+	modalStyle();
+	console.log(jsondata);
+	main.modalList = jsondata;
+	console.log(main.modalList);
+	main.modalcjh2Open();
+}
+
 function delReason(index){
     $(`#del${index}`).remove();
 	for(i=0;i<main.dupCheck.length;i++){
@@ -162,17 +179,20 @@ function setList(jsondata){
 function getOrderDetail(jsondata){
 	main.modalListPush(jsondata);
 	main.getTTprice(jsondata);
-	main.styleObject.height = (document.getElementById("content").offsetHeight-86)+"px";
-	$("html, body").animate({ scrollTop: 0 }, 100);
+	modalStyle();
 	main.modalOpen();
 }
 
 function getOrderDetail2(jsondata){
 	main.modalListPush(jsondata);
 	main.getTTprice(jsondata);
+	modalStyle();
+	main.modalcjhOpen();
+}
+
+function modalStyle(){
 	main.styleObject.height = (document.getElementById("content").offsetHeight-86)+"px";
 	$("html, body").animate({ scrollTop: 0 }, 100);
-	main.modalcjhOpen();
 }
 
 function testasdasd(){
