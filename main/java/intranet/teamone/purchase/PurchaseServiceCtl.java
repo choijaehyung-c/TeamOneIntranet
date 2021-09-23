@@ -28,4 +28,15 @@ public class PurchaseServiceCtl {
 		return dao.getCateItem(cate);
 	}
 
+	ProductBean getPrDetail(ProductBean pr) {
+		
+		return dao.getPrDetail(pr);
+	}
+
+	 List<ProductBean> getSearchItem(String word) {
+	
+		 
+		return dao.getSearchItem(word);
+	}
+
 }

@@ -14,9 +14,31 @@ public class HSMApprovalServiceEntrance {
 	@Autowired
 	HSMApprovalServiceCtl asc;
 
+	//받은 결재리스트 불러오기
 	public List<ApprovalBean> getApprovalList(ApprovalBean ab) {
 		
 		return asc.getApprovalList(ab);
+	}
+	
+	//해당 os코드의 주문디테일 가져오기
+	public List<ProductBean> getApprovalDetail(ApprovalBean ab) {
+		
+		return asc.getApprovalDetail(ab);
+	}
+
+	public List<ApprovalBean> getAnyApprovalList(ApprovalBean ab) {
+		
+		return asc.getAnyApprovalList(ab);
+	}
+
+	public String responseAppovalRefuse(ApprovalBean ab) {
+		
+		return asc.responseAppovalRefuse(ab);
+	}
+
+	public List<ApprovalBean> getSendApprovalList(ApprovalBean ab) {
+		
+		return asc.getSendApprovalList(ab);
 	}
 
 	
