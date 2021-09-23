@@ -33,4 +33,14 @@ public class PurchaseDAO {
 		return sql.selectList("getCateItem",cate);
 	}
 
+	ProductBean getPrDetail(ProductBean pr) {
+		
+		return sql.selectOne("getPrDetail",pr);
+	}
+
+	 List<ProductBean> getSearchItem(String word) {
+		// TODO Auto-generated method stub
+		return sql.selectList("getSearchItem", word);
+	}
+
 }

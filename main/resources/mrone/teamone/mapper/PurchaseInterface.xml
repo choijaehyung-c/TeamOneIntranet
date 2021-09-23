@@ -16,4 +16,21 @@
 		SELECT * FROM CHLCHL.PRODUCT WHERE CATE=#{cate}
 	</select>
 	
+	<select id="getPrDetail" parameterType="intranet.teamone.bean.ProductBean" resultType="intranet.teamone.bean.ProductBean">
+		SELECT PR.PR_SPCODE,
+       SP.SP_NAME,
+       PR.PR_CODE,
+       PR.PR_NAME,
+       PR.PR_IMAGE,
+       PR.PR_PRICE,
+       PR.PR_TAX,
+       PR.PR_INFO,
+       PR.PR_ORIGIN
+		FROM PR INNER JOIN SP ON PR.PR_SPCODE = SP.SP_CODE
+		WHERE PR_CODE=#{pr_code} AND PR_STCODE='PC'
+	</select>
+	
+	<select id="getSearchItem" parameterType="string" resultType="intranet.teamone.bean.ProductBean">
+		SELECT * FROM CHLCHL.PRODUCT WHERE PR_NAME LIKE '%' || #{word} || '%'	
+	</select>
 </mapper>

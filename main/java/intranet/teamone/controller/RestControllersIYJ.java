@@ -18,6 +18,9 @@ public class RestControllersIYJ {
 	@Autowired
 	PurchaseServiceEntrance pse;
 
-
+	@PostMapping ("/getSearchItem")
+	public List<ProductBean> getSearchItem(@RequestBody String word){
+		return pse.getSearchItem(word);
+	}
 	
 }
