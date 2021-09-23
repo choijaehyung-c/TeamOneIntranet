@@ -498,20 +498,22 @@ $(window).scroll(function(){
                        <button class="input-group-text btn-primary" type="submit"  @click="searchItem()">Search</button>
                  </div>
 				<div  style="height: 100%; width: 95%; margin-left:5%">
-								<div class="menu_wrap" style="margin-left:20%;">
+
+						<div class="menu_wrap" style="margin-left:23%;">
 								
-									<ul v-for="li in list" class="dep1">
-										<li>										
-											<a href="#" @click="getCateName(li.bk_code)">{{li.bk_name}}</a>
-												<ul v-for="ll in detail" class="dep2">
-													<li>
+									<ul  class="dep1">
+										<li v-for="li in list">										
+											<a @click="getCateName(li.bk_code)">{{li.bk_name}}</a>
+												<ul  class="dep2">
+													<li v-for="ll in detail">
 														<a  @click="getCateItem(ll.cate)">{{ll.cate_name}}</a>
 													</li>
 												</ul>
 										</li>
 									</ul>
 								</div>
-                  
+
+
 
 									<div id="sidebarLayer"
 										style="position: absolute; right:0.4%; top: 80px; width: 120px;  border: 1px solid #ddd; text-align: center; background-color: #FFFFFF; z-index: 1000;">
@@ -528,7 +530,7 @@ $(window).scroll(function(){
 										<div class="row">
 											<div class="col-lg-8">
 												<h5 class="mt-3 mt-sm-0" >
-													<a class="text-dark fs-0 fs-lg-1">
+													<a style="color:#000;">
 														{{item.pr_name}}</a>
 												</h5>
 												<p class="fs--1 mb-2 mb-md-3">
@@ -592,7 +594,7 @@ $(window).scroll(function(){
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Cart List</h6>
+                            <h6 class="m-0 font-weight-bold text-primary" >Cart List</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -625,15 +627,15 @@ $(window).scroll(function(){
 										</tr>
 									</thead>
                                     
-                                    <tbody id = "table">        
-                                  		<tr class="odd" v-for="li in list">
-                                  			<td><input type='checkbox' name='chkYn'/><img :src="li.img" style='width:150px;'/></td>
-                                  			<td>{{li.spcode}}</td>
-                                  			<td>{{li.prname}}</td>
-                                  			<td>{{li.prcode}}</td>
-                                  			<td>{{li.price}}</td>
-                                  			<td><input type='number' id="count2" name='count2' :value=li.count style="width:45%;"></td>
-                                  			<td><input type='text' readonly name='tt_price' :value=li.price*li.count>원</td>
+                                    <tbody id="table">        
+                                  		<tr class="odd" v-for="li in cart">
+                                  			<td id="img"><input type='checkbox'name='chkYn' :value=li.spcode+li.prname+li.prcode+li.price+li.count+li.price*li.count /><img :src="li.img" style='width:150px;'/></td>
+                                  			<td id="spcode">{{li.spcode}}</td>
+                                  			<td id="prname">{{li.prname}}</td>
+                                  			<td id="prcode">{{li.prcode}}</td>
+                                  			<td id="price">{{li.price}}</td>
+                                  			<td id="count"><input type="number"  :value=li.count v-model="li.count" style="width:45%;"></td>
+                                  			<td id="tt_price"><input type='text' readonly name='tt_price' :value=li.price*li.count>원</td>
                                   			
                                   		</tr>
                                      </tbody>

@@ -7,6 +7,7 @@ const main = new Vue({
 		list:[],
 		detail:{},
 		items:[],
+		cart:[]
 	},
 	methods:{
 		changePage:function(page){
@@ -79,7 +80,8 @@ const main = new Vue({
 				
 								
 		},
-		getCartPage:function(){									
+		getCartPage:function(){
+			this.cart=[];									
 			let ck = document.cookie.split(';');
 			let cookie='';
 					
@@ -98,7 +100,7 @@ const main = new Vue({
 				
 				let ckData = {img:img, spcode:spcode, prname:prname, prcode:prcode,price:price,count:count,ttprice:tt_price};
 
-				this.list.push(ckData);
+				this.cart.push(ckData);
 																																				
 			}	 
 		}
@@ -117,12 +119,16 @@ const main = new Vue({
 		let chkedValue = document.getElementsByName('chkYn').values;
 		let chk_val = [];
 		
-		for(i=0; i<chkedValue.length; i++){
+		/*for(i=0; i<chkedValue.length; i++){
 			if(chkedValue[i].checked){
 				chk_val.push(chkedValue[i].value);
 			}
 		}
-		console.log(chk_val);
+		console.log(chk_val);*/
+		$('input:checkbox[name=chkYn]:checked').each(function(){
+			chk_val = $(this).val();
+			alert(chk_val);
+		});
 
 	}		
 }
