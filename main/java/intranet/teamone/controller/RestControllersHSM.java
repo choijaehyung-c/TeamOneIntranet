@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import intranet.teamone.approval.HSMApprovalServiceEntrance;
 import intranet.teamone.bean.ApprovalBean;
+import intranet.teamone.bean.OrderDetailBean;
 import intranet.teamone.bean.ProductBean;
 
 @RestController
@@ -30,7 +31,7 @@ public class RestControllersHSM {
 	}
 
 	@PostMapping("/GetApprovalDetail")
-	public List<ProductBean> getApprovalDetail(@RequestBody ApprovalBean ab) {
+	public List<OrderDetailBean> getApprovalDetail(@RequestBody ApprovalBean ab) {
 		return ase.getApprovalDetail(ab);
 	}
 

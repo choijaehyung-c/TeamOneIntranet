@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import intranet.teamone.bean.ApprovalBean;
+import intranet.teamone.bean.OrderDetailBean;
 import intranet.teamone.bean.ProductBean;
 
 
@@ -23,7 +24,7 @@ public class HSMApprovalServiceCtl {
 	}
 
 
-	public List<ProductBean> getApprovalDetail(ApprovalBean ab) {
+	public List<OrderDetailBean> getApprovalDetail(ApprovalBean ab) {
 		
 		return dao.getApprovalDetail(ab);
 	}

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import intranet.teamone.bean.ApprovalBean;
+import intranet.teamone.bean.OrderDetailBean;
 import intranet.teamone.bean.ProductBean;
 
 @Service
@@ -21,7 +22,7 @@ public class HSMApprovalServiceEntrance {
 	}
 	
 	//해당 os코드의 주문디테일 가져오기
-	public List<ProductBean> getApprovalDetail(ApprovalBean ab) {
+	public List<OrderDetailBean> getApprovalDetail(ApprovalBean ab) {
 		
 		return asc.getApprovalDetail(ab);
 	}

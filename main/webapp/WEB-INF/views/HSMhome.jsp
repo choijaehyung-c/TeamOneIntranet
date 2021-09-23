@@ -564,14 +564,14 @@ $(window).scroll(function(){
 											<tbody>
 												<tr v-for="ALD in detail">
 													<td></td>
-													<td>{{ALD.pr_stock}}개</td>
+													<td>{{ALD.od_quantity}}개</td>
 													<td>{{ALD.pr_price}}원</td>
 												</tr>
 											</tbody>
 										</table>
                    		<div  style="text-align: center">
                    		<button type="button" class="btn btn-dark">허가</button>
-                   		<button @click="responseAppovalRefuse(list2.ap_code, list2.cg_type)" type="button" class="btn btn-dark">반려</button>
+                   		<button @click="responseAppovalRefuse(list2.ap_code)" type="button" class="btn btn-dark">반려</button>
                    		<button @click="modalClose()" type="button" class="btn btn-dark">닫기</button>
                   		</div>
                    		
@@ -587,7 +587,7 @@ $(window).scroll(function(){
 								<div class="dataTable-top">
 									<div>
 									<select @chang="">
-  										<option value="0" selected>구매,반품</option>
+  										<option value="0" selected>구매</option>
     									<option value="1">일반</option>
 									</select>
 									</div>
@@ -602,8 +602,7 @@ $(window).scroll(function(){
 										<table id="datatablesSimple" class="dataTable-table">
 											<thead>
 												<tr>
-													<th style="width: 20%;"><a>지사명</a></th>
-													<th style="width: 20%;"><a>부서명</a></th>
+													<th style="width: 20%;"><a>결재신청부서</a></th>
 													<th style="width: 20%;"><a>결재구분</a></th>													
 													<th style="width: 20%;"><a>날짜</a></th>
 													<th style="width: 20%;"><a></a></th>
@@ -611,30 +610,18 @@ $(window).scroll(function(){
 											</thead>
 
 											<tbody>
-												<tr v-if="AL.cg_type=='O'" v-for="AL in list">
-													<td @click="getApprovalDetail(AL.ap_oscode, AL.cg_type, AL.ap_code)">{{AL.of_name}}</td>
-													<td @click="getApprovalDetail(AL.ap_oscode, AL.cg_type, AL.ap_code)">{{AL.dp_name}}</td>
-													<td @click="getApprovalDetail(AL.ap_oscode, AL.cg_type, AL.ap_code)">{{AL.cg_name}}</td>
-													<td @click="getApprovalDetail(AL.ap_oscode, AL.cg_type, AL.ap_code)">{{AL.ap_date}}</td>
+												<tr v-for="AL in list">
+													<td @click="getApprovalDetail(AL.ap_oscode, AL.ap_code)">{{AL.of_name}} {{AL.dp_name}}</td>
+													<td @click="getApprovalDetail(AL.ap_oscode, AL.ap_code)">{{AL.cg_name}}</td>
+													<td @click="getApprovalDetail(AL.ap_oscode, AL.ap_code)">{{AL.ap_date}}</td>
 													<td style="text-align: center">
-														<button @click=""
+														<button @click="getDetailInfo(AL.ap_oscode)"
 															type="button" class="btn btn-dark">허가</button>
-														<button @click="responseAppovalRefuse(AL.ap_code, AL.cg_type)"
+														<button @click="responseAppovalRefuse(AL.ap_code)"
 															type="button" class="btn btn-dark">반려</button>
 													</td>
 												</tr>
-												<tr v-if="AL.cg_type=='R'" v-for="AL in list" >
-													<td @click="getApprovalDetail(AL.ap_oscode, AL.cg_type, AL.ap_code)">{{AL.of_name}}</td>
-													<td @click="getApprovalDetail(AL.ap_oscode, AL.cg_type, AL.ap_code)">{{AL.dp_name}}</td>
-													<td @click="getApprovalDetail(AL.ap_oscode, AL.cg_type, AL.ap_code)">{{AL.cg_name}}</td>
-													<td @click="getApprovalDetail(AL.ap_oscode, AL.cg_type, AL.ap_code)">{{AL.ap_date}}</td>
-													<td style="text-align: center">
-														<button @click=""
-															type="button" class="btn btn-dark">허가</button>
-														<button @click="responseAppovalRefuse(AL.ap_code, AL.cg_type)"
-															type="button" class="btn btn-dark">반려</button>
-													</td>
-												</tr>
+										
 											</tbody>
 										</table>
 									</div>
@@ -643,6 +630,33 @@ $(window).scroll(function(){
 						</div>
 				</template>
 				<template v-if="display[8].show">
+				
+					<div v-if="modal.show" style="height: 100%; width: 100%; background: rgba(0,0,0,0.5); position: absolute; padding: 20px; z-index: 2;">
+           	 	<div style="max-width: 100%; width: auto; display: table; background: #fff; border-radius: 10px; padding: 20px; z-index: 1;">
+                   		<table id="datatablesSimple" class="dataTable-table">
+											<thead>
+												<tr>
+													<th style="width: 20%;"><a>상품명</a></th>
+													<th style="width: 20%;"><a>주문수량</a></th>
+													<th style="width: 20%;"><a>상품가격</a></th>													
+												</tr>
+											</thead>
+
+											<tbody>
+												<tr v-for="SALD in detail">
+													<td></td>
+													<td>{{SALD.od_quantity}}개</td>
+													<td>{{SALD.pr_price}}원</td>
+												</tr>
+											</tbody>
+										</table>
+                   		<div  style="text-align: center">
+                   		<button @click="modalClose()" type="button" class="btn btn-dark">닫기</button>
+                  		</div>
+                   		
+                  	</div>
+                   	</div>
+				
 					<div class="container-fluid px-4">
 						<h6>&nbsp</h6>
 							<div
@@ -650,7 +664,7 @@ $(window).scroll(function(){
 								<div class="dataTable-top">
 									<div>
 									<select @chang="">
-  										<option value="0" selected>구매,반품</option>
+  										<option value="0" selected>구매</option>
     									<option value="1">일반</option>
 									</select>
 									</div>
@@ -667,34 +681,21 @@ $(window).scroll(function(){
 												<tr>
 													<th style="width: 20%;"><a>결재부서</a></th>
 													<th style="width: 20%;"><a>결재구분</a></th>													
-													<th style="width: 20%;"><a>결재상태</a></th>													
 													<th style="width: 20%;"><a>날짜</a></th>
-													<th style="width: 20%;"><a></a></th>
+													<th style="width: 20%;"><a>결재상태</a></th>													
+													
 												</tr>
 											</thead>
 
 											<tbody>
 												<tr v-if="SAL.cg_type=='O'" v-for="SAL in list">
-													<td @click="">{{SAL.of_name}} {{SAL.dp_name}}</td>
-													<td @click="">{{SAL.cg_name}}</td>
-													<td @click="">{{SAL.at_name}}</td>
-													<td @click="">{{SAL.ap_date}}</td>
-													<td style="text-align: center">
-
-														<button @click=""
-															type="button" class="btn btn-dark">결재취소</button>
-													</td>
+													<td @click="getApprovalDetail(SAL.ap_oscode, SAL.ap_code)">{{SAL.of_name}} {{SAL.dp_name}}</td>
+													<td @click="getApprovalDetail(SAL.ap_oscode, SAL.ap_code)">{{SAL.cg_name}}</td>
+													<td @click="getApprovalDetail(SAL.ap_oscode, SAL.ap_code)">{{SAL.ap_date}}</td>
+													<td @click="getApprovalDetail(SAL.ap_oscode, SAL.ap_code)">{{SAL.at_name}}</td>
+								
 												</tr>
-												<tr v-if="SAL.cg_type=='R'" v-for="SAL in list" >
-													<td @click="">{{SAL.of_name}} {{SAL.dp_name}}</td>
-													<td @click="">{{SAL.cg_name}}</td>
-													<td @click="">{{SAL.at_name}}</td>
-													<td @click="">{{SAL.ap_date}}</td>
-													<td style="text-align: center">
-														<button @click=""
-															type="button" class="btn btn-dark">결재취소</button>
-													</td>
-												</tr>
+			
 											</tbody>
 										</table>
 									</div>

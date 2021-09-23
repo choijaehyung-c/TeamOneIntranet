@@ -15,8 +15,8 @@
 	</select>
 	
 	
-	<select id="getApprovalDetail" parameterType="intranet.teamone.bean.ApprovalBean" resultType="intranet.teamone.bean.ProductBean">
-		SELECT OD_CODE AS PR_CODE, OD_QUANTITY AS PR_STOCK, OD_PRICE AS PR_PRICE
+	<select id="getApprovalDetail" parameterType="intranet.teamone.bean.ApprovalBean" resultType="intranet.teamone.bean.OrderDetailBean">
+		SELECT OD_OSCODE, SPCODE AS OD_PRSPCODE, OD_CODE AS OD_PRCODE, OD_QUANTITY, OD_PRICE AS PR_PRICE
 		FROM OD WHERE OD_OSCODE = #{ap_oscode}
 	</select>
 	

@@ -34,8 +34,10 @@ const main = new Vue({
 		detailPush:function(jsondata){
 			this.detail = jsondata;
 		},
-		getApprovalDetail:function(oscode, cgtype, apcode){
-			this.list2 = {ap_code:apcode, cg_type: cgtype};
+		getApprovalDetail:function(oscode, apcode=''){
+			if(apcode !=''){				
+			this.list2 = {ap_code:apcode};
+			}	
 			let sendJsonData = { ap_oscode: oscode};
 			let clientData = JSON.stringify(sendJsonData);
 			postAjaxJson('rest/GetApprovalDetail', 'getApprovalDetailPush', 'j', clientData);
@@ -47,21 +49,19 @@ const main = new Vue({
 				
 			}
 		},
-		responseAppovalRefuse:function(apcode, cgtype){
-			if(cgtype =="O"){
-				let sendJsonData = { ap_code:apcode, at_code: "OF"};
-				let clientData = JSON.stringify(sendJsonData);
-				alert(clientData);
-				postAjaxJson('rest/ResponseAppoval', 'receiveApprovalPage', 's', clientData);
-			}else{
-				let sendJsonData = { ap_code:apcode, at_code: "RF"};
-				let clientData = JSON.stringify(sendJsonData);
-				postAjaxJson('rest/ResponseAppovalRefuse', 'receiveApprovalPage', 's', clientData);
-			}
+		responseAppovalRefuse:function(apcode){
+			let sendJsonData = { ap_code:apcode, at_code: "OF"};
+			let clientData = JSON.stringify(sendJsonData);
+			postAjaxJson('rest/ResponseAppovalRefuse', 'receiveApprovalPage', 's', clientData);
 			this.modalClose();
 		},
+		getDetailInfo:function(oscode){
+			let sendJsonData = { ap_oscode: oscode};
+			let clientData = JSON.stringify(sendJsonData);
+			postAjaxJson('rest/GetApprovalDetail', 'responseAppovalAccept', 'j', clientData);
+		},
 		responseAppovalAccept:function(){
-			
+			postAjaxJson('http://cleverc.online/vue/clientOrder', 'mroGetNewProductDetailVue', 'j', clientData);
 		}
 		
 		
@@ -104,4 +104,22 @@ function getSendApprovalListPush(jsondata){
 	main.listPush(jsondata);
 	main.changePage(8);
 }
+
+function responseAppovalAccept(jsondata){
+	let jsondataLength = jsondata.length;
+	let OD = [];
+	for(i=0; i<jsondataLength; i++){
+		OD.push({od_prspcode:jsondata[i].od_prspcode, od_quantity:jsondata[i].od_quantity, od_prcode:jsondata[i].od_prcode})
+	}
+	let sendJsonData = { os_clcode: "INC10H", os_region:"KOR001SEO01BMK",od:OD };
+	let clientData = JSON.stringify(sendJsonData);
+	postAjaxJson("http://cleverc.online/vue/clientOrder", 'returnStringData', 's', clientData);
+	alert(clientData);
+	alert(JSON.stringify(jsondata));
+}
+
+function returnStringData(code){
+	alert(code);
+}
+
 
