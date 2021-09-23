@@ -632,8 +632,8 @@ $(window).scroll(function(){
                                   			<td>{{li.prname}}</td>
                                   			<td>{{li.prcode}}</td>
                                   			<td>{{li.price}}</td>
-                                  			<td>{{li.count}}</td>
-                                  			<td>{{li.ttprice}}</td>
+                                  			<td><input type='number' id="count2" name='count2' :value=li.count style="width:45%;"></td>
+                                  			<td><input type='text' readonly name='tt_price' :value=li.price*li.count>원</td>
                                   			
                                   		</tr>
                                      </tbody>
