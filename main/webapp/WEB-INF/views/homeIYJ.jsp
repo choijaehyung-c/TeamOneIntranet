@@ -490,20 +490,35 @@ $(window).scroll(function(){
 				</template>
 <!-------------------------------------------IYJ-------------------------------------------->			
 				
+				
 				<template v-if="display[1].show">
-							<div  style="height: 100%; width: 95%; margin-left:5%">
+					<div class="input-group" style="margin-left:30%; width:30%;">
+                       <input name="word"type="text" class="dataTable-input" placeholder="상품명을 입력하세요." guddll>
+                        <span class="mdi mdi-magnify search-icon"></span>
+                       <button class="input-group-text btn-primary" type="submit"  @click="searchItem()">Search</button>
+                 </div>
+				<div  style="height: 100%; width: 95%; margin-left:5%">
+								<div class="menu_wrap" style="margin-left:20%;">
+								
+									<ul v-for="li in list" class="dep1">
+										<li>										
+											<a href="#" @click="getCateName(li.bk_code)">{{li.bk_name}}</a>
+												<ul v-for="ll in detail" class="dep2">
+													<li>
+														<a  @click="getCateItem(ll.cate)">{{ll.cate_name}}</a>
+													</li>
+												</ul>
+										</li>
+									</ul>
+								</div>
+                  
+
 									<div id="sidebarLayer"
 										style="position: absolute; right:0.4%; top: 80px; width: 120px;  border: 1px solid #ddd; text-align: center; background-color: #FFFFFF; z-index: 1000;">
 									<div>My Cart<br><br>
 										<div id="space"></div>
 										<div id="add" style="display:none; border:1px solid #000;" @click="addCart()">담기</div>
-									</div>	
-																												
-									</div>
-							<span style="margin-right:10px;" v-for="li in list" @click="getCateName(li.bk_code)">{{li.bk_name}}</span>
-								
-								<div style="margin-top:50px;">
-								<div v-for="ll in detail" @click="getCateItem(ll.cate)">{{ll.cate_name}}</div>
+									</div>																					
 								</div>
 
 								<div class="row" v-for="(item,index) in items" style="margin-bottom:10px;">
@@ -512,19 +527,19 @@ $(window).scroll(function(){
 								<div class="col-sm-7 col-md-8">
 										<div class="row">
 											<div class="col-lg-8">
-												<h5 class="mt-3 mt-sm-0">
+												<h5 class="mt-3 mt-sm-0" >
 													<a class="text-dark fs-0 fs-lg-1">
 														{{item.pr_name}}</a>
 												</h5>
 												<p class="fs--1 mb-2 mb-md-3">
-													<a class="text-500" >{{item.cate_name}}</a>
+													<a>{{item.cate_name}}</a>
 												</p>
 
 											</div>
 											<div
 												class="col-lg-4 d-flex justify-content-between flex-column">
 												<div>
-													<h4 class="fs-1 fs-md-2 text-warning mb-0">{{item.pr_price}}</h4>
+													<h4 class="fs-1 fs-md-2 text-warning mb-0">{{item.pr_price}}원</h4>
 
 
 													<div class="d-none d-lg-block">
@@ -563,7 +578,6 @@ $(window).scroll(function(){
 										</div>
 									</div>
 								</div>
-
 							</div>
 							</template>
 							
@@ -583,10 +597,12 @@ $(window).scroll(function(){
                         <div class="card-body">
                             <div class="table-responsive">
                                 <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4"><div class="row"><div class="col-sm-12"><table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                                <button type="button" class="btn btn-success mb-2 me-1" style="float:right;" @click="sendApproval()">결재하기</button>
                                     <thead>
 										<tr role="row">
 											<th class="sorting sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
 												aria-sort="ascending" aria-label="Image: activate to sort column descending" style="width: 100px;">
+											<input type="checkbox" id="check_all" name="chkYn" onclick="selectAll(this)" >
 											Image </th>
 											<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
 												aria-label="Supply Code: activate to sort column ascending" style="width: 100px;">
@@ -597,6 +613,9 @@ $(window).scroll(function(){
 											<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
 												aria-label="Item Code: activate to sort column ascending" style="width: 80px;">
 											Item Code</th>
+											<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+												aria-label="Item Code: activate to sort column ascending" style="width: 80px;">
+											Price</th>
 											<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
 												aria-label="Quantity: activate to sort column ascending" style="width: 40px;">
 											Quantity</th>

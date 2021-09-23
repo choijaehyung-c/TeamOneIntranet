@@ -28,4 +28,16 @@ public class PurchaseServiceEntrance {
 		return psc.getCateItem(cate);
 	}
 
+	//아직안됨. 디텔
+	public ProductBean getPrDetail(ProductBean pr) {
+		
+		return psc.getPrDetail(pr);
+	}
+	
+	public List<ProductBean> getSearchItem(String word) {
+		
+		return psc.getSearchItem(word);
+	}
+
+
 }
