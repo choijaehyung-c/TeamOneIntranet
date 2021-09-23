@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import intranet.teamone.bean.DeliveryBean;
+import intranet.teamone.bean.DeliveryLocationBean;
 import intranet.teamone.bean.MroneOrderBean;
 import intranet.teamone.bean.MroneOrderDetailBean;
 
@@ -55,4 +57,13 @@ public class OrderManageDAO {
 	List<MroneOrderDetailBean> getOrderDetail(String os_code){
 		return mSql.selectList("getOrderDetail",os_code);
 	}
+	
+	DeliveryBean getDelivery(String os_code) {
+		return mSql.selectOne("getDelivery",os_code);
+	}
+	
+	List<DeliveryLocationBean> getDeliveryLocation(String lc_code) {
+		return mSql.selectList("getDeliveryLocation",lc_code);
+	}
+	
 }

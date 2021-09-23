@@ -3,9 +3,10 @@ const main = new Vue({
 	el : '#mainVue',
 	data : {
 		display:[{show:false},{show:false},{show:false},{show:false},{show:false},{show:false},{show:false},{show:false},{show:false},{show:false},{show:false}],
+		modal:{show:false},
 		list:[],
-		detail:[],
-		items:[]
+		detail:{},
+		items:[],
 	},
 	methods:{
 		changePage:function(page){
@@ -13,7 +14,16 @@ const main = new Vue({
 				this.display[i].show=false;
 			}
 			this.display[page].show = true;
-		},	   
+		},
+		modalOpen:function(){
+			this.modal.show = true;
+		},
+		modalClose:function(){
+			this.modal.show = false;
+		}, 
+		listPush:function(jsondata){
+			this.detail = jsondata;
+		},
 		getBkindPage:function(){			
 				postAjaxJson('rest/getBkind', 'getBkindList','j',clientData='');
 		},
@@ -28,20 +38,21 @@ const main = new Vue({
             this.items[i].pr_price = this.items[i].pr_price.toLocaleString();
             this.items[i].pr_tax = this.items[i].pr_tax.toLocaleString();
          }			
-      },
+      },		
 		addSideBar:function(prcode,index,spcode,price,tax,img,prname){
 			let count = document.getElementsByName("quantity")[index].value;
-			let add = document.getElementById("add");
-			let pr_price = (price+tax)*count;
-			let value = prcode +','+ prname+ '>' + spcode +':'+ count + '&' +pr_price+ '#' +img; //split(',')는 상품코드와 공급사코드 (':')갯수 ('/')는 가격
+			let add = document.getElementById("add"); //담기버튼
+			let unit_price = price+tax;
+			//let pr_price = (price+tax)*count;
+			let value = prcode +','+ prname+ '>' + spcode +':'+ count + '&' +unit_price+ '#' +img; //split(',')는 상품코드와 공급사코드 (':')갯수 ('/')는 가격
 			let cart = document.getElementById("space");
 			let html ="";
 				
-				html += "<div id='setDiv'>"
+				html += `<div id="setDiv${index}">`
 				html += "<img src='"+img+"' style='width:90px;'/>";
 				html += "<div style='font-size:12px;'>"+prname+"</div><span style='font-size:10px;'>("+prcode+")</span>";
 				html += "<div style='font-size:12px;'>" + count +"개</div>";
-				html += `<div name="delCart" onClick="delCarts()" style='font-size:13px; cursor:pointer;'>[삭제]</div>`;
+				html += `<div id="delCart" onClick="delCarts(${index})" style='font-size:13px; cursor:pointer;'>[삭제]</div>`;
 				html +=	"<input type='hidden' value='"+value+"' name='ckval'/>";
 				html += "<input type='hidden' value='"+prcode+"' name='prcode'/></div>";
 			
@@ -80,19 +91,49 @@ const main = new Vue({
 				//alert(ck[i].search('addCart-')); //모든 쿠키를 확인해서 쿠키당 addCart가 들어가면 1을반환 없으면 0을반환  
                 cookie = ck[i]								
            	   	//alert(cookie);
+				let price = cookie.split('&')[1].split('#')[0];
+				let count = cookie.split(':')[1].split('&')[0];
+				let tt_price = price * count;
+				
 				
 				
 				html += "<tr class='odd'>";
-				html += "<td>"+"<img src='"+cookie.split('#')[1]+"' style='width:150px;'/>"+ "</td>"; //이미지
+				html += "<td><input type='checkbox' name='chkYn'>"+"<img src='"+cookie.split('#')[1]+"' style='width:150px;'/>"+ "</td>"; //이미지
 				html += "<td>"+ cookie.split('>')[1].split(':')[0]+"</td>"; // 공급사 코드
 				html += "<td>"+cookie.split(',')[1].split('>')[0]+ "</td>"; //상품 이름
 				html += "<td>"+cookie.split('-')[1].split('=')[0]+"</td>"; //상품코드
-				html += "<td>"+cookie.split(':')[1].split('&')[0]+"</td>"; //갯수
-				html += "<td>"+cookie.split('&')[1].split('#')[0]+"</td></tr>"; //총가격
+				html += "<td>"+price+"원</td>"; //상품 가격
+				html += "<td>"+count+"</td>"; //갯수
+				html += "<td>"+tt_price+"원</td></tr>"; //총가격
 				
 																																								
 			}	 
 		}table.innerHTML = html;
+	},
+	searchItem:function(){
+	let word = document.getElementsByName("word")[0].value;
+		if(word!=""){
+			postAjaxJson('restIYJ/getSearchItem','cateItemList','j',word);
+		}else{
+			alert("검색어를 입력하세요.");
+		}
+		
+	
+	},
+	sendApproval:function(){
+		let chkedValue = document.getElementsByName('chkYn');
+		let chk_val = [];
+		
+		for(i=0; i<chkedValue.length; i++){
+			if(chkedValue[i].checked){
+				chk_val.push(chkedValue[i].value);
+			}
+		}
+		console.log(chk_val);
+		
+		/*$('input[name=chkYn]:checked').each(function(){
+			alert('check값 : ' +$(this).val());
+		})*/
 	}		
 }
 	
@@ -189,15 +230,32 @@ function getCateDetail(data){
 //카테고리별 아이템목록
 function cateItemList(data){
 	main.changeWon(data);	
-	main.items= data;
+	if(data!=""){
+		main.items= data;
+	}else{
+		alert("해당검색어의 상품이 없습니다.");
+	}
 }
 
 //사이드 장바구니 삭제
-function delCarts(){
+function delCarts(index){
 	//index번호랑 맞춰서 삭제하기..
-	let set = document.getElementById("setDiv");
-	//let set = index + value;
-	set.remove();
+	let set = document.getElementById("setDiv${index}");
+    $(`#setDiv${index}`).remove();
+	for(i=0;i<set.length;i++){
+		if(set[i]==index){
+			set.splice(i);
+		}
+	}
+}
+
+//check박스 전체 선택
+function selectAll(selectAll)  {
+  const checkboxes = document.getElementsByName('chkYn');
+  
+  checkboxes.forEach((checkbox) => {
+    checkbox.checked = selectAll.checked;
+  })
 }
 
 

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import intranet.teamone.bean.DeliveryBean;
 import intranet.teamone.bean.MroneOrderBean;
 import intranet.teamone.bean.MroneOrderDetailBean;
 import intranet.teamone.order_manage.OrderManageServiceEntrance;
@@ -55,6 +56,11 @@ public class RestControllersCJH {
 	@PostMapping("/getOrderDetail")
 	public List<MroneOrderDetailBean> getOrderDetail(@RequestBody String os_code){
 		return ome.getOrderDetail(os_code);
+	}
+	
+	@PostMapping("/getDelivery")
+	public DeliveryBean getDelivery(@RequestBody String os_code){
+		return ome.getDelivery(os_code);
 	}
 	
 }

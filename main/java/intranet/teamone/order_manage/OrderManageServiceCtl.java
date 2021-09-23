@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import intranet.teamone.bean.DeliveryBean;
 import intranet.teamone.bean.MroneOrderBean;
 import intranet.teamone.bean.MroneOrderDetailBean;
 import intranet.teamone.utils.ProjectUtils;
@@ -81,4 +82,12 @@ public class OrderManageServiceCtl {
 	List<MroneOrderDetailBean> getOrderDetail(String os_code){
 		return dao.getOrderDetail(os_code);
 	}
+	
+	DeliveryBean getDelivery(String os_code) {
+		DeliveryBean dl = new DeliveryBean();
+		dl = dao.getDelivery(os_code);
+		dl.setLc(dao.getDeliveryLocation(dl.getDl_lccode()));
+		return dl;
+	}
+	
 }
