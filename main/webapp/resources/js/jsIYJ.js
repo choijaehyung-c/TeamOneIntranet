@@ -80,7 +80,11 @@ const main = new Vue({
 								
 		},
 		getCartPage:function(){
+<<<<<<< HEAD
 						
+=======
+            let table = document.getElementById("table");            
+>>>>>>> 58db27463bac7fadacd64e4caa929f07e3287cca
 			let html='';
 			let ck = document.cookie.split(';');
 			let cookie='';
@@ -106,7 +110,11 @@ const main = new Vue({
 				
 																																								
 			}	 
+<<<<<<< HEAD
 		}document.getElementById("table").innerHTML = html;
+=======
+        }table.innerHTML = html;
+>>>>>>> 58db27463bac7fadacd64e4caa929f07e3287cca
 	},
 	searchItem:function(){
 	let word = document.getElementsByName("word")[0].value;
