@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace="mrone.teamone.mapper.MroneOrderManage">
+ 
+ 	<select id="getOrderList" parameterType="string" resultType="intranet.teamone.bean.MroneOrderBean">
+ 		SELECT OS_CODE,OS_DATE,OS_STATE,OS_REGION FROM CHLCHL.ORDERS WHERE OS_STATE = 'OA' OR OS_STATE = 'OR'  AND OS_REGION = #{os_region} 
+ 	</select>
+
+ 	<select id="getOrderCompleteList" parameterType="string" resultType="intranet.teamone.bean.MroneOrderBean">
+ 		SELECT OS_CODE,OS_DATE,OS_STATE,OS_REGION FROM CHLCHL.ORDERS WHERE OS_STATE = 'OC' OR OS_STATE = 'OF' AND OS_REGION = #{os_region}
+ 	</select>
+ 	 	
+ 	<select id="getRefundList" parameterType="string" resultType="intranet.teamone.bean.MroneOrderBean">
+ 		SELECT OS_CODE,OS_DATE,OS_STATE,OS_REGION FROM CHLCHL.ORDERS WHERE OS_STATE = 'RA' OR OS_STATE = 'RR' AND OS_REGION = #{os_region}
+ 	</select>
+ 	
+ 	 <select id="getRefundCompleteList" parameterType="string" resultType="intranet.teamone.bean.MroneOrderBean">
+ 		SELECT OS_CODE,OS_DATE,OS_STATE,OS_REGION FROM CHLCHL.ORDERS WHERE OS_STATE = 'RC' OR OS_STATE = 'FF' AND OS_REGION = #{os_region}
+ 	</select>
+ 	
+ 	<select id="getExchangeList" parameterType="string" resultType="intranet.teamone.bean.MroneOrderBean">
+ 		SELECT OS_CODE,OS_DATE,OS_STATE,OS_REGION FROM CHLCHL.ORDERS WHERE OS_STATE = 'EA' OR OS_STATE = 'ER' AND OS_REGION = #{os_region}
+ 	</select>
+ 	
+ 	<select id="getExchangeCompleteList" parameterType="string" resultType="intranet.teamone.bean.MroneOrderBean">
+ 		SELECT OS_CODE,OS_DATE,OS_STATE,OS_REGION FROM CHLCHL.ORDERS WHERE OS_STATE = 'EC' OR OS_STATE = 'EF' AND OS_REGION = #{os_region}
+ 	</select>
+ 	
+ 	<select id="getPrnameAndCount" parameterType="string" resultType="string">
+ 		SELECT PR_NAME FROM CHLCHL.ORDERSDETAIL 
+ 		INNER JOIN CHLCHL.PRODUCT 
+ 		ON PRODUCT.PR_SPCODE = ORDERSDETAIL.OD_PRSPCODE 
+ 		AND PRODUCT.PR_CODE = ORDERSDETAIL.OD_PRCODE 
+ 		WHERE OD_OSCODE = #{os_code} AND PR_STCODE = 'PC'
+ 	</select>
+  	
+ 	<select id="getOrderDetail" parameterType="string" resultType="intranet.teamone.bean.MroneOrderDetailBean">
+ 		SELECT OD_PRSPCODE,OD_OSCODE AS "OS_ORIGIN",OD_PRCODE,OD_QUANTITY,PR_NAME,PR_IMAGE,PR_PRICE,PR_TAX,PR_INFO,PR_ORIGIN,OD_STCODE 
+ 		FROM CHLCHL.ORDERSDETAIL INNER JOIN CHLCHL.PRODUCT ON CHLCHL.ORDERSDETAIL.OD_PRCODE = CHLCHL.PRODUCT.PR_CODE 
+ 		WHERE PR_STCODE='PC' AND OD_OSCODE=#{os_code}
+ 	</select>
+ 	
+ </mapper>

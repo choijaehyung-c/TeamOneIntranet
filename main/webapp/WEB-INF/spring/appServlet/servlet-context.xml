@@ -47,6 +47,6 @@
 	<context:component-scan base-package="intranet.teamone.purchase" />
 	<context:component-scan base-package="intranet.teamone.approval" />
 	<context:component-scan base-package="intranet.teamone.utils" />
-	
+	<context:component-scan base-package="intranet.teamone.order_manage" />
 	
 </beans:beans>
