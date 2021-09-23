@@ -53,13 +53,6 @@ public class HomeController {
 		return mav;
 	}
 	
-	
-	@GetMapping("/")
-	public String home() {
-		
-		return "accessForm";
-	}
-	
 	@GetMapping("/home")
 	public String mainPage() {
 		return "home";
