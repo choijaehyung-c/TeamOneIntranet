@@ -22,8 +22,12 @@ const main = new Vue({
 			"box-shadow":'0 0 8px 8px white inset'
 		},
 		dupCheck:[],
+		image:'false'
 	},
 	methods:{
+		sTest:function(){
+			console.log(this.image);
+		},
 		changePage:function(page){
 			for(i=0;i<this.display.length; i++){
 				this.display[i].show=false;
@@ -119,6 +123,11 @@ const main = new Vue({
 	
 });
 
+function sTest(){
+	console.log("?");
+	alert("되라!");
+}
+
 function getDeliveryInfo(jsondata){
 	modalStyle();
 	console.log(jsondata);
@@ -194,12 +203,3 @@ function modalStyle(){
 	main.styleObject.height = (document.getElementById("content").offsetHeight-86)+"px";
 	$("html, body").animate({ scrollTop: 0 }, 100);
 }
-
-function testasdasd(){
-	alert("test1");
-}
-
-function testasdasd2(){
-	alert("test2");
-}
-

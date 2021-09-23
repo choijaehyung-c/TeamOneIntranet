@@ -53,11 +53,6 @@ public class HomeController {
 		return mav;
 	}
 	
-	@GetMapping("/home")
-	public String mainPage() {
-		return "home";
-	}
-	
 	@GetMapping("/test")
 	public String sdfsw() {
 		return "testset";
