@@ -713,6 +713,10 @@ $(window).scroll(function(){
 					</div>
 					</div>
 					</div>
+					<input type="text" value="true" v-model="image" />
+					{{image}}
+					<div onunload="sTest()">되라잇</div>
+					<button @click="sTest">asdasd</button>
 				</template>
 				<template v-if="display[4].show">
 					<div id="modalBack" v-if="modal.show" :style="styleObject">
