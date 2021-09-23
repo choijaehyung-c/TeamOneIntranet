@@ -80,7 +80,7 @@ const main = new Vue({
 								
 		},
 		getCartPage:function(){
-			let table = document.getElementById("table");			
+						
 			let html='';
 			let ck = document.cookie.split(';');
 			let cookie='';
@@ -94,21 +94,19 @@ const main = new Vue({
 				let price = cookie.split('&')[1].split('#')[0];
 				let count = cookie.split(':')[1].split('&')[0];
 				let tt_price = price * count;
-				
-				
-				
+								
 				html += "<tr class='odd'>";
-				html += "<td><input type='checkbox' name='chkYn'>"+"<img src='"+cookie.split('#')[1]+"' style='width:150px;'/>"+ "</td>"; //이미지
+				html += "<td><input type='checkbox' name='chkYn'/>"+"<img src='"+cookie.split('#')[1]+"' style='width:150px;'/>"+ "</td>"; //이미지
 				html += "<td>"+ cookie.split('>')[1].split(':')[0]+"</td>"; // 공급사 코드
 				html += "<td>"+cookie.split(',')[1].split('>')[0]+ "</td>"; //상품 이름
 				html += "<td>"+cookie.split('-')[1].split('=')[0]+"</td>"; //상품코드
 				html += "<td>"+price+"원</td>"; //상품 가격
-				html += "<td>"+count+"</td>"; //갯수
-				html += "<td>"+tt_price+"원</td></tr>"; //총가격
+				html += `<td><input type='number' id="count2" name='count2' value="${cookie.split(':')[1].split('&')[0]}" style="width:40%;"></td>`; //갯수
+				html += `<td><input type='text' readonly name='tt_price' value="${tt_price}">원</td></tr>`; //총가격
 				
 																																								
 			}	 
-		}table.innerHTML = html;
+		}document.getElementById("table").innerHTML = html;
 	},
 	searchItem:function(){
 	let word = document.getElementsByName("word")[0].value;
@@ -121,7 +119,7 @@ const main = new Vue({
 	
 	},
 	sendApproval:function(){
-		let chkedValue = document.getElementsByName('chkYn');
+		let chkedValue = document.getElementsByName('chkYn').values;
 		let chk_val = [];
 		
 		for(i=0; i<chkedValue.length; i++){
@@ -130,10 +128,7 @@ const main = new Vue({
 			}
 		}
 		console.log(chk_val);
-		
-		/*$('input[name=chkYn]:checked').each(function(){
-			alert('check값 : ' +$(this).val());
-		})*/
+
 	}		
 }
 	
