@@ -24,6 +24,7 @@
     <!-- Custom styles for this template-->
     <link href="${pageContext.request.contextPath}/resources/css/sb-admin-2.min.css" rel="stylesheet">
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.js"></script> 
+
   
  
 
@@ -37,6 +38,29 @@ $(window).scroll(function(){
 	$("#sidebarLayer").stop();
 	$("#sidebarLayer").animate( { "top" : scrollTop });
 	});
+	
+
+/* When the user clicks on the button, 
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+
+
 
 </script>
 
@@ -686,6 +710,8 @@ $(window).scroll(function(){
             </div>
         </div>
     </div>
+    
+
 
 	
 	<script src="${pageContext.request.contextPath}/resources/vue/vue.js"></script>

@@ -19,4 +19,6 @@ public class ProductBean {
 	private String bk_name;
 	private String bk_code;
 	private String pr_stock;
+	private String pr_origin;
+	private String word;
 }
