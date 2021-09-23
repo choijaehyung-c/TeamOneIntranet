@@ -22,7 +22,7 @@ const main = new Vue({
 			this.modal.show = false;
 		}, 
 		listPush:function(jsondata){
-			this.detail = jsondata;
+			this.list = jsondata;
 		},
 		getBkindPage:function(){			
 				postAjaxJson('rest/getBkind', 'getBkindList','j',clientData='');
@@ -79,42 +79,29 @@ const main = new Vue({
 				
 								
 		},
-		getCartPage:function(){
-<<<<<<< HEAD
-						
-=======
-            let table = document.getElementById("table");            
->>>>>>> 58db27463bac7fadacd64e4caa929f07e3287cca
-			let html='';
+		getCartPage:function(){									
 			let ck = document.cookie.split(';');
 			let cookie='';
-			
+					
 		//이름찾는 
 		for(var i in ck) {
             if(ck[i].search('addCart-')!=-1) {
 				//alert(ck[i].search('addCart-')); //모든 쿠키를 확인해서 쿠키당 addCart가 들어가면 1을반환 없으면 0을반환  
                 cookie = ck[i]								
-           	   	//alert(cookie);
+           	   	let img = cookie.split('#')[1];
+				let spcode = cookie.split('>')[1].split(':')[0];
+				let prname=cookie.split(',')[1].split('>')[0];
+				let prcode=cookie.split('-')[1].split('=')[0];
 				let price = cookie.split('&')[1].split('#')[0];
 				let count = cookie.split(':')[1].split('&')[0];
 				let tt_price = price * count;
-								
-				html += "<tr class='odd'>";
-				html += "<td><input type='checkbox' name='chkYn'/>"+"<img src='"+cookie.split('#')[1]+"' style='width:150px;'/>"+ "</td>"; //이미지
-				html += "<td>"+ cookie.split('>')[1].split(':')[0]+"</td>"; // 공급사 코드
-				html += "<td>"+cookie.split(',')[1].split('>')[0]+ "</td>"; //상품 이름
-				html += "<td>"+cookie.split('-')[1].split('=')[0]+"</td>"; //상품코드
-				html += "<td>"+price+"원</td>"; //상품 가격
-				html += `<td><input type='number' id="count2" name='count2' value="${cookie.split(':')[1].split('&')[0]}" style="width:40%;"></td>`; //갯수
-				html += `<td><input type='text' readonly name='tt_price' value="${tt_price}">원</td></tr>`; //총가격
 				
-																																								
+				let ckData = {img:img, spcode:spcode, prname:prname, prcode:prcode,price:price,count:count,ttprice:tt_price};
+
+				this.list.push(ckData);
+																																				
 			}	 
-<<<<<<< HEAD
-		}document.getElementById("table").innerHTML = html;
-=======
-        }table.innerHTML = html;
->>>>>>> 58db27463bac7fadacd64e4caa929f07e3287cca
+		}
 	},
 	searchItem:function(){
 	let word = document.getElementsByName("word")[0].value;

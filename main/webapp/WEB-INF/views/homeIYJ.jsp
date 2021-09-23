@@ -626,7 +626,16 @@ $(window).scroll(function(){
 									</thead>
                                     
                                     <tbody id = "table">        
-                                  
+                                  		<tr class="odd" v-for="li in list">
+                                  			<td><input type='checkbox' name='chkYn'/><img :src="li.img" style='width:150px;'/></td>
+                                  			<td>{{li.spcode}}</td>
+                                  			<td>{{li.prname}}</td>
+                                  			<td>{{li.prcode}}</td>
+                                  			<td>{{li.price}}</td>
+                                  			<td>{{li.count}}</td>
+                                  			<td>{{li.ttprice}}</td>
+                                  			
+                                  		</tr>
                                      </tbody>
                                 </table></div></div>
                             </div>
