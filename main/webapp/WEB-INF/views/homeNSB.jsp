@@ -22,6 +22,7 @@
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/styles.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <!-- Custom styles for this template-->
     <link href="${pageContext.request.contextPath}/resources/css/sb-admin-2.min.css" rel="stylesheet">
   <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.js"></script>
@@ -551,10 +552,11 @@ $(window).scroll(function(){
             <template v-if="displayNSB[0].show">
             <button class="btn btn-dark"  v-on:click="orderApprovalPage()">주문 결재 작성</button>
              <button class="btn btn-dark"  v-on:click="refundApprovalPage()">반품 결재 작성</button>
-               <div v-if="modal.show"
-                     style="height: 100%; width: calc( 100% - 225px ); background: rgba(0, 0, 0, 0.5); position: absolute; padding: 20px; z-index: 2;">
-                     <div
-                        style="max-width: 100%; width: 83.5%; display: table; background: #fff; border-radius: 10px; padding: 20px; z-index: 1;">
+                <div id="id01" class="w3-modal">
+    					<div class="w3-modal-content">
+      						<div class="w3-container">
+        						<span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                     <div style="max-width: 100%; width: 100%; display: table; background: #fff; border-radius: 10px; padding: 20px; z-index: 1;">
                         <table id="datatablesSimple" class="dataTable-table">
                            <thead>
                                  <tr>
@@ -569,10 +571,45 @@ $(window).scroll(function(){
                                     <td>{{list.ep_name}}</td>
                                     <td>{{list.of_name}}</td>                              
                                  </tr>                     
-                                     <button class="btn btn-dark"  v-on:click="modalClose()">닫기</button>                                                                                                                                                                                         
+                                                                                                                                                                                                        
                                   </tbody>                                         
                            </table>                     
                           </div>
+                     </div>
+                     </div>
+                     </div>
+                     
+                   <div id="id02" class="w3-modal">
+    					<div class="w3-modal-content">
+      						<div class="w3-container">
+        						<span onclick="document.getElementById('id02').style.display='none'" class="w3-button w3-display-topright">&times;</span>    
+                     <div style="max-width: 100%; width: 100%; display: table; background: #fff; border-radius: 10px; padding: 20px; z-index: 1;">
+                        <table id="datatablesSimple" class="dataTable-table">
+                           <thead>
+                                 <tr>
+                                    <th data-sortable style="width: 14%; background-color: #E0E0E0;"><a>공급사코드</a></th>
+                                    <th data-sortable style="width: 30%; background-color: #E0E0E0;"><a>품명</a></th>
+                                    <th data-sortable style="width: 14%; background-color: #E0E0E0;"><a>품목코드</a></th>
+                                    <th data-sortable style="width: 14%; background-color: #E0E0E0;"><a>개별가격</a></th>
+                                    <th data-sortable style="width: 14%; background-color: #E0E0E0;"><a>수량</a></th>
+                                    <th data-sortable style="width: 14%; background-color: #E0E0E0;"><a>총가격</a></th>   
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                 <tr v-for="list in cartNSB"  @click="inputCart(list)">
+                                    <td>{{list.spcode}}</td>
+                                    <td>{{list.prname}}</td>
+                                    <td>{{list.prcode}}</td>
+                                    <td>{{list.price}}</td> 
+                                    <td>{{list.count}}</td> 
+                                    <td>{{list.ttprice}}</td>                               
+                                 </tr>                     
+                                                                                                                                                                            
+                                  </tbody>                                         
+                           </table>                     
+                          </div>
+                     </div>
+                     </div>
                      </div>
                      
       <table id="datatablesSimple" class="dataTable-table">
@@ -603,26 +640,40 @@ $(window).scroll(function(){
                               <td v-if="displayNSB[1].show">{{bean2.dp_name}}</td>
                               <th>수신자</th>
                               <td v-if="displayNSB[1].show">{{bean2.ep_name}}</td>
-                              <td><button class="btn btn-dark" @click="getDP()">부서찾기</button></td>
+                              <td><button class="btn btn-dark"  onclick="document.getElementById('id01').style.display='block'" @click="getDP()">부서찾기</button></td>
                               </tr>
-                                 
-                           
 
                            <table id="datatablesSimple" class="dataTable-table"> 
                               <tr>
                               <th>기안내용</th>
                               </tr>
                               <tr>
-                              <td><button class="btn btn-dark" @click="getApprovalCart()">장바구니</button></td>
-                              
-                              
+                              <td><button class="btn btn-dark" onclick="document.getElementById('id02').style.display='block'" @click="getApprovalCart()">장바구니</button></td>                           
+                          	  </tr>
+                              <tr v-if="displayNSB[6].show" >
+                              <th>공급사코드</th>
+                              <th>품명</th>
+                              <th>품목코드</th>
+                              <th>개별가격</th>
+                              <th>수량</th>
+                              <th>총가격</th>
                               </tr>
+                              <tr v-if="displayNSB[6].show" v-for="list in inputcart">
+                              <td >{{list.spcode}}</td>
+                              <td >{{list.prname}}</td>
+                              <td >{{list.prcode}}</td>
+                              <td >{{list.price}}</td>
+                              <td >{{list.count}}</td>
+                              <td >{{list.ttprice}}</td>
+
+                              </tr>
+                              
+                              </table>
                               <tr>                           
                               <td ><button class="btn btn-dark" @click="issueApproval()" style="float:right">기안하기</button></td>
                               </tr>
                               </table>                                    
-               </tbody>
-            </table>                  
+               </tbody>               
             <tr>
             <td>
             </td>
@@ -632,10 +683,12 @@ $(window).scroll(function(){
             <template v-if="displayNSB[2].show">
             <button class="btn btn-dark"  v-on:click="orderApprovalPage()">주문 결재 작성</button>
              <button class="btn btn-dark"  v-on:click="refundApprovalPage()">반품 결재 작성</button>
-               <div v-if="modal.show"
-                     style="height: 100%; width: calc( 100% - 225px ); background: rgba(0, 0, 0, 0.5); position: absolute; padding: 20px; z-index: 2;">
-                     <div
-                        style="max-width: 100%; width: 83.5%; display: table; background: #fff; border-radius: 10px; padding: 20px; z-index: 1;">
+              
+                <div id="id01" class="w3-modal">
+    					<div class="w3-modal-content">
+      						<div class="w3-container">
+        						<span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                     <div style="max-width: 100%; width: 100%; display: table; background: #fff; border-radius: 10px; padding: 20px; z-index: 1;">
                         <table id="datatablesSimple" class="dataTable-table">
                            <thead>
                                  <tr>
@@ -650,16 +703,19 @@ $(window).scroll(function(){
                                     <td>{{list.ep_name}}</td>
                                     <td>{{list.of_name}}</td>                              
                                  </tr>                     
-                                     <button class="btn btn-dark"  v-on:click="modalClose()">닫기</button>                                                                                                                                                                                         
+                                                                                                                                                                                                                             
                                   </tbody>                                         
                            </table>                     
                           </div>
                      </div>
-                     
-                     <div v-if="modal2.show"
-                     style="height: 100%; width: calc( 100% - 225px ); background: rgba(0, 0, 0, 0.5); position: absolute; padding: 20px; z-index: 2;">
-                     <div
-                        style="max-width: 100%; width: 83.5%; display: table; background: #fff; border-radius: 10px; padding: 20px; z-index: 1;">
+                     </div>
+                     </div>
+              
+                       <div id="id02" class="w3-modal">
+    					<div class="w3-modal-content">
+      						<div class="w3-container">
+        						<span onclick="document.getElementById('id02').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+         			<div style="max-width: 100%; width: 100%; display: table; background: #fff; border-radius: 10px; padding: 20px; z-index: 1;">
                         <table id="datatablesSimple" class="dataTable-table">
                            <thead>
                                  <tr>
@@ -677,16 +733,20 @@ $(window).scroll(function(){
                                     <td>{{list.os_code}}</td>
                                     <td>{{list.os_date}}</td>
                                     <td>{{list.os_state}}</td>   
-                                    <td>{{list.pr_code}}</td>   
+                                    <td>{{list.od_prcode}}</td>   
                                     <td>{{list.pr_name}}</td>   
-                                    <td>{{list.pr_quantity}}</td>   
+                                    <td>{{list.od_quantity}}</td>   
                                     <td>{{list.pr_price + list.pr_tax}}</td>                              
                                  </tr>                     
-                                     <button class="btn btn-dark"  v-on:click="modalClose()">닫기</button>                                                                                                                                                                                         
+                                                                                                                                                                                                                           
                                   </tbody>                                         
                            </table>                     
                           </div>
-                     </div>
+                     </div>      
+      </div>
+    </div>
+
+                                        
                      
                <table id="datatablesSimple" class="dataTable-table">
                         <colgroup>
@@ -717,13 +777,13 @@ $(window).scroll(function(){
                               <td v-if="displayNSB[3].show">{{bean2.dp_name}}</td>
                               <th>수신자</th>
                               <td v-if="displayNSB[3].show">{{bean2.ep_name}}</td>
-                              <td><button class="btn btn-dark" @click="getDP2()">부서찾기</button></td>
+                              <td><button class="btn btn-dark" onclick="document.getElementById('id01').style.display='block'" @click="getDP2()">부서찾기</button></td>
                               </tr>
 
                            <table id="datatablesSimple" class="dataTable-table" v-if="displayNSB[3].show" > 
                               <tr >
                               <th>기안내용</th>
-                              <td><button class="btn btn-dark" @click="getApprovalOrderList(bean.ep_ofcode)">거래내역</button></td>
+                              <td><button class="btn btn-dark" onclick="document.getElementById('id02').style.display='block'" @click="getApprovalOrderList(bean.ep_ofcode)">거래내역</button></td>
                               </tr>
 
                               <tr >
@@ -754,10 +814,12 @@ $(window).scroll(function(){
                </template>
       <!-- -------------------------------------------------------------------------------------------- -->      
             <template v-if="display[6].show">            
-                  <div v-if="modal.show"
-                     style="height: 100%; width: calc( 100% - 225px ); background: rgba(0, 0, 0, 0.5); position: absolute; padding: 20px; z-index: 2;">
-                     <div
-                        style="max-width: 100%; width: 83.5%; display: table; background: #fff; border-radius: 10px; padding: 20px; z-index: 1;">
+                  
+                  <div id="id01" class="w3-modal">
+    					<div class="w3-modal-content">
+      						<div class="w3-container">
+        						<span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                     <div style="max-width: 100%; width: 100%; display: table; background: #fff; border-radius: 10px; padding: 20px; z-index: 1;">
                         <table id="datatablesSimple" class="dataTable-table">
                            <thead>
                                  <tr>
@@ -772,10 +834,12 @@ $(window).scroll(function(){
                                     <td>{{list.ep_name}}</td>
                                     <td>{{list.of_name}}</td>                              
                                  </tr>                     
-                                     <button class="btn btn-dark"  v-on:click="modalClose()">닫기</button>                                                                                                                                                                                         
+                                                                                                                                                                                                     
                                   </tbody>                                         
                            </table>                     
                           </div>
+                     </div>
+                     </div>
                      </div>
                      
                   <table id="datatablesSimple" class="dataTable-table">
@@ -806,7 +870,7 @@ $(window).scroll(function(){
                               <td v-if="displayNSB[5].show">{{bean2.dp_name}}</td>
                               <th>수신자</th>
                               <td v-if="displayNSB[5].show">{{bean2.ep_name}}</td>
-                              <td><button class="btn btn-dark" @click="getDP3()">부서찾기</button></td>
+                              <td><button class="btn btn-dark" onclick="document.getElementById('id01').style.display='block'" @click="getDP3()">부서찾기</button></td>
                               </tr>
 
                            <table id="datatablesSimple" class="dataTable-table"> 
