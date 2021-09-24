@@ -119,7 +119,7 @@ $(window).scroll(function(){
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">전자결재</h6>
-                        <div class="collapse-item" onClick="orderApprovalPage()">주문결재 신청</div>
+                        <div class="collapse-item" onClick="ApprovalPage()">주문결재 신청</div>
                         <div class="collapse-item" onClick="anyApprovalPage()">일반결재 신청</div>
                         <div class="collapse-item" onClick="receiveApprovalPage()">받은결재함</div>
                         <div class="collapse-item" onClick="sendApprovalPage()">보낸결재함</div>
@@ -542,15 +542,293 @@ $(window).scroll(function(){
 				<template v-if="display[3].show"></template>
 				<template v-if="display[4].show"></template>
 <!-------------------------------------------NSB-------------------------------------------->				
-				<template v-if="display[5].show"></template>
-				<template v-if="display[6].show"></template>
-<!-------------------------------------------HSM-------------------------------------------->
+				<template v-if="display[5].show">
+				<button class="btn btn-dark"  v-on:click="orderApprovalPage()">주문 결재 작성</button>
+			 	<button class="btn btn-dark"  v-on:click="refundApprovalPage()">반품 결재 작성</button>
+				</template>
+<!-- -------------------------------------------------------------------------------------------- -->		
+				<template v-if="displayNSB[0].show">
+				<button class="btn btn-dark"  v-on:click="orderApprovalPage()">주문 결재 작성</button>
+			 	<button class="btn btn-dark"  v-on:click="refundApprovalPage()">반품 결재 작성</button>
+					<div v-if="modal.show"
+							style="height: 100%; width: calc( 100% - 225px ); background: rgba(0, 0, 0, 0.5); position: absolute; padding: 20px; z-index: 2;">
+							<div
+								style="max-width: 100%; width: 83.5%; display: table; background: #fff; border-radius: 10px; padding: 20px; z-index: 1;">
+								<table id="datatablesSimple" class="dataTable-table">
+									<thead>
+											<tr>
+												<th data-sortable style="width: 33.3333%; background-color: #E0E0E0;"><a>부서명</a></th>
+												<th data-sortable style="width: 33.3333%; background-color: #E0E0E0;"><a>담당자명</a></th>
+												<th data-sortable style="width: 33.3333%; background-color: #E0E0E0;"><a>지사명</a></th>	
+											</tr>
+										</thead>
+										<tbody>
+											<tr v-for="list in list" @click="inputDP(list.ep_code)">
+												<td>{{list.dp_name}}</td>
+												<td>{{list.ep_name}}</td>
+												<td>{{list.of_name}}</td>										
+											</tr>							
+											    <button class="btn btn-dark"  v-on:click="modalClose()">닫기</button>										  											   																																							
+						                </tbody>									  				
+									</table>							
+					 			 </div>
+							</div>
+							
+		<table id="datatablesSimple" class="dataTable-table">
+								<colgroup>
+									<col width="20%" />
+									<col width="20%" />
+									<col width="20%" />
+									<col width="20%" />
+									<col width="20%" />
+								</colgroup>
+
+								<tbody>
+									<tr>
+										<th>기안부서</th>
+										<td>{{bean.dp_name}}</td>
+										<th>기안자</th>
+										<td colspan="2">{{bean.ep_name}}</td>
+									</tr>
+									<tr>
+										<th>결재구분</th>
+										<td colspan="4"><select id="div_apv_sq" class="form-control"
+											name="div_apv_sq">
+												<option value="O">주문</option>
+										</select></td>
+									</tr>
+									<tr >
+										<th>수신부서</th>
+										<td v-if="displayNSB[1].show">{{bean2.dp_name}}</td>
+										<th>수신자</th>
+										<td v-if="displayNSB[1].show">{{bean2.ep_name}}</td>
+										<td><button class="btn btn-dark" @click="getDP()">부서찾기</button></td>
+										</tr>
+											
+									
+
+									<table id="datatablesSimple" class="dataTable-table"> 
+										<tr>
+										<th>기안내용</th>
+										</tr>
+										<tr>
+										<td><button class="btn btn-dark" @click="getApprovalCart()">장바구니</button></td>
+										
+										
+										</tr>
+										<tr>									
+										<td ><button class="btn btn-dark" @click="issueApproval()" style="float:right">기안하기</button></td>
+										</tr>
+										</table>												
+					</tbody>
+				</table>						
+				<tr>
+				<td>
+				</td>
+				</tr>				
+				</template>
+<!-- -------------------------------------------------------------------------------------------- -->				
+				<template v-if="displayNSB[2].show">
+				<button class="btn btn-dark"  v-on:click="orderApprovalPage()">주문 결재 작성</button>
+			 	<button class="btn btn-dark"  v-on:click="refundApprovalPage()">반품 결재 작성</button>
+					<div v-if="modal.show"
+							style="height: 100%; width: calc( 100% - 225px ); background: rgba(0, 0, 0, 0.5); position: absolute; padding: 20px; z-index: 2;">
+							<div
+								style="max-width: 100%; width: 83.5%; display: table; background: #fff; border-radius: 10px; padding: 20px; z-index: 1;">
+								<table id="datatablesSimple" class="dataTable-table">
+									<thead>
+											<tr>
+												<th data-sortable style="width: 33.3333%; background-color: #E0E0E0;"><a>부서명</a></th>
+												<th data-sortable style="width: 33.3333%; background-color: #E0E0E0;"><a>담당자명</a></th>
+												<th data-sortable style="width: 33.3333%; background-color: #E0E0E0;"><a>지사명</a></th>	
+											</tr>
+										</thead>
+										<tbody>
+											<tr v-for="list in list" @click="inputDP2(list.ep_code)">
+												<td>{{list.dp_name}}</td>
+												<td>{{list.ep_name}}</td>
+												<td>{{list.of_name}}</td>										
+											</tr>							
+											    <button class="btn btn-dark"  v-on:click="modalClose()">닫기</button>										  											   																																							
+						                </tbody>									  				
+									</table>							
+					 			 </div>
+							</div>
+							
+							<div v-if="modal2.show"
+							style="height: 100%; width: calc( 100% - 225px ); background: rgba(0, 0, 0, 0.5); position: absolute; padding: 20px; z-index: 2;">
+							<div
+								style="max-width: 100%; width: 83.5%; display: table; background: #fff; border-radius: 10px; padding: 20px; z-index: 1;">
+								<table id="datatablesSimple" class="dataTable-table">
+									<thead>
+											<tr>
+												<th data-sortable style="width: 14.2857%; background-color: #E0E0E0;"><a>주문코드</a></th>
+												<th data-sortable style="width: 14.2857%; background-color: #E0E0E0;"><a>주문날짜</a></th>
+												<th data-sortable style="width: 14.2857%; background-color: #E0E0E0;"><a>주문상태</a></th>
+												<th data-sortable style="width: 14.2857%; background-color: #E0E0E0;"><a>상품코드</a></th>
+												<th data-sortable style="width: 14.2857%; background-color: #E0E0E0;"><a>상품명</a></th>
+												<th data-sortable style="width: 14.2857%; background-color: #E0E0E0;"><a>수량</a></th>
+												<th data-sortable style="width: 14.2857%; background-color: #E0E0E0;"><a>가격</a></th>				
+											</tr>
+										</thead>
+										<tbody>
+											<tr v-for="list in list" @click="inputOrder(list.os_code)">
+												<td>{{list.os_code}}</td>
+												<td>{{list.os_date}}</td>
+												<td>{{list.os_state}}</td>	
+												<td>{{list.pr_code}}</td>	
+												<td>{{list.pr_name}}</td>	
+												<td>{{list.pr_quantity}}</td>	
+												<td>{{list.pr_price + list.pr_tax}}</td>										
+											</tr>							
+											    <button class="btn btn-dark"  v-on:click="modalClose()">닫기</button>										  											   																																							
+						                </tbody>									  				
+									</table>							
+					 			 </div>
+							</div>
+							
+					<table id="datatablesSimple" class="dataTable-table">
+								<colgroup>
+									<col width="20%" />
+									<col width="20%" />
+									<col width="20%" />
+									<col width="20%" />
+									<col width="20%" />
+								</colgroup>
+
+								<tbody>
+									<tr>
+										<th>기안부서</th>
+										<td>{{bean.dp_name}}</td>
+										<th>기안자</th>
+										<td colspan="2">{{bean.ep_name}}</td>
+									</tr>
+									<tr>
+										<th>결재구분</th>
+										<td colspan="4"><select id="div_apv_sq" class="form-control"
+											name="div_apv_sq">
+												<option value="R">반품</option>
+												<option value="E">교환</option>
+										</select></td>
+									</tr>
+									<tr >
+										<th>수신부서</th>
+										<td v-if="displayNSB[3].show">{{bean2.dp_name}}</td>
+										<th>수신자</th>
+										<td v-if="displayNSB[3].show">{{bean2.ep_name}}</td>
+										<td><button class="btn btn-dark" @click="getDP2()">부서찾기</button></td>
+										</tr>
+
+									<table id="datatablesSimple" class="dataTable-table" v-if="displayNSB[3].show" > 
+										<tr >
+										<th>기안내용</th>
+										<td><button class="btn btn-dark" @click="getApprovalOrderList(bean.ep_ofcode)">거래내역</button></td>
+										</tr>
+
+										<tr >
+										<th>주문코드</th>
+										<th>주문날짜</th>
+										<th>주문상태</th>
+										<th>상품코드</th>
+										<th>상품명</th>
+										<th>주문수량</th>
+										<th>가격</th>
+										</tr>
+										<tr v-if="displayNSB[4].show">
+										<td >{{bean3.os_code}}</td>
+										<td >{{bean3.os_date}}</td>
+										<td >{{bean3.os_state}}</td>
+										<td >{{bean3.od_prcode}}</td>
+										<td >{{bean3.pr_name}}</td>
+										<td >{{bean3.od_quantity}}</td>
+										<td >{{bean3.pr_price + bean3.pr_tax}}</td>
+										</tr>
+										
+										</table>
+										<tr>									
+										<td ><button class="btn btn-dark" @click="issueApproval()" style="float:right">기안하기</button></td>
+										</tr>												
+									</tbody>
+								</table>						
+					</template>
+		<!-- -------------------------------------------------------------------------------------------- -->		
+				<template v-if="display[6].show">				
+						<div v-if="modal.show"
+							style="height: 100%; width: calc( 100% - 225px ); background: rgba(0, 0, 0, 0.5); position: absolute; padding: 20px; z-index: 2;">
+							<div
+								style="max-width: 100%; width: 83.5%; display: table; background: #fff; border-radius: 10px; padding: 20px; z-index: 1;">
+								<table id="datatablesSimple" class="dataTable-table">
+									<thead>
+											<tr>
+												<th data-sortable style="width: 33.3333%; background-color: #E0E0E0;"><a>부서명</a></th>
+												<th data-sortable style="width: 33.3333%; background-color: #E0E0E0;"><a>담당자명</a></th>
+												<th data-sortable style="width: 33.3333%; background-color: #E0E0E0;"><a>지사명</a></th>	
+											</tr>
+										</thead>
+										<tbody>
+											<tr v-for="list in list" @click="inputDP3(list.ep_code)">
+												<td>{{list.dp_name}}</td>
+												<td>{{list.ep_name}}</td>
+												<td>{{list.of_name}}</td>										
+											</tr>							
+											    <button class="btn btn-dark"  v-on:click="modalClose()">닫기</button>										  											   																																							
+						                </tbody>									  				
+									</table>							
+					 			 </div>
+							</div>
+							
+						<table id="datatablesSimple" class="dataTable-table">
+								<colgroup>
+									<col width="20%" />
+									<col width="20%" />
+									<col width="20%" />
+									<col width="20%" />
+									<col width="20%" />
+								</colgroup>
+
+								<tbody>
+									<tr>
+										<th>기안부서</th>
+										<td>{{bean.dp_name}}</td>
+										<th>기안자</th>
+										<td colspan="2">{{bean.ep_name}}</td>
+									</tr>
+									<tr>
+										<th>결재구분</th>
+										<td colspan="4"><select id="div_apv_sq" class="form-control"
+											name="div_apv_sq">
+												<option value="N">일반</option>
+										</select></td>
+									</tr>
+									<tr >
+										<th>수신부서</th>
+										<td v-if="displayNSB[5].show">{{bean2.dp_name}}</td>
+										<th>수신자</th>
+										<td v-if="displayNSB[5].show">{{bean2.ep_name}}</td>
+										<td><button class="btn btn-dark" @click="getDP3()">부서찾기</button></td>
+										</tr>
+
+									<table id="datatablesSimple" class="dataTable-table"> 
+										<tr>
+										<th>기안내용</th>
+										</tr>
+										<tr>
+										<td><input type="text" style="text-align:center; width:80%; height:400px;"></td>
+										<td><button class="btn btn-dark" @click="issueApproval2()">기안하기</button></td>
+										</tr>
+										</table>												
+					</tbody>
+				</table>					
+				</template>
+				
+
+<!-------------------------------------------HSM--------------------------------------------
 				<template v-if="display[7].show"></template>
 				<template v-if="display[8].show"></template>
-<!-------------------------------------------JES-------------------------------------------->
+
 				<template v-if="display[9].show"></template>
 				<template v-if="display[10].show"></template>
-<!------------------------------------------------------------------------------------------>
+-------------------------------------------------------------------------------------------->
 			</div>
 		</main>
 		</div>
