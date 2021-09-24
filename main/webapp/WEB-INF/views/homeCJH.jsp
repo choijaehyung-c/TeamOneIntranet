@@ -369,6 +369,10 @@ $(window).scroll(function(){
         <div id="layoutSidenav_content">
 		<main style="height: 100%; width: 100%;">
 			<div id="mainVue" style="height: 100%; width: 100%;">
+			<div id="loading2" v-if="loading" >
+    		<img src="${pageContext.request.contextPath}/resources/img/asdasd.gif">
+  			</div>
+			
 <!------------------------------------------------------------------------------------------>
 				<template v-if="display[0].show">
                 <div class="container-fluid">
@@ -713,10 +717,7 @@ $(window).scroll(function(){
 					</div>
 					</div>
 					</div>
-					<input type="text" value="true" v-model="image" />
-					{{image}}
-					<div onunload="sTest()">되라잇</div>
-					<button @click="sTest">asdasd</button>
+					<input type="hidden" onchange="asdasdt()" v-model="changeMsg" value="asd"/>
 				</template>
 				<template v-if="display[4].show">
 					<div id="modalBack" v-if="modal.show" :style="styleObject">

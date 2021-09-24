@@ -22,7 +22,8 @@ const main = new Vue({
 			"box-shadow":'0 0 8px 8px white inset'
 		},
 		dupCheck:[],
-		image:'false'
+		loading:false,
+		changeMsg:''
 	},
 	methods:{
 		sTest:function(){
@@ -118,15 +119,16 @@ const main = new Vue({
 			this.dupCheck.push(index);
 		},getDelivery:function(code){
 			postAjaxJson('rest/getDelivery','getDeliveryInfo','j',code);
+		},loadingOn:function(){
+			this.loading = true;
+		},
+		loadingOff:function(){
+			
 		}
 	}
 	
 });
 
-function sTest(){
-	console.log("?");
-	alert("되라!");
-}
 
 function getDeliveryInfo(jsondata){
 	modalStyle();
@@ -146,9 +148,16 @@ function delReason(index){
 }
 
 function orderList(){
+	main.loadingOn();
 	postAjaxForm('rest/getOrderList','getList','j');
 	postAjaxForm('rest/getOrderCompleteList','getCompleteList','j');
 	main.changePage(3);
+	main.loadingOff();
+}
+
+function asdasdt(){
+	alert("?");
+	main.loading = false;
 }
 
 function refundList(){
