@@ -11,15 +11,14 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Dashboard</title>
+    <title>ICIA Technology</title>
 
     <!-- Custom fonts for this template-->
    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
     
     <link href="${pageContext.request.contextPath}/resources/css/IYJ.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<link href="${pageContext.request.contextPath}/resources/css/styles.css" rel="stylesheet" />
     <!-- Custom styles for this template-->
     <link href="${pageContext.request.contextPath}/resources/css/sb-admin-2.min.css" rel="stylesheet">
@@ -395,7 +394,7 @@ $(window).scroll(function(){
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+                        
                     </div>
                     <!-- Content Row -->
                     <div class="row">
@@ -489,17 +488,53 @@ $(window).scroll(function(){
                 </div>
 				</template>
 <!-------------------------------------------IYJ-------------------------------------------->			
-				
-				
+							
 				<template v-if="display[1].show">
-					<div class="input-group" style="margin-left:30%; width:30%;">
+								<div id="id01" class="w3-modal w3-animate-opacity" >
+									<div class="w3-modal-content" style="width:450px;" >
+										<div class="w3-container" style="max-width: 100%; width: auto; display: table;">
+											<span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+											<div style="border: 1px solid #ddd; display: inline-block; margin-top:15px;">상품코드:{{prdetail.pr_code}}</div>
+											<table class="dataTable-table">
+												<img :src="prdetail.pr_image" style="padding-left:16.5%;">
+												<tbody>
+													<tr>
+														<td>상품명</td>
+														<td><div style="width: 300px;">{{prdetail.pr_name}}</div></td>
+													</tr>
+													<tr>
+														<td>가격(VAT포함)</td>
+														<td><div style="width: 300px;">{{prdetail.pr_price+prdetail.pr_tax}}원</div></td>
+													</tr>
+													<tr>
+														<td>공급사</td>
+														<td><div style="width: 300px;">{{prdetail.sp_name}}({{prdetail.pr_spcode}})</div></td>
+													</tr>
+													<tr>
+														<td>원산지</td>
+														<td><div style="width: 300px;">{{prdetail.pr_origin}}</div></td>
+													</tr>
+													<tr>
+														<td>정보</td>
+														<td><div style="width: 300px;">{{prdetail.pr_info}}</div></td>
+													</tr>
+
+												</tbody>
+											</table>
+
+										</div>
+									</div>
+								</div>
+
+
+								<div class="input-group" style="margin-left:30%; width:30%;">
                        <input name="word"type="text" class="dataTable-input" placeholder="상품명을 입력하세요." guddll>
                         <span class="mdi mdi-magnify search-icon"></span>
                        <button class="input-group-text btn-primary" type="submit"  @click="searchItem()">Search</button>
                  </div>
 				<div  style="height: 100%; width: 95%; margin-left:5%">
 
-						<div class="menu_wrap" style="margin-left:23%;">
+						<div class="menu_wrap" style="margin-left:23%; ">
 								
 									<ul  class="dep1">
 										<li v-for="li in list">										
@@ -516,21 +551,21 @@ $(window).scroll(function(){
 
 
 									<div id="sidebarLayer"
-										style="position: absolute; right:0.4%; top: 80px; width: 120px;  border: 1px solid #ddd; text-align: center; background-color: #FFFFFF; z-index: 1000;">
+										style="position: absolute; right:0.4%; top: 80px; width: 120px;  border: 1px solid #ddd; text-align: center; background-color: #FFFFFF; z-index: 1;">
 									<div>My Cart<br><br>
 										<div id="space"></div>
 										<div id="add" style="display:none; border:1px solid #000;" @click="addCart()">담기</div>
 									</div>																					
 								</div>
 
-								<div class="row" v-for="(item,index) in items" style="margin-bottom:10px;">
+								<div class="row" v-for="(item,index) in items" style="margin-bottom:10px; ">
 									<img class="img-fluid fit-cover w-sm-100 h-sm-100 rounded-1 absolute-sm-centered"
-										:src="item.pr_image" alt="" style="width:200px; height:180px; border-radius:20px;">
+										:src="item.pr_image" alt="" style="width:220px; height:250px; border-radius:20px;">
 								<div class="col-sm-7 col-md-8">
 										<div class="row">
 											<div class="col-lg-8">
 												<h5 class="mt-3 mt-sm-0" >
-													<a style="color:#000;">
+													<a style="color:#000;" @click="getPrDetail(item.pr_code)" onclick="document.getElementById('id01').style.display='block'">
 														{{item.pr_name}}</a>
 												</h5>
 												<p class="fs--1 mb-2 mb-md-3">
@@ -564,17 +599,8 @@ $(window).scroll(function(){
 															type="number" min="1" max="10" value="1" style="max-width: 50px">
 													</div>
 													<div class="mt-2">
-													<div class="btn btn-sm btn-primary d-lg-block mt-lg-2" @click="addSideBar(item.pr_code,index,item.pr_spcode,item.pr_price,item.pr_tax,item.pr_image,item.pr_name)">
-														<svg
-															class="svg-inline--fa fa-cart-plus fa-w-18"
-															aria-hidden="true" focusable="false" data-prefix="fas"
-															data-icon="cart-plus" role="img"
-															xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3000 550"
-															data-fa-i2svg="">
-															<path fill="currentColor"
-																d="M504.717 320H211.572l6.545 32h268.418c15.401 0 26.816 14.301 23.403 29.319l-5.517 24.276C523.112 414.668 536 433.828 536 456c0 31.202-25.519 56.444-56.824 55.994-29.823-.429-54.35-24.631-55.155-54.447-.44-16.287 6.085-31.049 16.803-41.548H231.176C241.553 426.165 248 440.326 248 456c0 31.813-26.528 57.431-58.67 55.938-28.54-1.325-51.751-24.385-53.251-52.917-1.158-22.034 10.436-41.455 28.051-51.586L93.883 64H24C10.745 64 0 53.255 0 40V24C0 10.745 10.745 0 24 0h102.529c11.401 0 21.228 8.021 23.513 19.19L159.208 64H551.99c15.401 0 26.816 14.301 23.403 29.319l-47.273 208C525.637 312.246 515.923 320 504.717 320zM408 168h-48v-40c0-8.837-7.163-16-16-16h-16c-8.837 0-16 7.163-16 16v40h-48c-8.837 0-16 7.163-16 16v16c0 8.837 7.163 16 16 16h48v40c0 8.837 7.163 16 16 16h16c8.837 0 16-7.163 16-16v-40h48c8.837 0 16-7.163 16-16v-16c0-8.837-7.163-16-16-16z"></path></svg>
-														<!-- <span class="fas fa-cart-plus"> </span> Font Awesome fontawesome.com -->
-														<span class="ms-2 d-none d-md-inline-block">장바구니 담기</span></div>
+													<div  @click="addSideBar(item.pr_code,index,item.pr_spcode,item.pr_price,item.pr_tax,item.pr_image,item.pr_name)">
+														<button type="button" class="btn btn-danger ms-2">장바구니 담기</button>
 												</div>
 											</div>
 										</div>
@@ -584,6 +610,39 @@ $(window).scroll(function(){
 							</template>
 							
 				<template v-if="display[2].show">
+						<div id="modal01" class="w3-modal" onclick="this.style.display='none'">
+   							<span class="w3-button w3-hover-red w3-xlarge w3-display-topright">&times;</span>
+   								<div class="w3-modal-content w3-animate-zoom" style="width:450px; padding:10px;">
+     		 						<div style="border: 1px solid #ddd; display: inline-block; margin-top:15px;">상품코드:{{prdetail.pr_code}}</div>
+										<table class="dataTable-table">
+											<img :src="prdetail.pr_image" style="padding-left:16.5%;">
+											<tbody>
+												<tr>
+													<td>상품명</td>
+													<td><div style="width: 300px;">{{prdetail.pr_name}}</div></td>
+												</tr>
+												<tr>
+													<td>가격(VAT포함)</td>
+													<td><div style="width: 300px;">{{prdetail.pr_price+prdetail.pr_tax}}원</div></td>
+												</tr>
+												<tr>
+													<td>공급사</td>
+													<td><div style="width: 300px;">{{prdetail.sp_name}}({{prdetail.pr_spcode}})</div></td>
+												</tr>
+												<tr>
+													<td>원산지</td>
+													<td><div style="width: 300px;">{{prdetail.pr_origin}}</div></td>
+												</tr>
+												<tr>
+													<td>정보</td>
+													<td><div style="width: 300px;">{{prdetail.pr_info}}</div></td>
+												</tr>
+
+												</tbody>
+											</table>
+    											</div>
+  											</div>
+  											
 					<div  style="height: 100%; width: 100%;">
 						<div class="container-fluid">
 
@@ -629,7 +688,7 @@ $(window).scroll(function(){
                                     
                                     <tbody id="table">        
                                   		<tr class="odd" v-for="li in cart">
-                                  			<td id="img"><input type='checkbox'name='chkYn' :value=li.spcode+li.prname+li.prcode+li.price+li.count+li.price*li.count /><img :src="li.img" style='width:150px;'/></td>
+                                  			<td id="img" ><input type='checkbox'name='chkYn' :value=li.spcode+li.prname+li.prcode+li.price+li.count+li.price*li.count /><img :src="li.img" style='width:150px; cursor:zoom-in' @click="getPrDetail(li.prcode)" onclick="document.getElementById('modal01').style.display='block'"/></td>
                                   			<td id="spcode">{{li.spcode}}</td>
                                   			<td id="prname">{{li.prname}}</td>
                                   			<td id="prcode">{{li.prcode}}</td>

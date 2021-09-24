@@ -25,7 +25,9 @@
        PR.PR_PRICE,
        PR.PR_TAX,
        PR.PR_INFO,
-       PR.PR_ORIGIN
+       PR.PR_ORIGIN,
+       PR.CATE,
+       PR.CATE_NAME
 		FROM PR INNER JOIN SP ON PR.PR_SPCODE = SP.SP_CODE
 		WHERE PR_CODE=#{pr_code} AND PR_STCODE='PC'
 	</select>

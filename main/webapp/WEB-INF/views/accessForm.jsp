@@ -71,7 +71,7 @@
                                     <hr>
                                     <div class="text-center">
                                         <a class="small" href="forgot-password.html">Forgot Password?</a>
-                                    </div>	
+                                    </div>   
                                 </div>
                             </div>
                         </div>
@@ -84,8 +84,8 @@
 
     </div>
    
-	<script src="${pageContext.request.contextPath}/resources/js/accessNSB.js"></script>
-	
+   <script src="${pageContext.request.contextPath}/resources/js/accessNSB.js"></script>
+   
 </body>
 
 </html>

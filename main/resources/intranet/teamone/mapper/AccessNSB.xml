@@ -5,37 +5,37 @@
 
 <mapper namespace="intranet.teamone.mapper.AccessNSB">
 
-	<select id="isUserId" parameterType="intranet.teamone.bean.AccessBean" resultType="int">
-		SELECT COUNT(*) FROM ${table} WHERE ${col} = #{id}
-	</select>
-	
-	<select id="checkPwd" parameterType="intranet.teamone.bean.AccessBean" resultType="int">
-		SELECT COUNT(*) FROM ${table} WHERE ${col} = #{id} AND  ${col2} = #{pwd}
-	</select>
-	
-	<select id="getAccessHistorySum" parameterType="intranet.teamone.bean.AccessHistoryBean" resultType="int">
-		SELECT COALESCE(SUM(AH_METHOD),0) FROM AH WHERE AH_EPCODE = #{ah_epcode}
-	</select>
-	
-	<select id="getLogOutAccessHistorySum" parameterType="intranet.teamone.bean.AccessHistoryBean" resultType="int">
-		SELECT COALESCE(SUM(AH_METHOD),0) FROM AH WHERE AH_EPCODE = #{ah_epcode} and AH_PUBLICIP = #{ah_publicip} and 
-		AH_PRIVATEIP = #{ah_privateip} and AH_BROWSER = #{ah_browser}
-	</select>
-	
-	<select id="getLastAccessInfo" parameterType="intranet.teamone.bean.AccessHistoryBean" resultType="string">
-		SELECT AH_BROWSER||AH_PUBLICIP||AH_PRIVATEIP FROM(SELECT * FROM AH WHERE AH_EPCODE =#{ah_epcode} ORDER BY AH_DATE DESC) WHERE ROWNUM = 1
-	</select>
-	
-	
-	<insert id="insAccessHistoryIntranet" parameterType="intranet.teamone.bean.AccessHistoryBean">
-		INSERT INTO AH (AH_METHOD, AH_DATE, AH_EPCODE, AH_PUBLICIP, AH_PRIVATEIP, AH_BROWSER) VALUES (#{ah_method}, sysdate, #{ah_epcode}, #{ah_publicip}, #{ah_privateip}, #{ah_browser})
-	</insert>
-	
-	<insert id="forceLogout" parameterType="intranet.teamone.bean.AccessHistoryBean">
-		INSERT INTO AH (AH_METHOD, AH_DATE, AH_EPCODE, AH_PUBLICIP, AH_PRIVATEIP, AH_BROWSER) SELECT -1, SYSDATE, AH_EPCODE, AH_PUBLICIP, AH_PRIVATEIP, AH_BROWSER FROM AH
-		WHERE AH_DATE = (SELECT MAX(AH_DATE) FROM AH WHERE AH_EPCODE=#{ah_epcode}) and AH_METHOD = #{ah_method}
-	</insert>
-	
-	
-	
+   <select id="isUserId" parameterType="intranet.teamone.bean.AccessBean" resultType="int">
+      SELECT COUNT(*) FROM ${table} WHERE ${col} = #{id}
+   </select>
+   
+   <select id="checkPwd" parameterType="intranet.teamone.bean.AccessBean" resultType="int">
+      SELECT COUNT(*) FROM ${table} WHERE ${col} = #{id} AND  ${col2} = #{pwd}
+   </select>
+   
+   <select id="getAccessHistorySum" parameterType="intranet.teamone.bean.AccessHistoryBean" resultType="int">
+      SELECT COALESCE(SUM(AH_METHOD),0) FROM AH WHERE AH_EPCODE = #{ah_epcode}
+   </select>
+   
+   <select id="getLogOutAccessHistorySum" parameterType="intranet.teamone.bean.AccessHistoryBean" resultType="int">
+      SELECT COALESCE(SUM(AH_METHOD),0) FROM AH WHERE AH_EPCODE = #{ah_epcode} and AH_PUBLICIP = #{ah_publicip} and 
+      AH_PRIVATEIP = #{ah_privateip} and AH_BROWSER = #{ah_browser}
+   </select>
+   
+   <select id="getLastAccessInfo" parameterType="intranet.teamone.bean.AccessHistoryBean" resultType="string">
+      SELECT AH_BROWSER||AH_PUBLICIP||AH_PRIVATEIP FROM(SELECT * FROM AH WHERE AH_EPCODE =#{ah_epcode} ORDER BY AH_DATE DESC) WHERE ROWNUM = 1
+   </select>
+   
+   
+   <insert id="insAccessHistoryIntranet" parameterType="intranet.teamone.bean.AccessHistoryBean">
+      INSERT INTO AH (AH_METHOD, AH_DATE, AH_EPCODE, AH_PUBLICIP, AH_PRIVATEIP, AH_BROWSER) VALUES (#{ah_method}, sysdate, #{ah_epcode}, #{ah_publicip}, #{ah_privateip}, #{ah_browser})
+   </insert>
+   
+   <insert id="forceLogout" parameterType="intranet.teamone.bean.AccessHistoryBean">
+      INSERT INTO AH (AH_METHOD, AH_DATE, AH_EPCODE, AH_PUBLICIP, AH_PRIVATEIP, AH_BROWSER) SELECT -1, SYSDATE, AH_EPCODE, AH_PUBLICIP, AH_PRIVATEIP, AH_BROWSER FROM AH
+      WHERE AH_DATE = (SELECT MAX(AH_DATE) FROM AH WHERE AH_EPCODE=#{ah_epcode}) and AH_METHOD = #{ah_method}
+   </insert>
+   
+   
+   
 </mapper>

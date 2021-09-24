@@ -5,9 +5,10 @@ const main = new Vue({
 		display:[{show:false},{show:false},{show:false},{show:false},{show:false},{show:false},{show:false},{show:false},{show:false},{show:false},{show:false}],
 		modal:{show:false},
 		list:[],
-		detail:{},
 		items:[],
-		cart:[]
+		cart:[],
+		detail:[],
+		prdetail:{}
 	},
 	methods:{
 		changePage:function(page){
@@ -22,8 +23,9 @@ const main = new Vue({
 		modalClose:function(){
 			this.modal.show = false;
 		}, 
-		listPush:function(jsondata){
-			this.list = jsondata;
+		detailPush:function(jsondata){
+			this.prdetail={};
+			this.prdetail = jsondata;
 		},
 		getBkindPage:function(){			
 				postAjaxJson('rest/getBkind', 'getBkindList','j',clientData='');
@@ -130,6 +132,11 @@ const main = new Vue({
 			alert(chk_val);
 		});
 
+	},
+	getPrDetail:function(prcode){//각 상품의 상세정보
+		code = {pr_code:prcode};
+		clientData = JSON.stringify(code);
+		postAjaxJson('restIYJ/getPrDetail','ItemDetail','j',clientData);
 	}		
 }
 	
@@ -254,4 +261,8 @@ function selectAll(selectAll)  {
   })
 }
 
+//상품별 상세정보 (모달)
+function ItemDetail(jsonData){
+	main.detailPush(jsonData); //detail의 데이터공간에 밀어넣음	
+}
 

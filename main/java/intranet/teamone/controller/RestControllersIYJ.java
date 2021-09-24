@@ -23,4 +23,10 @@ public class RestControllersIYJ {
 		return pse.getSearchItem(word);
 	}
 	
+	@PostMapping("/getPrDetail")
+	public ProductBean getPrDetail(@RequestBody ProductBean pr) {
+		System.out.println("상품상세정보 : "+pse.getPrDetail(pr));
+		return pse.getPrDetail(pr);
+	}
+	
 }

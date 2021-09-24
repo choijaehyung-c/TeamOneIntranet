@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="intranet.teamone.mapper.dashboard">
+
+	<select id = "getChart">
+SELECT SUM(OD_QUANTITY), OD.OD_CODE
+FROM OS INNER JOIN OD ON OS.OS_CODE = OD.OD_OSCODE
+WHERE OS.OS_OFCODE='SEO01B' AND OS_DPCODE='MK' AND OS_DATE > TRUNC(SYSDATE,'MM') AND OS_DATE <![CDATA[ <]]> LAST_DAY(SYSDATE) 
+GROUP BY OD.OD_CODE, OD_QUANTITY
+ORDER BY OD_QUANTITY DESC;
+	</select>
+</mapper>
