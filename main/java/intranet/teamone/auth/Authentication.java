@@ -72,7 +72,9 @@ public class Authentication {
                   System.out.println("로그인성공");
                   if(tf = dao.insAccessHistory(ah)) {
                      System.out.println("기록성공");
+                     
                      mav.setViewName("redirect:/");
+
                         ck.setValue("mro"+enc.aesEncode(ah.getAh_epcode(),"session"));                  
                      }
                      ck.setMaxAge(60*60*12); // 쿠키 유효기간 설정 (초 단위) : 반나절
@@ -132,8 +134,11 @@ public class Authentication {
             ah.setAh_epcode(enc.aesDecode((String)pu.getAttribute("userSs"),"session"));
             //남아 있는 세션이(해당아이디가) DB에 로그인 되어 있는상태 => 마이페이지로
             if(dao.getAccessHistorySum(ah) && ck.getValue().substring(3,ck.getValue().length()).equals((String)pu.getAttribute("userSs"))) {
-            System.out.println("0924 test");
-               mav.setViewName("homeNSB");
+               mav.setViewName("homeIYJ");
+               mav.addObject("Name",dao.getUserInfo(ah.getAh_epcode()).getEp_name());
+               mav.addObject("Dp",dao.getUserInfo(ah.getAh_epcode()).getDp_name());
+               mav.addObject("of", dao.getUserInfo(ah.getAh_epcode()).getOf_name());
+               mav.addObject("email", dao.getUserInfo(ah.getAh_epcode()).getEp_email());
             //남아 있는 세션이(해당아이디가) DB에선 이미 로그아웃된경우 =>해당브라우저에 남아있던 세션도 죽임(꼭 새로고침 안해줘도됨 인터넷창 닫으면 어차피 세션 사라짐)
             }else{
                pu.removeAttribute("userSs");

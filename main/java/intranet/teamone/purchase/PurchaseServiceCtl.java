@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import intranet.teamone.bean.AccessInfoBean;
+import intranet.teamone.bean.OrderBean;
 import intranet.teamone.bean.ProductBean;
 
 @Service
@@ -39,4 +41,12 @@ public class PurchaseServiceCtl {
 		return dao.getSearchItem(word);
 	}
 
+	 //해당 부서의 많이 구매한 상품 탑 5
+	List<OrderBean> getRanking(){
+		AccessInfoBean ai = new AccessInfoBean();
+		ai.setDp_code("MF");
+		return dao.getRanking(ai);
+	}
+	
+	
 }

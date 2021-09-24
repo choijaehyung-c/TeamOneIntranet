@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import intranet.teamone.bean.AccessBean;
 import intranet.teamone.bean.AccessHistoryBean;
+import intranet.teamone.bean.EmployeeBean;
 
 
 @Repository
@@ -51,7 +52,10 @@ public class AuthDao {
       return data>0? true : false;
    }
 
-   
+   EmployeeBean getUserInfo(String epcode) {
+	  
+	 return sql.selectOne("getUserInfo", epcode);  
+   }
    
    
 }

@@ -36,6 +36,18 @@
       WHERE AH_DATE = (SELECT MAX(AH_DATE) FROM AH WHERE AH_EPCODE=#{ah_epcode}) and AH_METHOD = #{ah_method}
    </insert>
    
+   <select id="getUserInfo" parameterType="string" resultType="intranet.teamone.bean.EmployeeBean">
+ 		SELECT EP_CODE,
+        EP_NAME,
+        OF_CODE,
+        OF_NAME,
+        DP_CODE,
+        DP_NAME,
+        EP_EMAIL
+ FROM EP INNER JOIN DP ON EP.EP_DPCODE=DP.DP_CODE
+         INNER JOIN "OF" ON EP.EP_OFCODE = "OF".OF_CODE
+         WHERE EP_CODE=#{epcode}  
+   </select>
    
    
 </mapper>
