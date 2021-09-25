@@ -38,7 +38,15 @@ $(window).scroll(function(){
 	});
 
 </script>
-
+<script>
+function getcl(){
+	<%
+		String cld = (String) session.getAttribute("cld");
+		String clp = (String) session.getAttribute("clp");
+	%>
+	return {cld:'<%=cld%>', clp:'<%= clp%>'};
+}
+</script>
 
 
 
@@ -550,13 +558,7 @@ $(window).scroll(function(){
 	            	<img src="${pageContext.request.contextPath}/resources/img/loadcat.gif">
 	            </div>
 			</div>
-            
-            
-            
-            
-            
-            
-				
+	
 				<template v-if="display[3].show">
 				
 				     <div id="modalBack" v-if="modalcjh2.show" :style="styleObject">
@@ -690,7 +692,7 @@ $(window).scroll(function(){
 														<td @click="getOrderDetail(order.os_code)">{{order.os_stname}}</td>
 													<td @click="getOrderDetail(order.os_code)">{{order.os_summary}}</td>
 													<td @click="getOrderDetail(order.os_code)">{{order.os_date}}</td>
-													<td><div v-if="order.os_state==='OA'">구매 확정</div><div v-else>-</div></td>
+													<td><div v-if="order.os_state==='OA'" @click="sendOrderDecide(order.os_code)">구매 확정</div><div v-else>-</div></td>
 													<td><div v-if="order.os_state==='OA'" @click="getOrderDetail2(order.os_code)">교환/반품</div><div v-else>-</div></td>
 													<td><div v-if="order.os_state==='OA'" @click="getDelivery(order.os_code)">배송 조회</div><div v-else>-</div></td>
 												</tr>
@@ -958,6 +960,8 @@ $(window).scroll(function(){
             </div>
         </div>
     </div>
+
+
 
 <script type="text/javascript"> 
 

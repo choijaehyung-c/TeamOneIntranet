@@ -115,11 +115,20 @@ const main = new Vue({
 			this.dupCheck.push(index);
 		},getDelivery:function(code){
 			postAjaxJson('rest/getDelivery','getDeliveryInfo','j',code);
+		},sendOrderDecide:function(code){
+			let data = getcl();
+			let cData = {os_code:code,clcode:data.cld,clpwd:data.clp};
+			console.log(cData);
+			postAjaxJson('http://172.30.1.21/vue/clientOrderDecide','getResultUOD','s',JSON.stringify(cData));
 		}
 		
 	}
 	
 });
+
+function getResultUOD(data){
+	alert(data);
+}
 
 function getDeliveryInfo(jsondata){
 	modalStyle();
