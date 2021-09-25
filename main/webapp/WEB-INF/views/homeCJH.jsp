@@ -552,9 +552,9 @@ function getcl(){
 <!-------------------------------------------CJH-------------------------------------------->				
 			
             
-            <div id="loadingBack" class="fade-out-box" style="display: none; position: absolute; top: 0%; left: 0%; width: 100%;
+            <div id="loadingBack" style="display: none; position: absolute; top: 0%; left: 0%; width: 100%;
             height: 100% ; z-index:1001; -moz-opacity: 0.8; opacity:.80; filter: alpha(opacity=60);">
-            	<div id="loadingCat" class="fade-out-box" style="position: absolute;z-index:1000; overflow: auto;">
+            	<div id="loadingCat" style="position: absolute; transform:translate(-50%,-50%); z-index:1000; overflow: auto;">
 	            	<img src="${pageContext.request.contextPath}/resources/img/loadcat.gif">
 	            </div>
 			</div>
