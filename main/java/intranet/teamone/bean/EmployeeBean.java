@@ -10,5 +10,6 @@ public class EmployeeBean {
    private String ep_name;
    private String of_name;
    private String dp_name;
+   private String ep_email;
    
 }

@@ -120,13 +120,7 @@ const main = new Vue({
 	sendApproval:function(){
 		let chkedValue = document.getElementsByName('chkYn').values;
 		let chk_val = [];
-		
-		/*for(i=0; i<chkedValue.length; i++){
-			if(chkedValue[i].checked){
-				chk_val.push(chkedValue[i].value);
-			}
-		}
-		console.log(chk_val);*/
+
 		$('input:checkbox[name=chkYn]:checked').each(function(){
 			chk_val = $(this).val();
 			alert(chk_val);

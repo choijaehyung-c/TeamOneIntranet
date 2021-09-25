@@ -2,7 +2,7 @@ const main = new Vue({
    el : '#mainVue',
    data : {
       display:[{show:false},{show:false},{show:false},{show:false},{show:false},{show:false},{show:false},{show:false},{show:false},{show:false},{show:false}],
-      displayNSB:[{show:false}/*주문결재세션기입*/,{show:false}/*수신부서기입*/,{show:false}/*반품세션기입*/,{show:false}/*반품부서기입*/,{show:false}/*거래내역기입*/,{show:false}/*일반부서기입*/],
+      displayNSB:[{show:false}/*주문결재세션기입*/,{show:false}/*수신부서기입*/,{show:false}/*반품세션기입*/,{show:false}/*반품부서기입*/,{show:false}/*거래내역기입*/,{show:false}/*일반부서기입*/,{show:false}/*장바구니기입*/],
       modal:{show:false},
       modal2:{show:false},
       bean:{},
@@ -11,7 +11,9 @@ const main = new Vue({
       list:[],
       list2:[],
       list3:[],
-      detail:[]//모달정보들여기에 담기
+      detail:[],
+	  cartNSB:[],
+		inputcart:[]//모달정보들여기에 담기
    },
    methods:{
       changePage:function(page){
@@ -68,12 +70,41 @@ const main = new Vue({
       },
       //부서기입
       inputDP:function(epcode){
+	  document.getElementById('id01').style.display='none'
       postAjaxJson('/inputDP','inputDPVue','j',epcode);      
       },
       //주문결재 장바구니   
       getApprovalCart:function(){
-         
+         this.cartNSB=[];                           
+         let ck = document.cookie.split(';');
+         let cookie='';
+               
+      //이름찾는 
+      for(var i in ck) {
+            if(ck[i].search('addCart-')!=-1) {
+            //alert(ck[i].search('addCart-')); //모든 쿠키를 확인해서 쿠키당 addCart가 들어가면 1을반환 없으면 0을반환  
+                cookie = ck[i]                        
+                    let img = cookie.split('#')[1];
+            let spcode = cookie.split('>')[1].split(':')[0];
+            let prname=cookie.split(',')[1].split('>')[0];
+            let prcode=cookie.split('-')[1].split('=')[0];
+            let price = cookie.split('&')[1].split('#')[0];
+            let count = cookie.split(':')[1].split('&')[0];
+            let tt_price = price * count;
+            
+            let ckData = {img:img, spcode:spcode, prname:prname, prcode:prcode,price:price,count:count,ttprice:tt_price};
+
+            this.cartNSB.push(ckData);                                                                                                         
+         }    
+      }
       },
+	  //장바구니 기입
+	  inputCart:function(list){	
+		document.getElementById('id02').style.display='none'
+		this.inputcart.push(list);
+		this.displayNSB[6].show=true;
+		
+	  },	
       //반품결재
       refundApprovalPage:function(){
       postAjaxJson('/getDrafter','rDrafterVue','j');
@@ -82,13 +113,14 @@ const main = new Vue({
       postAjaxJson('/getDP','DPVue2','j');   
       },
       inputDP2:function(epcode){
-      this.modalClose();
+      document.getElementById('id01').style.display='none'
       postAjaxJson('/inputDP','inputDPVue2','j',epcode);      
       },
       getApprovalOrderList:function(ofcode){
       postAjaxJson('/getApprovalOrderList','getAOList','j',ofcode);
       },   
       inputOrder:function(oscode){
+	  document.getElementById('id02').style.display='none'
       postAjaxJson('/inputOrder','inputAOList','j',oscode);
       },
       
@@ -100,6 +132,7 @@ const main = new Vue({
       postAjaxJson('/getDP','DPVue3','j');   
       },
       inputDP3:function(epcode){
+	  document.getElementById('id01').style.display='none'
       postAjaxJson('/inputDP','inputDPVue3','j',epcode);      
       }
 
@@ -111,7 +144,8 @@ const main = new Vue({
 function ApprovalPage(){
    main.changePage(5);
    main.changePageNSB(6);
-
+   document.getElementById('id01').style.display='none'
+   document.getElementById('id02').style.display='none'
 }
 
 //기안자세션기입
@@ -125,7 +159,7 @@ function oDrafterVue(jsondata){
 function DPVue(jsondata){
    main.modalOpen();
    main.listPush(jsondata);
-   main.displayNSB[0].show=true;
+   main.displayNSB(0);
 }
 
 //선택한 부서정보 기입
@@ -139,6 +173,7 @@ function inputDPVue(jsondata){
 //반품 기안자세션기입
 function rDrafterVue(jsondata){
    main.changePageNSB(2);
+   main.display[5].show=false;
    main.beanPush(jsondata);   
 }
 
