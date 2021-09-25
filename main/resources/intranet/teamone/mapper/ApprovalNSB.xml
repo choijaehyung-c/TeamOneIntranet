@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="intranet.teamone.mapper.ApprovalNSB">
+   <select id="getDrafter" parameterType="string" resultType="intranet.teamone.bean.EmployeeBean">
+   SELECT  
+   EP_CODE, EP_OFCODE, EP_DPCODE, EP_NAME, OF_NAME, DP_NAME 
+   FROM EP INNER JOIN "OF" ON EP_OFCODE = OF_CODE  
+    INNER JOIN DP ON EP_DPCODE = DP_CODE 
+   WHERE EP_CODE= #{epcode} 
+    </select>
+    
+    <select id="getDP" resultType="intranet.teamone.bean.EmployeeBean">
+   SELECT  
+   EP_CODE, EP_OFCODE, EP_DPCODE, EP_NAME, OF_NAME, DP_NAME 
+   FROM EP INNER JOIN "OF" ON EP_OFCODE = OF_CODE  
+    INNER JOIN DP ON EP_DPCODE = DP_CODE  
+    </select>
+    
+    <select id="inputDP" parameterType="string" resultType="intranet.teamone.bean.EmployeeBean">
+   SELECT  
+   EP_CODE, EP_OFCODE, EP_DPCODE, EP_NAME, OF_NAME, DP_NAME 
+   FROM EP INNER JOIN "OF" ON EP_OFCODE = OF_CODE  
+    INNER JOIN DP ON EP_DPCODE = DP_CODE 
+   WHERE EP_CODE= #{epcode} 
+    </select>
+    
+    
+</mapper>

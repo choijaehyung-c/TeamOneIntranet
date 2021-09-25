@@ -542,7 +542,12 @@ $(window).scroll(function(){
 				</template>
 				<template v-if="display[2].show"></template>
 <!-------------------------------------------CJH-------------------------------------------->				
+				            <div id="loading2" v-if="loading" >
+            <img src="${pageContext.request.contextPath}/resources/img/asdasd.gif">
+              </div>
+				
 				<template v-if="display[3].show">
+				
 				     <div id="modalBack" v-if="modalcjh2.show" :style="styleObject">
 							<div style="width:70%; max-height:80%; background: #fff; transform:translate(-50%,0%);
 							border-radius: 10px; padding: 20px; z-index:1; position: absolute; margin-top:3%; left:50%; overflow:auto;">
@@ -713,6 +718,7 @@ $(window).scroll(function(){
 					</div>
 					</div>
 					</div>
+					<input id="detectRandering" type="hidden" value="ccc"/>
 				</template>
 				<template v-if="display[4].show">
 					<div id="modalBack" v-if="modal.show" :style="styleObject">

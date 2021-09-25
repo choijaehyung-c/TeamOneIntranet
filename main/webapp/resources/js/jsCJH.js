@@ -22,8 +22,13 @@ const main = new Vue({
 			"box-shadow":'0 0 8px 8px white inset'
 		},
 		dupCheck:[],
+		loading:false,
+        changeMsg:''
 	},
 	methods:{
+		sTest:function(){
+			console.log(this.image);
+		},
 		changePage:function(page){
 			for(i=0;i<this.display.length; i++){
 				this.display[i].show=false;
@@ -114,10 +119,41 @@ const main = new Vue({
 			this.dupCheck.push(index);
 		},getDelivery:function(code){
 			postAjaxJson('rest/getDelivery','getDeliveryInfo','j',code);
+		},
+		loadingOn:function(){
+            this.loading = true;
+        }
+		
 		}
-	}
 	
 });
+
+function callback1(){
+	setTimeout(function(){
+		try{if(document.getElementById("detectRandering").value=="ccc"){main.loading = false;}
+		}catch(error){}
+		if(main.loading){callback2();}
+	},1000);
+}
+
+function callback2(){
+	setTimeout(function(){
+		try{if(document.getElementById("detectRandering").value=="ccc"){main.loading = false;}
+		}catch(error){}
+		if(main.loading){callback1();}
+	},1000);
+}
+
+function asdasdt(){
+    alert("?");
+    main.loading = false;
+}
+
+
+function sTest(){
+	console.log("?");
+	alert("되라!");
+}
 
 function getDeliveryInfo(jsondata){
 	modalStyle();
@@ -137,9 +173,11 @@ function delReason(index){
 }
 
 function orderList(){
-	postAjaxForm('rest/getOrderList','getList','j');
-	postAjaxForm('rest/getOrderCompleteList','getCompleteList','j');
-	main.changePage(3);
+    main.loadingOn();
+    postAjaxForm('rest/getOrderList','getList','j');
+    postAjaxForm('rest/getOrderCompleteList','getCompleteList','j');
+    main.changePage(3);
+    callback1();
 }
 
 function refundList(){
@@ -194,12 +232,3 @@ function modalStyle(){
 	main.styleObject.height = (document.getElementById("content").offsetHeight-86)+"px";
 	$("html, body").animate({ scrollTop: 0 }, 100);
 }
-
-function testasdasd(){
-	alert("test1");
-}
-
-function testasdasd2(){
-	alert("test2");
-}
-

@@ -11,20 +11,18 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Dashboard</title>
+    <title>ICIA Technology</title>
 
     <!-- Custom fonts for this template-->
    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
     
     <link href="${pageContext.request.contextPath}/resources/css/IYJ.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<link href="${pageContext.request.contextPath}/resources/css/styles.css" rel="stylesheet" />
     <!-- Custom styles for this template-->
     <link href="${pageContext.request.contextPath}/resources/css/sb-admin-2.min.css" rel="stylesheet">
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.js"></script> 
-
   
  
 
@@ -38,29 +36,6 @@ $(window).scroll(function(){
 	$("#sidebarLayer").stop();
 	$("#sidebarLayer").animate( { "top" : scrollTop });
 	});
-	
-
-/* When the user clicks on the button, 
-toggle between hiding and showing the dropdown content */
-function myFunction() {
-  document.getElementById("myDropdown").classList.toggle("show");
-}
-
-// Close the dropdown if the user clicks outside of it
-window.onclick = function(event) {
-  if (!event.target.matches('.dropbtn')) {
-    var dropdowns = document.getElementsByClassName("dropdown-content");
-    var i;
-    for (i = 0; i < dropdowns.length; i++) {
-      var openDropdown = dropdowns[i];
-      if (openDropdown.classList.contains('show')) {
-        openDropdown.classList.remove('show');
-      }
-    }
-  }
-}
-
-
 
 </script>
 
@@ -419,7 +394,18 @@ window.onclick = function(event) {
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+                        <div class="card shadow mb-4" style="border:0.5px solid #FDFFFF; border-radius:5px; width:350px; height:350px; background:#fff;">
+                        	<svg style="margin:20px 35%;" xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
+  								<path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+  								<div style="margin-left:35%; font-size:25px; font-weight:bold;">${Name }님</div>
+  								<div style="margin-left:37%;">(주)${of}</div>
+  								<div style="margin:0 auto; padding-top:50px;">
+  									<div>부서 : <span>${Dp} </span></div>
+  									<div>연락처 : <span>${email }</span></div>
+  								</div>
+							</svg>
+                        	 
+                        </div>
                     </div>
                     <!-- Content Row -->
                     <div class="row">
@@ -513,46 +499,84 @@ window.onclick = function(event) {
                 </div>
 				</template>
 <!-------------------------------------------IYJ-------------------------------------------->			
-				
-				
+							
 				<template v-if="display[1].show">
-					<div class="input-group" style="margin-left:30%; width:30%;">
+								<div id="id01" class="w3-modal w3-animate-opacity" >
+									<div class="w3-modal-content" style="width:450px;" >
+										<div class="w3-container" style="max-width: 100%; width: auto; display: table;">
+											<span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+											<div style="border: 1px solid #ddd; display: inline-block; margin-top:15px;">상품코드:{{prdetail.pr_code}}</div>
+											<table class="dataTable-table">
+												<img :src="prdetail.pr_image" style="padding-left:16.5%;">
+												<tbody>
+													<tr>
+														<td>상품명</td>
+														<td><div style="width: 300px;">{{prdetail.pr_name}}</div></td>
+													</tr>
+													<tr>
+														<td>가격(VAT포함)</td>
+														<td><div style="width: 300px;">{{prdetail.pr_price+prdetail.pr_tax}}원</div></td>
+													</tr>
+													<tr>
+														<td>공급사</td>
+														<td><div style="width: 300px;">{{prdetail.sp_name}}({{prdetail.pr_spcode}})</div></td>
+													</tr>
+													<tr>
+														<td>원산지</td>
+														<td><div style="width: 300px;">{{prdetail.pr_origin}}</div></td>
+													</tr>
+													<tr>
+														<td>정보</td>
+														<td><div style="width: 300px;">{{prdetail.pr_info}}</div></td>
+													</tr>
+
+												</tbody>
+											</table>
+
+										</div>
+									</div>
+								</div>
+
+
+								<div class="input-group" style="margin-left:30%; width:30%;">
                        <input name="word"type="text" class="dataTable-input" placeholder="상품명을 입력하세요." guddll>
                         <span class="mdi mdi-magnify search-icon"></span>
                        <button class="input-group-text btn-primary" type="submit"  @click="searchItem()">Search</button>
                  </div>
 				<div  style="height: 100%; width: 95%; margin-left:5%">
-								<div class="menu_wrap" style="margin-left:20%;">
+
+						<div class="menu_wrap" style="margin-left:23%; ">
 								
-									<ul v-for="li in list" class="dep1">
-										<li>										
-											<a href="#" @click="getCateName(li.bk_code)">{{li.bk_name}}</a>
-												<ul v-for="ll in detail" class="dep2">
-													<li>
+									<ul  class="dep1">
+										<li v-for="li in list">										
+											<a @click="getCateName(li.bk_code)">{{li.bk_name}}</a>
+												<ul  class="dep2">
+													<li v-for="ll in detail">
 														<a  @click="getCateItem(ll.cate)">{{ll.cate_name}}</a>
 													</li>
 												</ul>
 										</li>
 									</ul>
 								</div>
-                  
+
+
 
 									<div id="sidebarLayer"
-										style="position: absolute; right:0.4%; top: 80px; width: 120px;  border: 1px solid #ddd; text-align: center; background-color: #FFFFFF; z-index: 1000;">
+										style="position: absolute; right:0.4%; top: 80px; width: 120px;  border: 1px solid #ddd; text-align: center; background-color: #FFFFFF; z-index: 1;">
 									<div>My Cart<br><br>
 										<div id="space"></div>
 										<div id="add" style="display:none; border:1px solid #000;" @click="addCart()">담기</div>
 									</div>																					
 								</div>
 
-								<div class="row" v-for="(item,index) in items" style="margin-bottom:10px;">
+								<div class="row" v-for="(item,index) in items" style="margin-bottom:10px; ">
 									<img class="img-fluid fit-cover w-sm-100 h-sm-100 rounded-1 absolute-sm-centered"
-										:src="item.pr_image" alt="" style="width:200px; height:180px; border-radius:20px;">
+										:src="item.pr_image" alt="" style="width:220px; height:250px; border-radius:20px;">
 								<div class="col-sm-7 col-md-8">
 										<div class="row">
 											<div class="col-lg-8">
 												<h5 class="mt-3 mt-sm-0" >
-													<a class="text-dark fs-0 fs-lg-1">
+													<a style="color:#000;" @click="getPrDetail(item.pr_code)" onclick="document.getElementById('id01').style.display='block'">
 														{{item.pr_name}}</a>
 												</h5>
 												<p class="fs--1 mb-2 mb-md-3">
@@ -586,17 +610,8 @@ window.onclick = function(event) {
 															type="number" min="1" max="10" value="1" style="max-width: 50px">
 													</div>
 													<div class="mt-2">
-													<div class="btn btn-sm btn-primary d-lg-block mt-lg-2" @click="addSideBar(item.pr_code,index,item.pr_spcode,item.pr_price,item.pr_tax,item.pr_image,item.pr_name)">
-														<svg
-															class="svg-inline--fa fa-cart-plus fa-w-18"
-															aria-hidden="true" focusable="false" data-prefix="fas"
-															data-icon="cart-plus" role="img"
-															xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3000 550"
-															data-fa-i2svg="">
-															<path fill="currentColor"
-																d="M504.717 320H211.572l6.545 32h268.418c15.401 0 26.816 14.301 23.403 29.319l-5.517 24.276C523.112 414.668 536 433.828 536 456c0 31.202-25.519 56.444-56.824 55.994-29.823-.429-54.35-24.631-55.155-54.447-.44-16.287 6.085-31.049 16.803-41.548H231.176C241.553 426.165 248 440.326 248 456c0 31.813-26.528 57.431-58.67 55.938-28.54-1.325-51.751-24.385-53.251-52.917-1.158-22.034 10.436-41.455 28.051-51.586L93.883 64H24C10.745 64 0 53.255 0 40V24C0 10.745 10.745 0 24 0h102.529c11.401 0 21.228 8.021 23.513 19.19L159.208 64H551.99c15.401 0 26.816 14.301 23.403 29.319l-47.273 208C525.637 312.246 515.923 320 504.717 320zM408 168h-48v-40c0-8.837-7.163-16-16-16h-16c-8.837 0-16 7.163-16 16v40h-48c-8.837 0-16 7.163-16 16v16c0 8.837 7.163 16 16 16h48v40c0 8.837 7.163 16 16 16h16c8.837 0 16-7.163 16-16v-40h48c8.837 0 16-7.163 16-16v-16c0-8.837-7.163-16-16-16z"></path></svg>
-														<!-- <span class="fas fa-cart-plus"> </span> Font Awesome fontawesome.com -->
-														<span class="ms-2 d-none d-md-inline-block">장바구니 담기</span></div>
+													<div  @click="addSideBar(item.pr_code,index,item.pr_spcode,item.pr_price,item.pr_tax,item.pr_image,item.pr_name)">
+														<button type="button" class="btn btn-danger ms-2">장바구니 담기</button>
 												</div>
 											</div>
 										</div>
@@ -606,6 +621,39 @@ window.onclick = function(event) {
 							</template>
 							
 				<template v-if="display[2].show">
+						<div id="modal01" class="w3-modal" onclick="this.style.display='none'">
+   							<span class="w3-button w3-hover-red w3-xlarge w3-display-topright">&times;</span>
+   								<div class="w3-modal-content w3-animate-zoom" style="width:450px; padding:10px;">
+     		 						<div style="border: 1px solid #ddd; display: inline-block; margin-top:15px;">상품코드:{{prdetail.pr_code}}</div>
+										<table class="dataTable-table">
+											<img :src="prdetail.pr_image" style="padding-left:16.5%;">
+											<tbody>
+												<tr>
+													<td>상품명</td>
+													<td><div style="width: 300px;">{{prdetail.pr_name}}</div></td>
+												</tr>
+												<tr>
+													<td>가격(VAT포함)</td>
+													<td><div style="width: 300px;">{{prdetail.pr_price+prdetail.pr_tax}}원</div></td>
+												</tr>
+												<tr>
+													<td>공급사</td>
+													<td><div style="width: 300px;">{{prdetail.sp_name}}({{prdetail.pr_spcode}})</div></td>
+												</tr>
+												<tr>
+													<td>원산지</td>
+													<td><div style="width: 300px;">{{prdetail.pr_origin}}</div></td>
+												</tr>
+												<tr>
+													<td>정보</td>
+													<td><div style="width: 300px;">{{prdetail.pr_info}}</div></td>
+												</tr>
+
+												</tbody>
+											</table>
+    											</div>
+  											</div>
+  											
 					<div  style="height: 100%; width: 100%;">
 						<div class="container-fluid">
 
@@ -616,7 +664,7 @@ window.onclick = function(event) {
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Cart List</h6>
+                            <h6 class="m-0 font-weight-bold text-primary" >Cart List</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -639,18 +687,27 @@ window.onclick = function(event) {
 											Item Code</th>
 											<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
 												aria-label="Item Code: activate to sort column ascending" style="width: 80px;">
-											Price</th>
+											Price<br>(VAT포함)</th>
 											<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
 												aria-label="Quantity: activate to sort column ascending" style="width: 40px;">
 											Quantity</th>
 											<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
 												aria-label="Total Price: activate to sort column ascending" style="width: 100px;">
-											Total Price</th>
+											Total Price<br>(VAT포함)</th>
 										</tr>
 									</thead>
                                     
-                                    <tbody id = "table">        
-                                  
+                                    <tbody id="table">        
+                                  		<tr class="odd" v-for="li in cart">
+                                  			<td id="img" ><input type='checkbox'name='chkYn' :value=li.spcode+li.prname+li.prcode+li.price+li.count+li.price*li.count /><img :src="li.img" style='width:150px; cursor:zoom-in' @click="getPrDetail(li.prcode)" onclick="document.getElementById('modal01').style.display='block'"/></td>
+                                  			<td id="spcode">{{li.spcode}}</td>
+                                  			<td id="prname">{{li.prname}}</td>
+                                  			<td id="prcode">{{li.prcode}}</td>
+                                  			<td id="price">{{li.price}}</td>
+                                  			<td id="count"><input type="number"  :value=li.count v-model="li.count" style="width:45%;"></td>
+                                  			<td id="tt_price"><input type='text' readonly name='tt_price' :value=li.price*li.count>원</td>
+                                  			
+                                  		</tr>
                                      </tbody>
                                 </table></div></div>
                             </div>
@@ -710,8 +767,6 @@ window.onclick = function(event) {
             </div>
         </div>
     </div>
-    
-
 
 	
 	<script src="${pageContext.request.contextPath}/resources/vue/vue.js"></script>

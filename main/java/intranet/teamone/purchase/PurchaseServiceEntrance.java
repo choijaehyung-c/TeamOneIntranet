@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import intranet.teamone.bean.AccessInfoBean;
+import intranet.teamone.bean.OrderBean;
 import intranet.teamone.bean.ProductBean;
 
 @Service
@@ -28,7 +30,6 @@ public class PurchaseServiceEntrance {
 		return psc.getCateItem(cate);
 	}
 
-	//아직안됨. 디텔
 	public ProductBean getPrDetail(ProductBean pr) {
 		
 		return psc.getPrDetail(pr);
@@ -39,5 +40,10 @@ public class PurchaseServiceEntrance {
 		return psc.getSearchItem(word);
 	}
 
+	 //해당 부서의 많이 구매한 상품 탑 5
+	public List<OrderBean> getRanking(){
+		
+		return psc.getRanking();
+	}
 
 }
