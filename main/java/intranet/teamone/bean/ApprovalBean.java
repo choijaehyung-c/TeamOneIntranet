@@ -15,7 +15,9 @@ public class ApprovalBean {
 	private String cg_type;
 	private String dp_name;
 	private String of_name;
+	private String of_code;
 	private String od_code;
 	private String at_code;
 	private String at_name;
+	private String an_text;
 }

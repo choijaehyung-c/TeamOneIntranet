@@ -6,18 +6,31 @@
 <mapper namespace="intranet.teamone.mapper.HSMApprovalInterface">
 	
 	<select id="getApprovalList" parameterType="intranet.teamone.bean.ApprovalBean" resultType="intranet.teamone.bean.ApprovalBean">
-		SELECT AP_CODE, AP_OSCODE, AP_DATE, CG_TYPE, CG_NAME, DP_NAME, OF_NAME
+		SELECT AP_CODE, AP_OSCODE, AP_DATE, CG_TYPE, CG_NAME, DP_NAME, OF_NAME, OF_CODE
 		FROM AP INNER JOIN CG ON AP.AP_CGTYPE = CG.CG_TYPE
         		INNER JOIN DP ON AP.AP_FROMDPCODE = DP.DP_CODE  AND AP.AP_FROMOFCODE = DP.DP_OFCODE 
 				INNER JOIN "OF" ON AP.AP_FROMOFCODE = "OF".OF_CODE
-		WHERE AP_TODPCODE = #{ap_todpcode} AND AP_TOOFCODE = #{ap_toofcode} AND AP_ATCODE = 'OR' OR
-			  AP_TODPCODE = #{ap_todpcode} AND AP_TOOFCODE = #{ap_toofcode} AND AP_ATCODE = 'RR'
+		WHERE AP_TODPCODE = #{ap_todpcode} AND AP_TOOFCODE = #{ap_toofcode} AND AP_ATCODE = 'OR'
+	</select>
+
+	<select id="getAnyApprovalList" parameterType="intranet.teamone.bean.ApprovalBean" resultType="intranet.teamone.bean.ApprovalBean">
+		SELECT AN_CODE AS AP_CODE, AN_DATE AS AP_DATE, CG_TYPE, CG_NAME, DP_NAME, OF_NAME
+		FROM ANYAPPROVAL 
+				INNER JOIN CG ON ANYAPPROVAL.AN_CGTYPE = CG.CG_TYPE
+        		INNER JOIN DP ON ANYAPPROVAL.AN_FROMDPCODE = DP.DP_CODE  AND ANYAPPROVAL.AN_FROMOFCODE = DP.DP_OFCODE 
+				INNER JOIN "OF" ON ANYAPPROVAL.AN_FROMOFCODE = "OF".OF_CODE
+		WHERE AN_TODPCODE = #{ap_todpcode} AND AN_TOOFCODE = #{ap_toofcode} AND AN_ATCODE = 'NR'	 
 	</select>
 	
 	
 	<select id="getApprovalDetail" parameterType="intranet.teamone.bean.ApprovalBean" resultType="intranet.teamone.bean.OrderDetailBean">
 		SELECT OD_OSCODE, SPCODE AS OD_PRSPCODE, OD_CODE AS OD_PRCODE, OD_QUANTITY, OD_PRICE AS PR_PRICE
 		FROM OD WHERE OD_OSCODE = #{ap_oscode}
+	</select>
+
+	<select id="getAnyApprovalDetail" parameterType="intranet.teamone.bean.ApprovalBean" resultType="intranet.teamone.bean.ApprovalBean">
+		SELECT AN_TEXT, AN_CODE AS AP_CODE
+		FROM ANYAPPROVAL WHERE AN_CODE = #{ap_code}
 	</select>
 	
 	<update id="responseAppovalRefuse" parameterType="intranet.teamone.bean.ApprovalBean">
@@ -32,5 +45,43 @@
                 INNER JOIN AT ON AP.AP_ATCODE = AT.AT_CODE
 		WHERE AP_FROMDPCODE = #{ap_fromdpcode} AND AP_FROMOFCODE = #{ap_fromofcode}
 	</select>
+
+	<select id="getSendAnyApprovalList" parameterType="intranet.teamone.bean.ApprovalBean" resultType="intranet.teamone.bean.ApprovalBean">
+		SELECT AN_CODE AS AP_CODE, AN_DATE AS AP_DATE, CG_NAME, DP_NAME, OF_NAME, AT_NAME, CG_TYPE
+		FROM ANYAPPROVAL
+				INNER JOIN CG ON ANYAPPROVAL.AN_CGTYPE = CG.CG_TYPE
+        		INNER JOIN DP ON ANYAPPROVAL.AN_TODPCODE = DP.DP_CODE  AND ANYAPPROVAL.AN_TOOFCODE = DP.DP_OFCODE 
+				INNER JOIN "OF" ON ANYAPPROVAL.AN_TOOFCODE = "OF".OF_CODE
+                INNER JOIN AT ON ANYAPPROVAL.AN_ATCODE = AT.AT_CODE
+		WHERE AN_FROMDPCODE = #{ap_fromdpcode} AND AN_FROMOFCODE = #{ap_fromofcode}
+	</select>
+	
+	<update id="updateAP" parameterType="intranet.teamone.bean.IntranetOrderBean">
+		UPDATE AP SET AP_ATCODE = 'OA' WHERE AP_CODE = #{aa_apcode}
+	</update>
+
+	<insert id="insAA" parameterType="intranet.teamone.bean.IntranetOrderBean">
+		INSERT INTO AA VALUES(#{aa_apcode}, #{rl_ioscode}, 'O', SYSDATE, #{ep_code})
+	</insert>
+	
+	<select id="totalPrice" parameterType="intranet.teamone.bean.IntranetOrderBean" resultType="int">
+		SELECT SUM(OD_PRICE) FROM OD WHERE OD_OSCODE = #{rl_ioscode}
+	</select>
+
+	<select id="getBudget" parameterType="intranet.teamone.bean.IntranetOrderBean" resultType="string">
+		SELECT BG_BUDGET FROM BG WHERE BG_OFCODE = #{of_code}
+	</select>
+	
+	<select id="updateBudget" parameterType="intranet.teamone.bean.IntranetOrderBean">
+		UPDATE BG SET BG_BUDGET = #{bg_budget} WHERE BG_OFCODE = #{of_code}
+	</select>
+	
+	<insert id="insRL" parameterType="intranet.teamone.bean.MroneOrderBean">
+		INSERT INTO RL VALUES(#{ios}, #{os_code}, SYSDATE, #{os_region})
+	</insert>
+
+	<update id="responseAnyAppoval" parameterType="intranet.teamone.bean.ApprovalBean">
+		UPDATE ANYAPPROVAL SET AN_ATCODE = #{at_code} WHERE AN_CODE = #{ap_code}
+	</update>
 	
 </mapper>

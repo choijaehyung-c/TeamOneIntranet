@@ -570,15 +570,40 @@ $(window).scroll(function(){
 											</tbody>
 										</table>
                    		<div  style="text-align: center">
-                   		<button type="button" class="btn btn-dark">허가</button>
+                   		<button @click="getDetailInfo(list2.os_code, list2.ap_code, list2.of_code)" type="button" class="btn btn-dark">허가</button>
                    		<button @click="responseAppovalRefuse(list2.ap_code)" type="button" class="btn btn-dark">반려</button>
                    		<button @click="modalClose()" type="button" class="btn btn-dark">닫기</button>
                   		</div>
                    		
                   	</div>
-                   	</div>
-				
-				
+                   	</div>				
+					
+					<div v-if="modal2.show" style="height: 100%; width: 100%; background: rgba(0,0,0,0.5); position: absolute; padding: 20px; z-index: 2;">
+           	 	<div style="max-width: 100%; width: auto; display: table; background: #fff; border-radius: 10px; padding: 20px; z-index: 1;">
+                   		<table id="datatablesSimple" class="dataTable-table">
+											<thead>
+												<tr>
+													<th style="width: 100%; text-align: center;"><a>사유</a></th>													
+												</tr>
+											</thead>
+										
+											<tbody>
+												<tr v-for="ANLD in detail">
+
+													<td>{{ANLD.an_text}}</td>
+		
+												</tr>
+											</tbody>
+										</table>
+                   		<div  style="text-align: center">
+                   		<button @click="responseAnyAppoval(list2.ap_code, 'NA')" type="button" class="btn btn-dark">허가</button>
+                   		<button @click="responseAnyAppoval(list2.ap_code, 'NF')" type="button" class="btn btn-dark">반려</button>
+                   		<button @click="modal2.show =false" type="button" class="btn btn-dark">닫기</button>
+                  		</div>
+                   		
+                  	</div>
+                   	</div>				
+		
 				
 					<div class="container-fluid px-4">
 						<h6>&nbsp</h6>
@@ -586,9 +611,9 @@ $(window).scroll(function(){
 								class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
 								<div class="dataTable-top">
 									<div>
-									<select @chang="">
-  										<option value="0" selected>구매</option>
-    									<option value="1">일반</option>
+									<select @change="changeReceiveApproval()" id= "changeList" class="form-control">
+  										<option value=0 selected>구매</option>
+    									<option value=1>일반</option>
 									</select>
 									</div>
 									<div class="dataTable-search">
@@ -609,15 +634,29 @@ $(window).scroll(function(){
 												</tr>
 											</thead>
 
-											<tbody>
+											<tbody v-if="selectPage[0].show">
 												<tr v-for="AL in list">
-													<td @click="getApprovalDetail(AL.ap_oscode, AL.ap_code)">{{AL.of_name}} {{AL.dp_name}}</td>
-													<td @click="getApprovalDetail(AL.ap_oscode, AL.ap_code)">{{AL.cg_name}}</td>
-													<td @click="getApprovalDetail(AL.ap_oscode, AL.ap_code)">{{AL.ap_date}}</td>
+													<td @click="getApprovalDetail(AL.ap_oscode, AL.ap_code, AL.of_code)">{{AL.of_name}} {{AL.dp_name}}</td>
+													<td @click="getApprovalDetail(AL.ap_oscode, AL.ap_code, AL.of_code)">{{AL.cg_name}}</td>
+													<td @click="getApprovalDetail(AL.ap_oscode, AL.ap_code, AL.of_code)">{{AL.ap_date}}</td>
 													<td style="text-align: center">
-														<button @click="getDetailInfo(AL.ap_oscode)"
+														<button @click="getDetailInfo(AL.ap_oscode, AL.ap_code, AL.of_code)"
 															type="button" class="btn btn-dark">허가</button>
 														<button @click="responseAppovalRefuse(AL.ap_code)"
+															type="button" class="btn btn-dark">반려</button>
+													</td>
+												</tr>
+										
+											</tbody>
+											<tbody v-if="selectPage[1].show">
+												<tr v-for="ANL in list2">
+													<td @click="getAnyApprovalDetail(ANL.ap_code)">{{ANL.of_name}} {{ANL.dp_name}}</td>
+													<td @click="getAnyApprovalDetail(ANL.ap_code)">{{ANL.cg_name}}</td>
+													<td @click="getAnyApprovalDetail(ANL.ap_code)">{{ANL.ap_date}}</td>
+													<td style="text-align: center">
+														<button @click="responseAnyAppoval(ANL.ap_code, 'NA')"
+															type="button" class="btn btn-dark">허가</button>
+														<button @click="responseAnyAppoval(ANL.ap_code, 'NF')"
 															type="button" class="btn btn-dark">반려</button>
 													</td>
 												</tr>
@@ -656,6 +695,33 @@ $(window).scroll(function(){
                    		
                   	</div>
                    	</div>
+                   	
+                   	
+                   	<div v-if="modal2.show" style="height: 100%; width: 100%; background: rgba(0,0,0,0.5); position: absolute; padding: 20px; z-index: 2;">
+           	 	<div style="max-width: 100%; width: auto; display: table; background: #fff; border-radius: 10px; padding: 20px; z-index: 1;">
+                   		<table id="datatablesSimple" class="dataTable-table">
+											<thead>
+												<tr>
+													<th style="width: 100%; text-align: center;"><a>사유</a></th>													
+												</tr>
+											</thead>
+										
+											<tbody>
+												<tr v-for="SANLD in detail">
+
+													<td>{{SANLD.an_text}}</td>
+		
+												</tr>
+											</tbody>
+										</table>
+                   		<div  style="text-align: center">
+                   		<button @click="modal2.show =false" type="button" class="btn btn-dark">닫기</button>
+                  		</div>
+                   		
+                  	</div>
+                   	</div>
+                   	
+                   	
 				
 					<div class="container-fluid px-4">
 						<h6>&nbsp</h6>
@@ -663,8 +729,8 @@ $(window).scroll(function(){
 								class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
 								<div class="dataTable-top">
 									<div>
-									<select @chang="">
-  										<option value="0" selected>구매</option>
+									<select @change="changeSendApprovalList()" id="changeSendApproval" class="form-control">
+  										<option value="0">구매</option>
     									<option value="1">일반</option>
 									</select>
 									</div>
@@ -687,12 +753,22 @@ $(window).scroll(function(){
 												</tr>
 											</thead>
 
-											<tbody>
-												<tr v-if="SAL.cg_type=='O'" v-for="SAL in list">
+											<tbody v-if="selectPage[2].show">
+												<tr v-for="SAL in list">
 													<td @click="getApprovalDetail(SAL.ap_oscode, SAL.ap_code)">{{SAL.of_name}} {{SAL.dp_name}}</td>
 													<td @click="getApprovalDetail(SAL.ap_oscode, SAL.ap_code)">{{SAL.cg_name}}</td>
 													<td @click="getApprovalDetail(SAL.ap_oscode, SAL.ap_code)">{{SAL.ap_date}}</td>
 													<td @click="getApprovalDetail(SAL.ap_oscode, SAL.ap_code)">{{SAL.at_name}}</td>
+								
+												</tr>
+			
+											</tbody>
+											<tbody v-if="selectPage[3].show">
+												<tr v-for="SAAL in list2">
+													<td @click="getSendAnyApprovalDetail(SAAL.ap_code)">{{SAAL.of_name}} {{SAAL.dp_name}}</td>
+													<td @click="getSendAnyApprovalDetail(SAAL.ap_code)">{{SAAL.cg_name}}</td>
+													<td @click="getSendAnyApprovalDetail(SAAL.ap_code)">{{SAAL.ap_date}}</td>
+													<td @click="getSendAnyApprovalDetail(SAAL.ap_code)">{{SAAL.at_name}}</td>
 								
 												</tr>
 			

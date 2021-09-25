@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import intranet.teamone.bean.ApprovalBean;
+import intranet.teamone.bean.IntranetOrderBean;
 import intranet.teamone.bean.OrderDetailBean;
 import intranet.teamone.bean.ProductBean;
 
@@ -40,6 +41,26 @@ public class HSMApprovalServiceEntrance {
 	public List<ApprovalBean> getSendApprovalList(ApprovalBean ab) {
 		
 		return asc.getSendApprovalList(ab);
+	}
+
+	public String responseAppovalAccept(IntranetOrderBean iob) {
+		
+		return asc.IntranetOrderBean(iob);
+	}
+
+	public List<OrderDetailBean> getAnyApprovalDetail(ApprovalBean ab) {
+		
+		return asc.getAnyApprovalDetail(ab);
+	}
+
+	public String responseAnyAppoval(ApprovalBean ab) {
+		
+		return asc.responseAnyAppoval(ab);
+	}
+
+	public List<ApprovalBean> getSendAnyApprovalList(ApprovalBean ab) {
+		
+		return asc.getSendAnyApprovalList(ab);
 	}
 
 	

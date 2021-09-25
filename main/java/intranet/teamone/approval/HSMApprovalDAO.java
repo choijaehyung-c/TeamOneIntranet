@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import intranet.teamone.bean.ApprovalBean;
+import intranet.teamone.bean.IntranetOrderBean;
+import intranet.teamone.bean.MroneOrderBean;
 import intranet.teamone.bean.OrderDetailBean;
 import intranet.teamone.bean.ProductBean;
 
@@ -37,7 +39,7 @@ public class HSMApprovalDAO {
 
 	public List<ApprovalBean> getAnyApprovalList(ApprovalBean ab) {
 		
-		return null;
+		return sql2.selectList("getAnyApprovalList", ab);
 	}
 	
 	public Boolean responseAppovalRefuse(ApprovalBean ab) {
@@ -45,15 +47,74 @@ public class HSMApprovalDAO {
 		return convertToBoolean(sql2.update("responseAppovalRefuse", ab));
 	}
 	
+	public List<ApprovalBean> getSendApprovalList(ApprovalBean ab) {
+		
+		return sql2.selectList("getSendApprovalList", ab);
+	}
+	
+	
+	public Boolean insAA(IntranetOrderBean iob) {
+		
+		return convertToBoolean(sql2.insert("insAA", iob));
+	}
+	
+	public Boolean updateAP(IntranetOrderBean iob) {
+		
+		return convertToBoolean(sql2.update("updateAP", iob));
+	}
+
+	public int totalPrice(IntranetOrderBean iob) {
+	
+		return sql2.selectOne("totalPrice", iob);
+	}
+	
+	
+	public String getBudget(IntranetOrderBean iob) {
+		
+		return sql2.selectOne("getBudget", iob);
+	}
+	
+	
+	public Boolean updateBudget(IntranetOrderBean iob) {
+		
+		return convertToBoolean(sql2.update("updateBudget", iob));
+	}
+	
+	
+	public Boolean insRL(MroneOrderBean mob) {
+	
+		return convertToBoolean(sql2.insert("insRL", mob));
+	}
+	
 	boolean convertToBoolean(int data) {
 		return data > 0 ? true : false;
 	}
 
 
-	public List<ApprovalBean> getSendApprovalList(ApprovalBean ab) {
+	public List<OrderDetailBean> getAnyApprovalDetail(ApprovalBean ab) {
 		
-		return sql2.selectList("getSendApprovalList", ab);
+		return sql2.selectList("getAnyApprovalDetail", ab);
 	}
+
+
+	public boolean responseAnyAppoval(ApprovalBean ab) {
+		
+		return convertToBoolean(sql2.update("responseAnyAppoval", ab));
+	}
+
+
+	public List<ApprovalBean> getSendAnyApprovalList(ApprovalBean ab) {
+		
+		return sql2.selectList("getSendAnyApprovalList", ab);
+	}
+
+
+
+
+
+
+
+
 
 
 
