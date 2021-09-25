@@ -23,12 +23,8 @@ const main = new Vue({
 		},
 		dupCheck:[],
 		loading:false,
-        changeMsg:''
 	},
 	methods:{
-		sTest:function(){
-			console.log(this.image);
-		},
 		changePage:function(page){
 			for(i=0;i<this.display.length; i++){
 				this.display[i].show=false;
@@ -119,41 +115,11 @@ const main = new Vue({
 			this.dupCheck.push(index);
 		},getDelivery:function(code){
 			postAjaxJson('rest/getDelivery','getDeliveryInfo','j',code);
-		},
-		loadingOn:function(){
-            this.loading = true;
-        }
-		
 		}
+		
+	}
 	
 });
-
-function callback1(){
-	setTimeout(function(){
-		try{if(document.getElementById("detectRandering").value=="ccc"){main.loading = false;}
-		}catch(error){}
-		if(main.loading){callback2();}
-	},1000);
-}
-
-function callback2(){
-	setTimeout(function(){
-		try{if(document.getElementById("detectRandering").value=="ccc"){main.loading = false;}
-		}catch(error){}
-		if(main.loading){callback1();}
-	},1000);
-}
-
-function asdasdt(){
-    alert("?");
-    main.loading = false;
-}
-
-
-function sTest(){
-	console.log("?");
-	alert("되라!");
-}
 
 function getDeliveryInfo(jsondata){
 	modalStyle();
@@ -173,20 +139,21 @@ function delReason(index){
 }
 
 function orderList(){
-    main.loadingOn();
+    loadingOpen();
     postAjaxForm('rest/getOrderList','getList','j');
     postAjaxForm('rest/getOrderCompleteList','getCompleteList','j');
     main.changePage(3);
-    callback1();
 }
 
 function refundList(){
+	loadingOpen();
 	postAjaxForm('rest/getRefundList','getList','j');
 	postAjaxForm('rest/getRefundCompleteList','getCompleteList','j');
 	main.changePage(4);
 }
 
 function exchangeList(){
+	loadingOpen();
 	postAjaxForm('rest/getExchangeList','getList','j');
 	postAjaxForm('rest/getExchangeCompleteList','getCompleteList','j');
 	main.changePage(11);
@@ -195,7 +162,8 @@ function exchangeList(){
 function getList(jsondata){
 	main.changeTab(0);
 	main.listPush(jsondata);
-	main.list3Push(setList(jsondata));		
+	main.list3Push(setList(jsondata));
+	loadingClose();
 }
 
 function getCompleteList(jsondata){
@@ -232,3 +200,36 @@ function modalStyle(){
 	main.styleObject.height = (document.getElementById("content").offsetHeight-86)+"px";
 	$("html, body").animate({ scrollTop: 0 }, 100);
 }
+
+function loadingOpen() {
+	main.loading = true;
+	let back = $('#loadingBack');
+	let cat = $("#loadingCat");
+	back.css({ 'width': $(window).width(), 'height': $(document).height() }); 
+	cat.css("position", "absolute");
+	cat.css("top", Math.max(0, ( ($(window).height() - cat.outerHeight()) / 2) + $(window).scrollTop() - 100) + "px");
+	cat.css("left", Math.max(0, ( ($(window).width() - cat.outerWidth()) / 2 ) + $(window).scrollLeft() ) + "px");
+	back.show();
+} 
+
+function loadingClose(){
+	setTimeout(function(){
+		try{if(document.getElementById("detectRandering").value=="ccc"){
+			$('#loadingBack').hide();
+			main.loading = false;}
+		}catch(error){}
+		if(main.loading){loadingCloseCallback();}
+	},100);
+}
+
+function loadingCloseCallback(){
+	setTimeout(function(){
+		try{if(document.getElementById("detectRandering").value=="ccc"){
+			 $('#loadingBack').hide();
+			 main.loading = false;}
+		}catch(error){}
+		if(main.loading){loadingClose();}
+	},100);
+}
+
+

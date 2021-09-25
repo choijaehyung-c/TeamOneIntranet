@@ -542,9 +542,20 @@ $(window).scroll(function(){
 				</template>
 				<template v-if="display[2].show"></template>
 <!-------------------------------------------CJH-------------------------------------------->				
-				            <div id="loading2" v-if="loading" >
-            <img src="${pageContext.request.contextPath}/resources/img/asdasd.gif">
-              </div>
+			
+            
+            <div id="loadingBack" class="fade-out-box" style="display: none; position: absolute; top: 0%; left: 0%; width: 100%;
+            height: 100% ; z-index:1001; -moz-opacity: 0.8; opacity:.80; filter: alpha(opacity=60);">
+            	<div id="loadingCat" class="fade-out-box" style="position: absolute;z-index:1000; overflow: auto;">
+	            	<img src="${pageContext.request.contextPath}/resources/img/loadcat.gif">
+	            </div>
+			</div>
+            
+            
+            
+            
+            
+            
 				
 				<template v-if="display[3].show">
 				
@@ -810,6 +821,7 @@ $(window).scroll(function(){
 										</table>		
 					</div>
 					</div>
+					<input id="detectRandering" type="hidden" value="ccc"/>
 				</template>
 				<template v-if="display[11].show">
 				     <div id="modalBack" v-if="modal.show" :style="styleObject">
@@ -899,6 +911,7 @@ $(window).scroll(function(){
 										</table>		
 					</div>
 					</div>
+					<input id="detectRandering" type="hidden" value="ccc"/>
 				</template>
 <!-------------------------------------------NSB-------------------------------------------->				
 				<template v-if="display[5].show"></template>
