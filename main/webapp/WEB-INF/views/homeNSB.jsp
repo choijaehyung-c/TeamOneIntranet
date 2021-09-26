@@ -890,8 +890,252 @@ $(window).scroll(function(){
 <!-------------------------------------------HSM--------------------------------------------
             <template v-if="display[7].show"></template>
             <template v-if="display[8].show"></template>
+-------------------------------------------------------------------------------------------->
+           
+           
+            <template v-if="display[9].show" >
+            
+            
+            
+            <div id="id01" class="w3-modal">
+    					<div class="w3-modal-content">
+      						<div class="w3-container">
+        						<span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                     <div style="max-width: 100%; width: 100%; display: table; background: #fff; border-radius: 10px; padding: 20px; z-index: 1;">
+					<table id="datatablesSimple" class="dataTable-table">
+					<table width='700' cellpadding='0' cellspacing='0' align='center' class='border_all'>
 
-            <template v-if="display[9].show"></template>
+ 					<tr>
+ 					 <td width='100%'>
+   	<table cellpadding='0' cellspacing='0' height='65' width='100%'><tr>
+      <td rowspan='2' align='center' width='360' class='border_tit'><font size='6'><b>세 금 계 산 서</b></font></td>
+      <td rowspan='2' width='5' align='center' class='border_tit'><font size='4'><b>[</b></font></td>
+      <td rowspan='2' width='70' align='center' class='border_tit'>공급자&nbsp;<br>보 &nbsp;관 &nbsp;용&nbsp;</td>
+      <td rowspan='2' width='5' align='center' class='border_tit'><font size='4'><b>]</b></font></td>
+     </tr>
+
+    </table>
+   </td>
+  </tr>
+  <tr> 
+   <td>
+    <table cellpadding='0' cellspacing='0' width='700' >
+     <tr>
+      <td class='border_up' align='center' width='17' rowspan='5'>공<br><br><br>급<br><br><br>자</td>
+      <td class='border_up' align='center' width='55' height='33'>등록번호</td>
+      <td class='border_up' align='center' width='278' colspan='5' >{{bean.tb_spcorpnum}}</td>
+      <td class='border_up' align='center' width='17' rowspan='5'>공<br>급<br>받<br>는<br>자</td>
+      <td class='border_up' align='center' width='55'>등록번호</td>
+      <td class='border_top' align='center' width='278' colspan='5' >{{bean.tb_clcorpnum}}</td>
+      
+     </tr>
+     <tr>
+      <td class='border_up' align='center' width='55' height='33'>상 호<br>(법인명)</td>
+      <td class='border_up' align='center' width='100' colspan='3'>{{bean.tb_spname}}</td>
+      <td class='border_up' align='center' width='12' colspan='1'>성<br>명</td>
+      <td class='border_up' align='right' width='94' colspan='1'>인</td>
+      <td class='border_up' align='center' width='55'>상 호<br>(법인명)</td>
+      <td class='border_up' align='center' width='100' colspan='3'  >{{bean.tb_clname}}</td>
+      <td class='border_up' align='center' width='12' colspan='1'>성<br>명</td>
+      <td class='border_top' align='right' width='94' colspan='2'>인</td>
+     </tr>
+     <tr>
+      <td class='border_up' align='center' width='55' height='33'>사업장<br>주  소</td>
+      <td class='border_up' align='center' width='278' colspan='5'>{{bean.tb_spaddress}}</td>
+      <td class='border_up' align='center' width='55'>사업장<br>주  소</td>
+      <td class='border_top' align='center' width='278' colspan='6' >{{bean.tb_claddress}}</td>
+     </tr>
+     <tr>
+      <td class='border_up' align='center' width='55' height='33'>업  태</td>
+      <td class='border_up' align='center' width='148' colspan='1'>{{bean.spbtname}}</td>
+      <td class='border_up' align='center' width='12' colspan='1'>종<br>목</td>
+      <td class='border_up' align='center' width='106' colspan='3'>{{bean.spbkname}}</td>
+      <td class='border_up' align='center' width='55'>업 &nbsp; 태</td>
+      <td class='border_up' align='center' width='148' colspan='1' >{{bean.clbtname}}</td>
+      <td class='border_up' align='center' width='12' colspan='1'>종<br>목</td>
+      <td class='border_up' align='center' width='106' colspan='4'>{{bean.clbkname}}</td>   
+     </tr>
+     <tr>
+      <td class='border_up' align='center' width='55' height='33' >E-mail</td>
+      <td class='border_up' align='center' width='148' colspan='5' >{{bean.tb_spemail}}</td>
+      <td class='border_up' align='center' width='55' height='33' >E-mail</td>
+      <td class='border_up' align='center' width='148' colspan='6' >{{bean.tb_clemail}}</td>
+     </tr>
+    </table>
+   </td>
+  </tr>
+  
+   <tr>
+   <td width='100%'>
+    <table cellpadding='0' cellspacing='0' width='700' >
+      <tr>
+      <td class='border_up' align='center' width='195' height='33'>품 &nbsp; &nbsp; &nbsp; 목</td>  
+      <td class='border_up' align='center' width='65' height='33'>수 량</td>
+      <td class='border_up' align='center' width='150' height='33'>공급가액</td>
+      <td class='border_up' align='center' width='83' height='33'>세 액</td>
+      <td class='border_up' align='center' width='122' height='33'>합계금액</td>
+      </tr>
+      
+      <tr>
+      <td class='border_up' align='center' width='195' height='33'  v-for="od in od">{{od.pr_name}}</td>      
+      <td class='border_up' align='center' width='65' height='33'  v-for="od in od">{{od.od_quantity}}</td>      
+      <td class='border_up' align='center' width='150' height='33'  v-for="od in od">{{od.pr_price}}</td>      
+      <td class='border_up' align='center' width='83' height='33'  v-for="od in od">{{od.pr_tax}}</td>
+      <td class='border_up' align='center' width='83'height='33'  v-for="od in od">{{od.od_quantity*(od.pr_tax+od.pr_price)}}</td>            
+      </tr>
+ 
+    </table>
+   </td>
+  </tr>
+ 
+
+  <tr>
+   <td width='100%'>
+    <table cellpadding='0' cellspacing='0' width='700' >
+     <tr align='justify'>   
+     <td>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</td> 
+      <td height='33'>{{bean.tb_ttprice}} 이를 영수합니다.</td>
+     </tr>
+
+  
+    </table>
+   </td>
+  </tr> 
+</table>
+
+<table width='700' cellpadding='0' cellspacing='0' align='center' class='border_all_red'>
+
+ <tr>
+  <td width='100%'>
+    <table cellpadding='0' cellspacing='0' height='65' width='100%'><tr>
+      <td rowspan='2' align='center' width='360' class='border_tit_red'><font size='6'><b>세 금 계 산 서</b></font></td>
+      <td rowspan='2' width='5' align='center' class='border_tit_red'><font size='4'><b>[</b></font></td>
+      <td rowspan='2' width='70' align='center' class='border_tit_red'>공급받는자&nbsp;<br>보 &nbsp;관 &nbsp;용&nbsp;</td>
+      <td rowspan='2' width='5' align='center' class='border_tit_red'><font size='4'><b>]</b></font></td>
+     </tr>
+
+    </table>
+   </td>
+  </tr>
+  <tr> 
+   <td>
+    <table cellpadding='0' cellspacing='0' width='700' >
+     <tr>
+      <td class='border_up_red' align='center' width='17' rowspan='5'>공<br><br><br>급<br><br><br>자</td>
+      <td class='border_up_red' align='center' width='55' height='33'>등록번호</td>
+      <td class='border_up_red' align='center' width='278' colspan='5' >{{bean.tb_spcorpnum}}</td>
+      <td class='border_up_red' align='center' width='17' rowspan='5'>공<br>급<br>받<br>는<br>자</td>
+      <td class='border_up_red' align='center' width='55'>등록번호</td>
+      <td class='border_top_red' align='center' width='278' colspan='5' >{{bean.tb_clcorpnum}}</td>
+      
+     </tr>
+     <tr>
+      <td class='border_up_red' align='center' width='55' height='33'>상 호<br>(법인명)</td>
+      <td class='border_up_red' align='center' width='100' colspan='3'>{{bean.tb_spname}}</td>
+      <td class='border_up_red' align='center' width='12' colspan='1'>성<br>명</td>
+      <td class='border_up_red' align='right' width='94' colspan='1'>인</td>
+      <td class='border_up_red' align='center' width='55'>상 호<br>(법인명)</td>
+      <td class='border_up_red' align='center' width='100' colspan='3'  >{{bean.tb_clname}}</td>
+      <td class='border_up_red' align='center' width='12' colspan='1'>성<br>명</td>
+      <td class='border_top_red' align='right' width='94' colspan='2'>인</td>
+     </tr>
+     
+     
+     
+     
+     <tr>
+      <td class='border_up_red' align='center' width='55' height='33'>사업장<br>주  소</td>
+      <td class='border_up_red' align='center' width='278' colspan='5'>{{bean.tb_spaddress}}</td>
+      <td class='border_up_red' align='center' width='55'>사업장<br>주  소</td>
+      <td class='border_top_red' align='center' width='278' colspan='6' >{{bean.tb_claddress}}</td>
+     </tr>
+     <tr>
+      <td class='border_up_red' align='center' width='55' height='33'>업  태</td>
+      <td class='border_up_red' align='center' width='148' colspan='1'>{{bean.spbtname}}</td>
+      <td class='border_up_red' align='center' width='12' colspan='1'>종<br>목</td>
+      <td class='border_up_red' align='center' width='106' colspan='3'>{{bean.spbkname}}</td>
+      <td class='border_up_red' align='center' width='55'>업 &nbsp; 태</td>
+      <td class='border_up_red' align='center' width='148' colspan='1' >{{bean.clbtname}}</td>
+      <td class='border_up_red' align='center' width='12' colspan='1'>종<br>목</td>
+      <td class='border_up_red' align='center' width='106' colspan='4'>{{bean.clbkname}}</td>   
+     </tr>
+     <tr>
+      <td class='border_up_red' align='center' width='55' height='33' >E-mail</td>
+      <td class='border_up_red' align='center' width='148' colspan='5' >{{bean.tb_spemail}}</td>
+      <td class='border_up_red' align='center' width='55' height='33' >E-mail</td>
+      <td class='border_up_red' align='center' width='148' colspan='6' >{{bean.tb_clemail}}</td>
+     </tr>
+    </table>
+   </td>
+  </tr>
+  
+   <tr>
+   <td width='100%'>
+    <table cellpadding='0' cellspacing='0' width='700' >
+      <tr>
+      <td class='border_up_red' align='center' width='195' height='33'>품 &nbsp; &nbsp; &nbsp; 목</td>  
+      <td class='border_up_red' align='center' width='65' height='33'>수 량</td>
+      <td class='border_up_red' align='center' width='150' height='33'>공급가액</td>
+      <td class='border_up_red' align='center' width='83' height='33'>세 액</td>
+      <td class='border_up_red' align='center' width='122' height='33'>합계금액</td>
+      </tr>
+      
+      <tr>
+      <td class='border_up_red' align='center' width='195' height='33' v-for="od in od">{{od.pr_name}}</td>      
+      <td class='border_up_red' align='center' width='65' height='33' v-for="od in od">{{od.od_quantity}}</td>      
+      <td class='border_up_red' align='center' width='150' height='33' v-for="od in od">{{od.pr_price}}</td>      
+      <td class='border_up_red' align='center' width='83' height='33' v-for="od in od">{{od.pr_tax}}</td>
+      <td class='border_up_red' align='center' width='83'height='33' v-for="od in od">{{od.od_quantity*(od.pr_tax+od.pr_price)}}</td>            
+      </tr>
+ 
+    </table>
+   </td>
+  </tr>
+
+  <tr>
+   <td width='100%'>
+    <table cellpadding='0' cellspacing='0' width='700' >
+     <tr align='justify'>   
+     <td>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</td> 
+      <td height='33'>{{bean.tb_ttprice}} 이를 영수합니다.</td>
+     </tr>
+
+  
+    </table>
+   </td>
+  </tr> 
+</table>	
+</table>	
+					
+                                          
+                     </div>
+                     </div>
+                     </div>
+                     </div>
+            
+            
+            <table id="datatablesSimple" class="dataTable-table">
+										<thead>
+											<tr>
+												<th data-sortable style="width: 25%;"><a>세금계산서코드</a></th>
+												<th data-sortable style="width: 25%;"><a>주문코드</a></th>
+												<th data-sortable style="width: 25%;"><a>고객사코드</a></th>
+												<th data-sortable style="width: 25%;"><a>고객사명</a></th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr v-for="list in list"
+												onclick="document.getElementById('id01').style.display='block'" @click="taxDetail(list.tb_code)">
+												<td>{{list.tb_code}}</td>
+												<td>{{list.tb_oscode}}</td>
+												<td>{{list.tb_clcode}}</td>
+												<td>{{list.tb_clname}}</td>
+											</tr>
+											</tbody>																	
+									</table>
+            </template>
+            
+<!-------------------------------------------HSM--------------------------------------------
             <template v-if="display[10].show"></template>
 -------------------------------------------------------------------------------------------->
          </div>
@@ -963,8 +1207,6 @@ $(window).scroll(function(){
 
     <!-- Custom scripts for all pages-->
     <script src="${pageContext.request.contextPath}/resources/js/sb-admin-2.min.js"></script>
-
-
 
 </body>
 

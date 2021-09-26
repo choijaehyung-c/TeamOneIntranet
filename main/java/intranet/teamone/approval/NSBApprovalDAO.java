@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 
 import intranet.teamone.bean.EmployeeBean;
 import intranet.teamone.bean.OrderBean;
+import intranet.teamone.bean.OrderDetailBean;
+import intranet.teamone.bean.TaxBean;
 
 @Repository
 public class NSBApprovalDAO {
@@ -33,11 +35,27 @@ public class NSBApprovalDAO {
    }
 
    public List<OrderBean> getApprovalOrderList(String ofcode) {
-
       return sql.selectList("getApprovalOrderList", ofcode);
    }
 
    public OrderBean inputOrder(String oscode) {
       return sql.selectOne("inputOrder", oscode);
    }
+
+   public List<TaxBean> getIssuedTax(String ofcode) {
+	return sql.selectList("getIssuedTax", ofcode);
+   }
+
+public String getofcode(String epcode) {
+	return sql2.selectOne("getofcode", epcode);
+}
+
+public TaxBean getIssuedTaxDetail(String tbcode) {
+	return sql.selectOne("getIssuedTaxDetail", tbcode);
+}
+
+public List<OrderDetailBean> getTaxProduct(String oscode) {
+	return sql.selectList("getTaxProduct", oscode);
+}
+
 }

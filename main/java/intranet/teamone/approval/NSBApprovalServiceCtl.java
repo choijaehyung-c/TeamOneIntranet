@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import intranet.teamone.bean.EmployeeBean;
 import intranet.teamone.bean.OrderBean;
+import intranet.teamone.bean.TaxBean;
 import intranet.teamone.utils.Encryption;
 import intranet.teamone.utils.ProjectUtils;
 
@@ -50,4 +51,27 @@ public class NSBApprovalServiceCtl {
    public OrderBean inputOrder(String oscode) {
       return dao.inputOrder(oscode);   
    }
+
+   public List<TaxBean> getIssuedTaxCtl() {
+	String epcode = null;
+	String ofcode = null;
+	 
+		try {
+         if(pu.getAttribute("userSs") != null) {
+            epcode=enc.aesDecode((String)pu.getAttribute("userSs"),"session");
+            ofcode = dao.getofcode(epcode);
+         }
+      } catch (Exception e) {
+                  
+         e.printStackTrace();
+      }
+	return dao.getIssuedTax(ofcode);
+   }
+
+public TaxBean getIssuedTaxDetailCtl(String tbcode) {
+	TaxBean tb = dao.getIssuedTaxDetail(tbcode);
+	tb.setOd(dao.getTaxProduct(tb.getTb_oscode()));
+	return tb;
+
+}
 }

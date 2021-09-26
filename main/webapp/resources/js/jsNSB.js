@@ -13,7 +13,8 @@ const main = new Vue({
       list3:[],
       detail:[],
 	  cartNSB:[],
-		inputcart:[]//모달정보들여기에 담기
+	  inputcart:[],//모달정보들여기에 담기
+	  od:[]
    },
    methods:{
       changePage:function(page){
@@ -134,7 +135,13 @@ const main = new Vue({
       inputDP3:function(epcode){
 	  document.getElementById('id01').style.display='none'
       postAjaxJson('/inputDP','inputDPVue3','j',epcode);      
-      }
+      },
+	  taxbillPage:function(){
+		postAjaxJson('/getIssuedTax','IssuedTaxVue','j');
+	  },
+	  taxDetail:function(tbcode){
+		postAjaxJson('/getIssuedTaxDetail','IssuedTaxDetailVue','j',tbcode);
+	  }
 
    }
    
@@ -157,14 +164,12 @@ function oDrafterVue(jsondata){
 
 //부서찾기모달
 function DPVue(jsondata){
-   main.modalOpen();
    main.listPush(jsondata);
    main.displayNSB(0);
 }
 
 //선택한 부서정보 기입
 function inputDPVue(jsondata){
-   main.modalClose();
    main.bean2Push(jsondata);
    main.displayNSB[0].show=true;
    main.displayNSB[1].show=true;
@@ -179,7 +184,6 @@ function rDrafterVue(jsondata){
 
 //부서찾기모달
 function DPVue2(jsondata){
-   main.modalOpen();
    main.listPush(jsondata);
 }
 //선택한 부서정보 기입
@@ -190,12 +194,10 @@ function inputDPVue2(jsondata){
 }
 //반품 거래내역 모달
 function getAOList(jsondata){
-   main.modalOpen2();
    main.listPush(jsondata);
 }
 //거래내역 기입
 function inputAOList(jsondata){
-   main.modalClose();
    main.bean3Push(jsondata);
    main.displayNSB[2].show=true;
    main.displayNSB[3].show=true;
@@ -213,14 +215,29 @@ function aDrafterVue(jsondata){
 }
 //일반결재 부서찾기 모달
 function DPVue3(jsondata){
-   main.modalOpen();
    main.listPush(jsondata);
 }
 //일반결재 부서 기입
 function inputDPVue3(jsondata){
-   main.modalClose();
    main.bean2Push(jsondata);
    main.display[6].show=true;
    main.displayNSB[5].show=true;
 }
+
+//세금계산서 페이지 이동
+function taxbillPage(){
+	main.taxbillPage();
+}
+//세금계산서 리스트 출력
+function IssuedTaxVue(jsondata){
+	main.changePage(9);
+	main.changePageNSB(6);
+	main.listPush(jsondata);
+}
+
+function IssuedTaxDetailVue(jsondata){
+	main.beanPush(jsondata);
+	main.od = jsondata.od;	
+}
+
 

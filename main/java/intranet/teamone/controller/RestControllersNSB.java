@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import intranet.teamone.approval.NSBApprovalServiceEntrance;
 import intranet.teamone.bean.EmployeeBean;
 import intranet.teamone.bean.OrderBean;
+import intranet.teamone.bean.TaxBean;
 
 
 
@@ -48,6 +49,15 @@ public class RestControllersNSB {
       return ase.inputOrder(oscode);   
    }
    
+	@PostMapping("/getIssuedTax")
+	public List<TaxBean> getIssuedTax() {		
+		return ase.getIssuedTax();			
+	}
+	
+	@PostMapping("/getIssuedTaxDetail")
+	public TaxBean getIssuedTaxDetail(@RequestBody String tbcode) {		
+		return ase.getIssuedTaxDetail(tbcode);			
+	}
 
    
 }

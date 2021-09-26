@@ -27,5 +27,10 @@
    WHERE EP_CODE= #{epcode} 
     </select>
     
+    <select id="getofcode"  parameterType="string" resultType="string">
+   SELECT  
+   EP_OFCODE 
+   FROM EP WHERE EP_CODE = #{epcode}
+    </select>
     
 </mapper>

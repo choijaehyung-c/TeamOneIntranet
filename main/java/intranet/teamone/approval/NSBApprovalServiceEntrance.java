@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import intranet.teamone.bean.EmployeeBean;
 import intranet.teamone.bean.OrderBean;
+import intranet.teamone.bean.TaxBean;
 
 @Service
 public class NSBApprovalServiceEntrance {
@@ -32,5 +33,14 @@ public class NSBApprovalServiceEntrance {
 
    public OrderBean inputOrder(String oscode) {   
       return asc.inputOrder(oscode);
+   }
+
+   public List<TaxBean> getIssuedTax() {
+	return asc.getIssuedTaxCtl();
+   }
+
+   public TaxBean getIssuedTaxDetail(String tbcode) {
+	   System.out.println(asc.getIssuedTaxDetailCtl(tbcode));
+	   return asc.getIssuedTaxDetailCtl(tbcode);
    }
 }

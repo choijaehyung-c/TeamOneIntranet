@@ -4,4 +4,5 @@ public interface ApprovalNSB {
    void getDrafter();
    void getDP();
    void inputDP();
+   void getofcode();
 }
