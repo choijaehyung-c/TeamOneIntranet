@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import intranet.teamone.bean.AccessInfoBean;
 import intranet.teamone.bean.OrderBean;
 import intranet.teamone.bean.ProductBean;
 import intranet.teamone.purchase.PurchaseServiceEntrance;
@@ -32,8 +33,11 @@ public class RestControllersIYJ {
 	
 	//아직 구현중
 	@PostMapping("/getRanking")
-	public List<OrderBean> getRanking(){
-		return pse.getRanking();
+	public List<OrderBean> getRanking(@RequestBody AccessInfoBean ab){
+		System.out.println(pse.getRanking(ab));
+		return pse.getRanking(ab);
 	}
+	
+	
 	
 }

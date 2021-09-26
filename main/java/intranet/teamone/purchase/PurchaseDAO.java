@@ -17,6 +17,10 @@ public class PurchaseDAO {
 	@Autowired
 	@Qualifier("mroneDB")
 	SqlSessionTemplate sql;
+	
+	@Autowired
+	@Qualifier("intranetDB")
+	SqlSessionTemplate sql2;
 
 	 List<ProductBean> getBkind() {
 		
@@ -43,8 +47,14 @@ public class PurchaseDAO {
 		return sql.selectList("getSearchItem", word);
 	}
 	 //해당 부서의 많이 구매한 상품 탑 5
-	List<OrderBean> getRanking(AccessInfoBean ai){
-		return sql.selectList("getRanking", ai);
+	List<OrderBean> getRanking(AccessInfoBean ab){
+		return sql2.selectList("getRanking", ab);
+	}
+
+
+	 List<OrderBean> getPrname(String ob) {
+		
+			return  sql.selectList("getPrname",ob);
 	}
 
 }
