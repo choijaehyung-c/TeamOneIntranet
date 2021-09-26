@@ -39,12 +39,12 @@ public class OrderManageServiceCtl {
 					}
 				}
 		}
+		else if(type.equals("OC"))
+			mos = dao.getOrderCompleteList(os_region);
 		else if(type.equals("R"))
 			mos = dao.getRefundList(os_region);
 		else if(type.equals("E"))
 			mos = dao.getExchangeList(os_region);
-		else if(type.equals("OC"))
-			mos = dao.getOrderCompleteList(os_region);
 		else if(type.equals("EC"))
 			mos = dao.getExchangeCompleteList(os_region);
 		else if(type.equals("RC"))

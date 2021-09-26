@@ -775,38 +775,12 @@ function getcl(){
 						</div>
 					<div class="tabs">
 					  <ul>
-						<li class="litab activeT" @click="changeTab(0)">주문 리스트</li>
-						<li class="litab" @click="changeTab(1)">완료 리스트</li>
+						<li class="litab activeT" @click="changeTab(0)">요청 리스트</li>
+						<li class="litab" @click="changeTab(1)">응답 리스트</li>
 					  </ul>
 					</div>
 					<div v-if="display2[0].show">
 					<div style="margin:1%; padding:1%; box-shadow: 0px 0px 10px #222;" v-for="ios in list3">
-								<p style="color:#000; font-weight:bold;">내부 주문 번호 {{ios}}</p><br>
-									<table id="datatablesSimple" class="dataTable-table">
-	 										<thead>
-												<tr>
-													<th style="width: 15%;"><a>외부 주문 번호</a></th>
-													<th style="width: 15%;"><a>상태</a></th>
-													<th style="width: 50%;"><a>상품명</a></th>
-													<th style="width: 20%;"><a>날짜</a></th>
-												</tr>
-												</thead> 
-
-											<tbody>
-												<tr v-for="order in list" v-if="order.ios == ios" @click="getOrderDetail(order.os_code)">
-													<td>{{order.os_code}}</td>
-													<td>{{order.os_stname}}</td>
-													<td>{{order.os_summary}}</td>
-													<td>{{order.os_date}}</td>
-												</tr>
-											</tbody>
-											
-											
-										</table>		
-					</div>
-					</div>
-					<div v-if="display2[1].show">
-					<div style="margin:1%; padding:1%; box-shadow: 0px 0px 10px #222;" v-for="ios in list2">
 								<p style="color:#000; font-weight:bold;">내부 주문 번호 {{ios}}</p><br>
 									<table id="datatablesSimple" class="dataTable-table">
 	 										<thead>
@@ -820,17 +794,44 @@ function getcl(){
 												</thead> 
 
 											<tbody>
-												<tr v-for="order in list1" v-if="order.ios == ios" @click="getOrderDetail(order.os_code)">
+												<tr v-for="order in list" v-if="order.ios == ios" @click="getOrderDetail(order.os_code)">
 													<td>{{order.os_code}}</td>
 													<td>{{order.os_stname}}</td>
 													<td>{{order.os_summary}}</td>
 													<td>{{order.os_date}}</td>
 												</tr>
 											</tbody>
+										</table>		
+					</div>
+					</div>
+					<div v-if="display2[1].show">
+					<div style="margin:1%; padding:1%; box-shadow: 0px 0px 10px #222;" v-for="ios in list2">
+								<p style="color:#000; font-weight:bold;">내부 주문 번호 {{ios}}</p><br>
+									<table id="datatablesSimple" class="dataTable-table">
+	 										<thead>
+												<tr>
+													<th style="width: 15%;"><a>외부 주문 번호</a></th>
+													<th style="width: 12%;"><a>상태</a></th>
+													<th style="width: 47%;"><a>상품명</a></th>
+													<th style="width: 18%;"><a>날짜</a></th>
+													<th style="width: 7%;"><a>Click!</a></th>
+												</tr>
+												</thead> 
+
+											<tbody>
+												<tr v-for="order in list1" v-if="order.ios == ios" style="text-align:center; vertical-align:middle;">
+													<td  @click="getOrderDetail(order.os_code)">{{order.os_code}}</td>
+													<td  @click="getOrderDetail(order.os_code)">{{order.os_stname}}</td>
+													<td  @click="getOrderDetail(order.os_code)">{{order.os_summary}}</td>
+													<td  @click="getOrderDetail(order.os_code)">{{order.os_date}}</td>
+													<td><div v-if="order.os_state==='RA'" @click="getDelivery(order.os_code)">배송 조회</div><div v-else>-</div></td>
+												</tr>
+											</tbody>
 											
 											
 										</table>		
 					</div>
+
 					</div>
 					<input id="detectRandering" type="hidden" value="ccc"/>
 				</template>
@@ -864,41 +865,58 @@ function getcl(){
 									</tbody>
 								</table>
 							</div>
-						</div>					
+						</div>
+				     <div id="modalBack" v-if="modalcjh2.show" :style="styleObject">
+							<div style="width:70%; max-height:80%; background: #fff; transform:translate(-50%,0%);
+							border-radius: 10px; padding: 20px; z-index:1; position: absolute; margin-top:3%; left:50%; overflow:auto;">
+							<div style="float: left; width:95%; color:#000; font-weight: 900; font-size:35px">&nbsp&nbsp배송 조회</div>
+							<button @click="modalcjh2Close()" type="button" class="btn btn-dark" style="font-weight: 900; font-size:16px;">X</button>
+										<hr style="display:block;">
+								<table class="dataTable-table">
+									<tr>
+										<td style="text-align:center; vertical-align:middle;">운송장 번호</td>
+										<td style="text-align:center; vertical-align:middle;">{{modalList.dl_code}}</td>
+										<td style="text-align:center; vertical-align:middle;">주문서 번호</td>
+										<td style="text-align:center; vertical-align:middle;">{{modalList.dl_oscode}}</td>
+									</tr>
+									<tr>
+										<td style="text-align:center; vertical-align:middle;">배송 기사</td>
+										<td style="text-align:center; vertical-align:middle;">{{modalList.dv_name}}</td>
+										<td style="text-align:center; vertical-align:middle;">연락처</td>
+										<td style="text-align:center; vertical-align:middle;">{{modalList.dv_hp}}</td>
+									</tr>
+									<tr>
+										<td style="text-align:center; vertical-align:middle;" colspan="4" v-if="modalList.dl_dscode == 1">상품준비중</td>
+										<td style="text-align:center; vertical-align:middle;" colspan="4" v-else-if="modalList.dl_dscode == 2">배송중</td>
+										<td style="text-align:center; vertical-align:middle;" colspan="4" v-else>배송완료</td>
+									</tr>
+								</table>
+								<table class="dataTable-table">
+								     <thead>
+                                        <tr>
+                                            <th style="width: 25%; text-align:center;"><a>x좌표</a></th>
+                                            <th style="width: 25%; text-align:center;"><a>y좌표</a></th>
+                                            <th style="width: 50%; text-align:center;"><a>날짜</a></th>
+                                        </tr>
+                                    </thead>
+									<tbody>
+										<tr v-for="item in modalList.lc">
+											<td style="text-align:center; vertical-align:middle;">{{item.lc_x}}</td>
+											<td style="text-align:center; vertical-align:middle;">{{item.lc_y}}</td>
+											<td style="text-align:center; vertical-align:middle;">{{item.lc_date}}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+					 </div>
 					<div class="tabs">
 					  <ul>
-						<li class="litab activeT" @click="changeTab(0)">주문 리스트</li>
-						<li class="litab" @click="changeTab(1)">완료 리스트</li>
+						<li class="litab activeT" @click="changeTab(0)">요청 리스트</li>
+						<li class="litab" @click="changeTab(1)">응답 리스트</li>
 					  </ul>
 					</div>
 					<div v-if="display2[0].show">
 					<div style="margin:1%; padding:1%; box-shadow: 0px 0px 10px #222;" v-for="ios in list3">
-								<p style="color:#000; font-weight:bold;">내부 주문 번호 {{ios}}</p><br>
-									<table id="datatablesSimple" class="dataTable-table">
-	 										<thead>
-												<tr>
-													<th style="width: 15%;"><a>외부 주문 번호</a></th>
-													<th style="width: 15%;"><a>상태</a></th>
-													<th style="width: 50%;"><a>상품명</a></th>
-													<th style="width: 20%;"><a>날짜</a></th>
-												</tr>
-												</thead> 
-
-											<tbody>
-												<tr v-for="order in list" v-if="order.ios == ios" @click="getOrderDetail(order.os_code)">
-													<td>{{order.os_code}}</td>
-													<td>{{order.os_stname}}</td>
-													<td>{{order.os_summary}}</td>
-													<td>{{order.os_date}}</td>
-												</tr>
-											</tbody>
-											
-											
-										</table>		
-					</div>
-					</div>
-					<div v-if="display2[1].show">
-					<div style="margin:1%; padding:1%; box-shadow: 0px 0px 10px #222;" v-for="ios in list2">
 								<p style="color:#000; font-weight:bold;">내부 주문 번호 {{ios}}</p><br>
 									<table id="datatablesSimple" class="dataTable-table">
 	 										<thead>
@@ -912,7 +930,7 @@ function getcl(){
 												</thead> 
 
 											<tbody>
-												<tr v-for="order in list1" v-if="order.ios == ios" @click="getOrderDetail(order.os_code)">
+												<tr v-for="order in list" v-if="order.ios == ios" @click="getOrderDetail(order.os_code)">
 													<td>{{order.os_code}}</td>
 													<td>{{order.os_stname}}</td>
 													<td>{{order.os_summary}}</td>
@@ -921,6 +939,35 @@ function getcl(){
 											</tbody>
 										</table>		
 					</div>
+					</div>
+					<div v-if="display2[1].show">
+					<div style="margin:1%; padding:1%; box-shadow: 0px 0px 10px #222;" v-for="ios in list2">
+								<p style="color:#000; font-weight:bold;">내부 주문 번호 {{ios}}</p><br>
+									<table id="datatablesSimple" class="dataTable-table">
+	 										<thead>
+												<tr>
+													<th style="width: 15%;"><a>외부 주문 번호</a></th>
+													<th style="width: 12%;"><a>상태</a></th>
+													<th style="width: 47%;"><a>상품명</a></th>
+													<th style="width: 18%;"><a>날짜</a></th>
+													<th style="width: 7%;"><a>Click!</a></th>
+												</tr>
+												</thead> 
+
+											<tbody>
+												<tr v-for="order in list1" v-if="order.ios == ios" style="text-align:center; vertical-align:middle;">
+													<td  @click="getOrderDetail(order.os_code)">{{order.os_code}}</td>
+													<td  @click="getOrderDetail(order.os_code)">{{order.os_stname}}</td>
+													<td  @click="getOrderDetail(order.os_code)">{{order.os_summary}}</td>
+													<td  @click="getOrderDetail(order.os_code)">{{order.os_date}}</td>
+													<td><div v-if="order.os_state==='EA'" @click="getDelivery(order.os_code)">배송 조회</div><div v-else>-</div></td>
+												</tr>
+											</tbody>
+											
+											
+										</table>		
+					</div>
+
 					</div>
 					<input id="detectRandering" type="hidden" value="ccc"/>
 				</template>
