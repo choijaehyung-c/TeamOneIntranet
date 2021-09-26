@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import intranet.teamone.bean.DeliveryBean;
 import intranet.teamone.bean.MroneOrderBean;
 import intranet.teamone.bean.MroneOrderDetailBean;
+import intranet.teamone.bean.connectionBean;
 import intranet.teamone.order_manage.OrderManageServiceEntrance;
 
 @RestController
@@ -61,6 +62,11 @@ public class RestControllersCJH {
 	@PostMapping("/getDelivery")
 	public DeliveryBean getDelivery(@RequestBody String os_code){
 		return ome.getDelivery(os_code);
+	}
+	
+	@PostMapping("/osConnect")
+	public String connectOs(@RequestBody connectionBean cb) {
+		return ome.connectOs(cb);
 	}
 	
 }

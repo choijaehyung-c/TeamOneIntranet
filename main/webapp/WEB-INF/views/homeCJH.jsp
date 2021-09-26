@@ -38,7 +38,17 @@ $(window).scroll(function(){
 	});
 
 </script>
-
+<script>
+function getcl(){
+	<%
+		String cld = (String) session.getAttribute("cld");
+		String clp = (String) session.getAttribute("clp");
+		//String region = (String) session.getAttribute("region");
+		String region = "KOR001SEO01BMK";
+	%>
+	return {cld:'<%=cld%>', clp:'<%=clp%>', region:'<%=region%>'};
+}
+</script>
 
 
 
@@ -542,17 +552,23 @@ $(window).scroll(function(){
 				</template>
 				<template v-if="display[2].show"></template>
 <!-------------------------------------------CJH-------------------------------------------->				
-				            <div id="loading2" v-if="loading" >
-            <img src="${pageContext.request.contextPath}/resources/img/asdasd.gif">
-              </div>
-				
+			
+            
+            <div id="loadingBack" style="display: none; position: absolute; top: 0%; left: 0%; width: 100%;
+            height: 100% ; z-index:1001; -moz-opacity: 0.8; opacity:.80; filter: alpha(opacity=60);">
+            	<div id="loadingCat" style="position: absolute; transform:translate(-50%,-50%); z-index:1000; overflow: auto;">
+	            	<img src="${pageContext.request.contextPath}/resources/img/loadcat.gif">
+	            </div>
+			</div>
+	
 				<template v-if="display[3].show">
 				
 				     <div id="modalBack" v-if="modalcjh2.show" :style="styleObject">
 							<div style="width:70%; max-height:80%; background: #fff; transform:translate(-50%,0%);
 							border-radius: 10px; padding: 20px; z-index:1; position: absolute; margin-top:3%; left:50%; overflow:auto;">
-							<button @click="modalcjh2Close()" type="button"
-										class="btn btn-dark" style="float: right;">닫기</button><br>
+							<div style="float: left; width:95%; color:#000; font-weight: 900; font-size:35px">&nbsp&nbsp배송 조회</div>
+							<button @click="modalcjh2Close()" type="button" class="btn btn-dark" style="font-weight: 900; font-size:16px;">X</button>
+										<hr style="display:block;">
 								<table class="dataTable-table">
 									<tr>
 										<td style="text-align:center; vertical-align:middle;">운송장 번호</td>
@@ -593,8 +609,10 @@ $(window).scroll(function(){
 				     <div id="modalBack" v-if="modal.show" :style="styleObject">
 							<div style="width:70%; max-height:80%; background: #fff; transform:translate(-50%,0%);
 							border-radius: 10px; padding: 20px; z-index:1; position: absolute; margin-top:3%; left:50%; overflow:auto;">
-							<button @click="modalClose()" type="button"
-										class="btn btn-dark" style="float: right;">닫기</button><br>
+							
+							<div style="float: left; width:95%; color:#000; font-weight: 900; font-size:35px">&nbsp&nbsp주문 정보</div>
+							<button @click="modalClose()" type="button" class="btn btn-dark" style="font-weight: 900; font-size:16px;">X</button>
+										<hr style="display:block;">
 								<table class="dataTable-table" id="modalTable">
 								     <thead>
                                         <tr>
@@ -623,8 +641,9 @@ $(window).scroll(function(){
 				     <div id="modalBack" v-if="modalcjh.show" :style="styleObject">
 							<div style="width:70%; max-height:80%; background: #fff; transform:translate(-50%,0%);
 							border-radius: 10px; padding: 20px; z-index:1; position: absolute; margin-top:3%; left:50%; overflow:auto;">
-							<button @click="modalcjhClose()" type="button"
-										class="btn btn-dark" style="float: right;">닫기</button><br>
+							<div style="float: left; width:95%; color:#000; font-weight: 900; font-size:35px">&nbsp&nbsp교환/반품</div>
+							<button @click="modalcjhClose()" type="button" class="btn btn-dark" style="font-weight: 900; font-size:16px;">X</button>
+										<hr style="display:block;">
 								<table class="dataTable-table" id="modalTable">
 								     <thead>
                                         <tr>
@@ -637,17 +656,21 @@ $(window).scroll(function(){
                                         </tr>
                                     </thead>
 									<tbody><!-- OD_PRSPCODE,OD_OSCODE AS "OS_ORIGIN",OD_PRCODE,OD_QUANTITY,PR_NAME,PR_IMAGE,PR_PRICE,PR_TAX,PR_INFO,PR_ORIGIN,OD_STCODE -->
-										<tr v-for="(item,index) in modalList" @click="insReason(index,item.od_prcode)">
+										<tr v-for="(item,index) in modalList" @click="insReason(index,item)">
 											<td><img :src="item.pr_image" width="100%" height="100%" alt="no search image"></td>
 											<td style="text-align:center; vertical-align:middle;">{{item.pr_name}}</td>
 											<td style="text-align:center; vertical-align:middle;">{{item.pr_info}}</td>
 											<td style="text-align:center; vertical-align:middle;">{{item.perPrice}}</td>
 											<td style="text-align:center; vertical-align:middle;">{{item.od_quantity}}</td>
-											<td style="text-align:center; vertical-align:middle;"><input style="zoom:2.0;" type="checkbox" /></td>
-										</tr>
-										<tr><td colspan="6" style="text-align:center; vertical-align:middle;"> 총 가격(VAT포함) : {{modalList.ttPrice}} 원</td></tr>
-									</tbody>
+											<td style="text-align:center; vertical-align:middle;"><input style="zoom:2.0;" type="checkbox" name="As_Checkbox" :value="item.od_prcode" /></td>
+										</tr>										
+									</tbody>									
 								</table>
+								<hr>
+								<div style="text-align: center;">
+								<button @click="exchangeCheckbox()" type="button" class="btn btn-outline-secondary" style="display: inline-block;">교환하기</button>
+								<button @click="refundCheckbox()" type="button" class="btn btn-outline-secondary" style="display: inline-block;">반품하기</button>
+								</div>
 							</div>
 						</div>
 				<div style="z-index: 3;">
@@ -658,7 +681,6 @@ $(window).scroll(function(){
 					  </ul>
 					</div>
 					<div v-if="display2[0].show">
-					
 					<div style="margin:1%; padding:1%; box-shadow: 0px 0px 10px #222;" v-for="ios in list3">
 								<p style="color:#000; font-weight:bold;">내부 주문 번호 {{ios}}</p><br>
 									<table id="datatablesSimple" class="dataTable-table">
@@ -679,8 +701,8 @@ $(window).scroll(function(){
 														<td @click="getOrderDetail(order.os_code)">{{order.os_stname}}</td>
 													<td @click="getOrderDetail(order.os_code)">{{order.os_summary}}</td>
 													<td @click="getOrderDetail(order.os_code)">{{order.os_date}}</td>
-													<td><div v-if="order.os_state==='OA'">구매 확정</div><div v-else>-</div></td>
-													<td><div v-if="order.os_state==='OA'" @click="getOrderDetail2(order.os_code)">교환/반품</div><div v-else>-</div></td>
+													<td><div v-if="order.os_state==='OA'" @click="sendOrderDecide(order.os_code)">구매 확정</div><div v-else>-</div></td>
+													<td><div v-if="order.os_state==='OA'" @click="getOrderDetail2(order.os_code,order.ios)">교환/반품</div><div v-else>-</div></td>
 													<td><div v-if="order.os_state==='OA'" @click="getDelivery(order.os_code)">배송 조회</div><div v-else>-</div></td>
 												</tr>
 											</tbody>
@@ -738,7 +760,7 @@ $(window).scroll(function(){
                                         </tr>
                                     </thead>
 									<tbody><!-- OD_PRSPCODE,OD_OSCODE AS "OS_ORIGIN",OD_PRCODE,OD_QUANTITY,PR_NAME,PR_IMAGE,PR_PRICE,PR_TAX,PR_INFO,PR_ORIGIN,OD_STCODE -->
-										<tr v-for="(item,index) in modalList">
+										<tr v-for="(item,index) in modalList" v-if="item.od_stcode ==='RR'">
 											<td><img :src="item.pr_image" width="100%" height="100%" alt="no search image"></td>
 											<td style="text-align:center; vertical-align:middle;">{{item.pr_name}}</td>
 											<td style="text-align:center; vertical-align:middle;">{{item.pr_info}}</td>
@@ -753,38 +775,12 @@ $(window).scroll(function(){
 						</div>
 					<div class="tabs">
 					  <ul>
-						<li class="litab activeT" @click="changeTab(0)">주문 리스트</li>
-						<li class="litab" @click="changeTab(1)">완료 리스트</li>
+						<li class="litab activeT" @click="changeTab(0)">요청 리스트</li>
+						<li class="litab" @click="changeTab(1)">응답 리스트</li>
 					  </ul>
 					</div>
 					<div v-if="display2[0].show">
 					<div style="margin:1%; padding:1%; box-shadow: 0px 0px 10px #222;" v-for="ios in list3">
-								<p style="color:#000; font-weight:bold;">내부 주문 번호 {{ios}}</p><br>
-									<table id="datatablesSimple" class="dataTable-table">
-	 										<thead>
-												<tr>
-													<th style="width: 15%;"><a>외부 주문 번호</a></th>
-													<th style="width: 15%;"><a>상태</a></th>
-													<th style="width: 50%;"><a>상품명</a></th>
-													<th style="width: 20%;"><a>날짜</a></th>
-												</tr>
-												</thead> 
-
-											<tbody>
-												<tr v-for="order in list" v-if="order.ios == ios" @click="getOrderDetail(order.os_code)">
-													<td>{{order.os_code}}</td>
-													<td>{{order.os_stname}}</td>
-													<td>{{order.os_summary}}</td>
-													<td>{{order.os_date}}</td>
-												</tr>
-											</tbody>
-											
-											
-										</table>		
-					</div>
-					</div>
-					<div v-if="display2[1].show">
-					<div style="margin:1%; padding:1%; box-shadow: 0px 0px 10px #222;" v-for="ios in list2">
 								<p style="color:#000; font-weight:bold;">내부 주문 번호 {{ios}}</p><br>
 									<table id="datatablesSimple" class="dataTable-table">
 	 										<thead>
@@ -798,18 +794,46 @@ $(window).scroll(function(){
 												</thead> 
 
 											<tbody>
-												<tr v-for="order in list1" v-if="order.ios == ios" @click="getOrderDetail(order.os_code)">
+												<tr v-for="order in list" v-if="order.ios == ios" @click="getOrderDetail(order.os_code)">
 													<td>{{order.os_code}}</td>
 													<td>{{order.os_stname}}</td>
 													<td>{{order.os_summary}}</td>
 													<td>{{order.os_date}}</td>
 												</tr>
 											</tbody>
+										</table>		
+					</div>
+					</div>
+					<div v-if="display2[1].show">
+					<div style="margin:1%; padding:1%; box-shadow: 0px 0px 10px #222;" v-for="ios in list2">
+								<p style="color:#000; font-weight:bold;">내부 주문 번호 {{ios}}</p><br>
+									<table id="datatablesSimple" class="dataTable-table">
+	 										<thead>
+												<tr>
+													<th style="width: 15%;"><a>외부 주문 번호</a></th>
+													<th style="width: 12%;"><a>상태</a></th>
+													<th style="width: 47%;"><a>상품명</a></th>
+													<th style="width: 18%;"><a>날짜</a></th>
+													<th style="width: 7%;"><a>Click!</a></th>
+												</tr>
+												</thead> 
+
+											<tbody>
+												<tr v-for="order in list1" v-if="order.ios == ios" style="text-align:center; vertical-align:middle;">
+													<td  @click="getOrderDetail(order.os_code)">{{order.os_code}}</td>
+													<td  @click="getOrderDetail(order.os_code)">{{order.os_stname}}</td>
+													<td  @click="getOrderDetail(order.os_code)">{{order.os_summary}}</td>
+													<td  @click="getOrderDetail(order.os_code)">{{order.os_date}}</td>
+													<td><div v-if="order.os_state==='RA'" @click="getDelivery(order.os_code)">배송 조회</div><div v-else>-</div></td>
+												</tr>
+											</tbody>
 											
 											
 										</table>		
 					</div>
+
 					</div>
+					<input id="detectRandering" type="hidden" value="ccc"/>
 				</template>
 				<template v-if="display[11].show">
 				     <div id="modalBack" v-if="modal.show" :style="styleObject">
@@ -841,41 +865,58 @@ $(window).scroll(function(){
 									</tbody>
 								</table>
 							</div>
-						</div>					
+						</div>
+				     <div id="modalBack" v-if="modalcjh2.show" :style="styleObject">
+							<div style="width:70%; max-height:80%; background: #fff; transform:translate(-50%,0%);
+							border-radius: 10px; padding: 20px; z-index:1; position: absolute; margin-top:3%; left:50%; overflow:auto;">
+							<div style="float: left; width:95%; color:#000; font-weight: 900; font-size:35px">&nbsp&nbsp배송 조회</div>
+							<button @click="modalcjh2Close()" type="button" class="btn btn-dark" style="font-weight: 900; font-size:16px;">X</button>
+										<hr style="display:block;">
+								<table class="dataTable-table">
+									<tr>
+										<td style="text-align:center; vertical-align:middle;">운송장 번호</td>
+										<td style="text-align:center; vertical-align:middle;">{{modalList.dl_code}}</td>
+										<td style="text-align:center; vertical-align:middle;">주문서 번호</td>
+										<td style="text-align:center; vertical-align:middle;">{{modalList.dl_oscode}}</td>
+									</tr>
+									<tr>
+										<td style="text-align:center; vertical-align:middle;">배송 기사</td>
+										<td style="text-align:center; vertical-align:middle;">{{modalList.dv_name}}</td>
+										<td style="text-align:center; vertical-align:middle;">연락처</td>
+										<td style="text-align:center; vertical-align:middle;">{{modalList.dv_hp}}</td>
+									</tr>
+									<tr>
+										<td style="text-align:center; vertical-align:middle;" colspan="4" v-if="modalList.dl_dscode == 1">상품준비중</td>
+										<td style="text-align:center; vertical-align:middle;" colspan="4" v-else-if="modalList.dl_dscode == 2">배송중</td>
+										<td style="text-align:center; vertical-align:middle;" colspan="4" v-else>배송완료</td>
+									</tr>
+								</table>
+								<table class="dataTable-table">
+								     <thead>
+                                        <tr>
+                                            <th style="width: 25%; text-align:center;"><a>x좌표</a></th>
+                                            <th style="width: 25%; text-align:center;"><a>y좌표</a></th>
+                                            <th style="width: 50%; text-align:center;"><a>날짜</a></th>
+                                        </tr>
+                                    </thead>
+									<tbody>
+										<tr v-for="item in modalList.lc">
+											<td style="text-align:center; vertical-align:middle;">{{item.lc_x}}</td>
+											<td style="text-align:center; vertical-align:middle;">{{item.lc_y}}</td>
+											<td style="text-align:center; vertical-align:middle;">{{item.lc_date}}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+					 </div>
 					<div class="tabs">
 					  <ul>
-						<li class="litab activeT" @click="changeTab(0)">주문 리스트</li>
-						<li class="litab" @click="changeTab(1)">완료 리스트</li>
+						<li class="litab activeT" @click="changeTab(0)">요청 리스트</li>
+						<li class="litab" @click="changeTab(1)">응답 리스트</li>
 					  </ul>
 					</div>
 					<div v-if="display2[0].show">
 					<div style="margin:1%; padding:1%; box-shadow: 0px 0px 10px #222;" v-for="ios in list3">
-								<p style="color:#000; font-weight:bold;">내부 주문 번호 {{ios}}</p><br>
-									<table id="datatablesSimple" class="dataTable-table">
-	 										<thead>
-												<tr>
-													<th style="width: 15%;"><a>외부 주문 번호</a></th>
-													<th style="width: 15%;"><a>상태</a></th>
-													<th style="width: 50%;"><a>상품명</a></th>
-													<th style="width: 20%;"><a>날짜</a></th>
-												</tr>
-												</thead> 
-
-											<tbody>
-												<tr v-for="order in list" v-if="order.ios == ios" @click="getOrderDetail(order.os_code)">
-													<td>{{order.os_code}}</td>
-													<td>{{order.os_stname}}</td>
-													<td>{{order.os_summary}}</td>
-													<td>{{order.os_date}}</td>
-												</tr>
-											</tbody>
-											
-											
-										</table>		
-					</div>
-					</div>
-					<div v-if="display2[1].show">
-					<div style="margin:1%; padding:1%; box-shadow: 0px 0px 10px #222;" v-for="ios in list2">
 								<p style="color:#000; font-weight:bold;">내부 주문 번호 {{ios}}</p><br>
 									<table id="datatablesSimple" class="dataTable-table">
 	 										<thead>
@@ -889,7 +930,7 @@ $(window).scroll(function(){
 												</thead> 
 
 											<tbody>
-												<tr v-for="order in list1" v-if="order.ios == ios" @click="getOrderDetail(order.os_code)">
+												<tr v-for="order in list" v-if="order.ios == ios" @click="getOrderDetail(order.os_code)">
 													<td>{{order.os_code}}</td>
 													<td>{{order.os_stname}}</td>
 													<td>{{order.os_summary}}</td>
@@ -899,6 +940,36 @@ $(window).scroll(function(){
 										</table>		
 					</div>
 					</div>
+					<div v-if="display2[1].show">
+					<div style="margin:1%; padding:1%; box-shadow: 0px 0px 10px #222;" v-for="ios in list2">
+								<p style="color:#000; font-weight:bold;">내부 주문 번호 {{ios}}</p><br>
+									<table id="datatablesSimple" class="dataTable-table">
+	 										<thead>
+												<tr>
+													<th style="width: 15%;"><a>외부 주문 번호</a></th>
+													<th style="width: 12%;"><a>상태</a></th>
+													<th style="width: 47%;"><a>상품명</a></th>
+													<th style="width: 18%;"><a>날짜</a></th>
+													<th style="width: 7%;"><a>Click!</a></th>
+												</tr>
+												</thead> 
+
+											<tbody>
+												<tr v-for="order in list1" v-if="order.ios == ios" style="text-align:center; vertical-align:middle;">
+													<td  @click="getOrderDetail(order.os_code)">{{order.os_code}}</td>
+													<td  @click="getOrderDetail(order.os_code)">{{order.os_stname}}</td>
+													<td  @click="getOrderDetail(order.os_code)">{{order.os_summary}}</td>
+													<td  @click="getOrderDetail(order.os_code)">{{order.os_date}}</td>
+													<td><div v-if="order.os_state==='EA'" @click="getDelivery(order.os_code)">배송 조회</div><div v-else>-</div></td>
+												</tr>
+											</tbody>
+											
+											
+										</table>		
+					</div>
+
+					</div>
+					<input id="detectRandering" type="hidden" value="ccc"/>
 				</template>
 <!-------------------------------------------NSB-------------------------------------------->				
 				<template v-if="display[5].show"></template>
@@ -945,6 +1016,8 @@ $(window).scroll(function(){
             </div>
         </div>
     </div>
+
+
 
 <script type="text/javascript"> 
 

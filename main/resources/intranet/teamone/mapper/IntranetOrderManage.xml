@@ -9,5 +9,9 @@
  		SELECT RL_IOSCODE FROM RL WHERE RL_REGION = #{os_region} AND RL_MOSCODE = #{os_code}
  	</select>
  	
+ 	<insert id="connectOs" parameterType="intranet.teamone.bean.connectionBean">
+ 		INSERT INTO RL VALUES(#{ios},#{mos},SYSDATE,#{region})
+ 	</insert>
+ 	
  	
  </mapper>

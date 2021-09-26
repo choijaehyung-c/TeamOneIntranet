@@ -23,12 +23,9 @@ const main = new Vue({
 		},
 		dupCheck:[],
 		loading:false,
-        changeMsg:''
+		relOs:''
 	},
 	methods:{
-		sTest:function(){
-			console.log(this.image);
-		},
 		changePage:function(page){
 			for(i=0;i<this.display.length; i++){
 				this.display[i].show=false;
@@ -87,7 +84,8 @@ const main = new Vue({
 		getOrderDetail:function(code){
 			postAjaxJson('rest/getOrderDetail','getOrderDetail','j',code);
 		},
-		getOrderDetail2:function(code){
+		getOrderDetail2:function(code,ios){
+			this.relOs = ios;
 			postAjaxJson('rest/getOrderDetail','getOrderDetail2','j',code);
 		},
 		getTTprice:function(tt){
@@ -99,7 +97,7 @@ const main = new Vue({
 			}
 			this.modalList.ttPrice = ttprice.toLocaleString();
 		},
-		insReason:function(index,code){
+		insReason:function(index,item){
 			if(this.dupCheck.includes(index))return;
 			let updown = 0;
 			let dCount = this.dupCheck.length;
@@ -114,45 +112,81 @@ const main = new Vue({
 			let newCell1 = newRow.insertCell(0);
 			let newCell2 = newRow.insertCell(1);
 			newCell1.colSpan = "5";
-			newCell1.innerHTML = `<input type="text" name="od_note" style="width:100%;" placeholder="사유 입력"/>`;
-			newCell2.innerHTML = `<div id="del${index}" onclick="delReason(${index})">삭제</div>`;
-			this.dupCheck.push(index);
+			if(document.getElementById(`note${item.od_prcode}`) == null){
+			newCell1.innerHTML = `<input type="text" id="note${item.od_prcode}" style="width:100%;" placeholder="사유 입력"/>`;
+			newCell2.innerHTML = `<div id="del${index}" onclick="delReason(${index})">삭제</div>`;}
+			this.dupCheck.push(index);			
 		},getDelivery:function(code){
 			postAjaxJson('rest/getDelivery','getDeliveryInfo','j',code);
+		},sendOrderDecide:function(code){
+			let data = getcl();
+			let cData = {os_code:code,clcode:data.cld,clpwd:data.clp};
+			console.log(cData);
+			postAjaxJson('http://172.30.1.21/vue/clientOrderDecide','getReload','s',JSON.stringify(cData));
 		},
-		loadingOn:function(){
-            this.loading = true;
-        }
-		
+		exchangeCheckbox:function(){
+			let check = document.getElementsByName("As_Checkbox");
+			let checkCount = check.length;
+			let odData = [];
+			for(i=0;i<checkCount;i++){
+				if(check[i].checked){
+					odData.push({
+					od_prcode:check[i].value,
+					od_quantity:this.modalList[i].od_quantity,
+					od_prspcode:this.modalList[i].od_prspcode,
+					od_note:$('#note'+check[i].value).val()
+					});
+				}
+			}
+			let data = getcl();
+			let cData = {os_clcode:data.cld,cl_pwd:data.clp,os_origin:this.modalList[0].os_origin,os_region:data.region,od:odData};
+			console.log(cData);
+			postAjaxJson('http://172.30.1.21/vue/clientExchange','getResultAs','j',JSON.stringify(cData));
+			this.modalcjh.show = false;
+			orderList();
+		},
+		refundCheckbox:function(){
+			let check = document.getElementsByName("As_Checkbox");
+			let checkCount = check.length;
+			let odData = [];
+			for(i=0;i<checkCount;i++){
+				if(check[i].checked){
+					odData.push({
+					od_prcode:check[i].value,
+					od_quantity:this.modalList[i].od_quantity,
+					od_prspcode:this.modalList[i].od_prspcode,
+					od_note:$('#note'+check[i].value).val(),
+					});
+				}else{
+					odData.push({
+					od_prcode:check[i].value,
+					od_quantity:this.modalList[i].od_quantity,
+					od_prspcode:this.modalList[i].od_prspcode,
+					od_stcode:"OA"
+					});
+				}
+			}
+			let data = getcl();
+			let cData = {os_clcode:data.cld,cl_pwd:data.clp,os_origin:this.modalList[0].os_origin,os_region:data.region,od:odData};
+			console.log(cData);
+			postAjaxJson('http://172.30.1.21/vue/clientRefund','getResultAs','j',JSON.stringify(cData));
+			this.modalcjh.show = false;
 		}
 	
+	}
 });
 
-function callback1(){
-	setTimeout(function(){
-		try{if(document.getElementById("detectRandering").value=="ccc"){main.loading = false;}
-		}catch(error){}
-		if(main.loading){callback2();}
-	},1000);
+function getResultAs(data){
+	if(main.relOs==null){
+		return alert("에라");
+	}
+	let cData = {ios:main.relOs,mos:data[0]};
+	postAjaxJson('/rest/osConnect','getReload','s',JSON.stringify(cData));
 }
 
-function callback2(){
-	setTimeout(function(){
-		try{if(document.getElementById("detectRandering").value=="ccc"){main.loading = false;}
-		}catch(error){}
-		if(main.loading){callback1();}
-	},1000);
-}
-
-function asdasdt(){
-    alert("?");
-    main.loading = false;
-}
-
-
-function sTest(){
-	console.log("?");
-	alert("되라!");
+function getReload(data){
+	alert(data);
+	orderList();
 }
 
 function getDeliveryInfo(jsondata){
@@ -173,20 +207,21 @@ function delReason(index){
 }
 
 function orderList(){
-    main.loadingOn();
+    loadingOpen();
     postAjaxForm('rest/getOrderList','getList','j');
     postAjaxForm('rest/getOrderCompleteList','getCompleteList','j');
     main.changePage(3);
-    callback1();
 }
 
 function refundList(){
+	loadingOpen();
 	postAjaxForm('rest/getRefundList','getList','j');
 	postAjaxForm('rest/getRefundCompleteList','getCompleteList','j');
 	main.changePage(4);
 }
 
 function exchangeList(){
+	loadingOpen();
 	postAjaxForm('rest/getExchangeList','getList','j');
 	postAjaxForm('rest/getExchangeCompleteList','getCompleteList','j');
 	main.changePage(11);
@@ -195,7 +230,8 @@ function exchangeList(){
 function getList(jsondata){
 	main.changeTab(0);
 	main.listPush(jsondata);
-	main.list3Push(setList(jsondata));		
+	main.list3Push(setList(jsondata));
+	loadingClose();
 }
 
 function getCompleteList(jsondata){
@@ -232,3 +268,36 @@ function modalStyle(){
 	main.styleObject.height = (document.getElementById("content").offsetHeight-86)+"px";
 	$("html, body").animate({ scrollTop: 0 }, 100);
 }
+
+function loadingOpen() {
+	main.loading = true;
+	let back = $('#loadingBack');
+	let cat = $("#loadingCat");
+	back.css({ 'width': $(window).width(), 'height': $(document).height() }); 
+	cat.css("position", "absolute");
+	cat.css("top", Math.max(0, ( ($(window).height() - cat.outerHeight()) / 2) + $(window).scrollTop() - 100) + "px");
+	cat.css("left", Math.max(0, ( ($(window).width() - cat.outerWidth()) / 2 ) + $(window).scrollLeft() ) + "px");
+	back.show();
+} 
+
+function loadingClose(){
+	setTimeout(function(){
+		try{if(document.getElementById("detectRandering").value=="ccc"){
+			$('#loadingBack').hide();
+			main.loading = false;}
+		}catch(error){}
+		if(main.loading){loadingCloseCallback();}
+	},100);
+}
+
+function loadingCloseCallback(){
+	setTimeout(function(){
+		try{if(document.getElementById("detectRandering").value=="ccc"){
+			 $('#loadingBack').hide();
+			 main.loading = false;}
+		}catch(error){}
+		if(main.loading){loadingClose();}
+	},100);
+}
+
+
