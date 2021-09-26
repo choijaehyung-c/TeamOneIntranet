@@ -18,4 +18,9 @@ public class HomeControllerIYJ {
 	public String mainPage() {
 		return "homeIYJ";
 	}
+	
+	@GetMapping("/test12")
+	public String testPage() {
+		return "NewFile1";
+	}
 }

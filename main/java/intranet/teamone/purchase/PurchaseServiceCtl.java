@@ -1,5 +1,6 @@
 package intranet.teamone.purchase;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,10 +43,19 @@ public class PurchaseServiceCtl {
 	}
 
 	 //해당 부서의 많이 구매한 상품 탑 5
-	List<OrderBean> getRanking(){
-		AccessInfoBean ai = new AccessInfoBean();
-		ai.setDp_code("MF");
-		return dao.getRanking(ai);
+	List<OrderBean> getRanking(AccessInfoBean ab){
+		
+		List<OrderBean> list;
+		list = dao.getRanking(ab);
+		 
+		
+		for(int i=0; i<list.size();i++) {
+			List<OrderBean> list2 = new ArrayList<OrderBean>();
+			list.get(i).setOd_prcode(list.get(i).getOd_prcode());
+			
+		}
+		
+		return dao.getRanking(ab);
 	}
 	
 	

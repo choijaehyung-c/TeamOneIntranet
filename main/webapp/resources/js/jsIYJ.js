@@ -131,7 +131,7 @@ const main = new Vue({
 		code = {pr_code:prcode};
 		clientData = JSON.stringify(code);
 		postAjaxJson('restIYJ/getPrDetail','ItemDetail','j',clientData);
-	}		
+	}
 }
 	
 });
@@ -260,3 +260,9 @@ function ItemDetail(jsonData){
 	main.detailPush(jsonData); //detail의 데이터공간에 밀어넣음	
 }
 
+function chartMain(of,dp){
+	let data = {of_name:of,dp_name:dp};
+	let client = JSON.stringify(data);
+	postAjaxJson('restIYJ/getRanking', 'gettingRanking','j',client);
+	
+}
