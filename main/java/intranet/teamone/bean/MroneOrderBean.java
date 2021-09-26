@@ -1,5 +1,7 @@
 package intranet.teamone.bean;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data

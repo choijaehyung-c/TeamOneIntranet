@@ -8,6 +8,10 @@
  	<select id="getOrderList" parameterType="string" resultType="intranet.teamone.bean.MroneOrderBean">
  		SELECT OS_CODE,OS_DATE,OS_STATE,OS_REGION FROM CHLCHL.ORDERS WHERE OS_STATE = 'OA' OR OS_STATE = 'OR'  AND OS_REGION = #{os_region} 
  	</select>
+ 	
+ 	<select id="getRRList" parameterType="string" resultType="string">
+ 		SELECT NVL(OS_ORIGIN,'NONE') FROM CHLCHL.ORDERS WHERE OS_STATE = 'RR' AND OS_REGION = #{os_region}
+ 	</select>
 
  	<select id="getOrderCompleteList" parameterType="string" resultType="intranet.teamone.bean.MroneOrderBean">
  		SELECT OS_CODE,OS_DATE,OS_STATE,OS_REGION FROM CHLCHL.ORDERS WHERE OS_STATE = 'OC' OR OS_STATE = 'OF' AND OS_REGION = #{os_region}

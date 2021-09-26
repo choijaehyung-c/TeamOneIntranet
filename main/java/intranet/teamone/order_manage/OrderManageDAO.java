@@ -11,6 +11,7 @@ import intranet.teamone.bean.DeliveryBean;
 import intranet.teamone.bean.DeliveryLocationBean;
 import intranet.teamone.bean.MroneOrderBean;
 import intranet.teamone.bean.MroneOrderDetailBean;
+import intranet.teamone.bean.connectionBean;
 
 @Repository
 public class OrderManageDAO {
@@ -24,6 +25,10 @@ public class OrderManageDAO {
 	
 	List<MroneOrderBean> getOrderList(String os_region){
 		return mSql.selectList("getOrderList",os_region);
+	}
+	
+	List<String> getRRList(String os_region){
+		return mSql.selectList("getRRList",os_region);
 	}
 	
 	List<MroneOrderBean> getOrderCompleteList(String os_region){
@@ -64,6 +69,14 @@ public class OrderManageDAO {
 	
 	List<DeliveryLocationBean> getDeliveryLocation(String lc_code) {
 		return mSql.selectList("getDeliveryLocation",lc_code);
+	}
+	
+	private boolean convertToBoolean(int data) {
+		return data>0? true : false;
+	}
+	
+	boolean connectOs(connectionBean cb) {
+		return this.convertToBoolean(iSql.insert("connectOs", cb));
 	}
 	
 }

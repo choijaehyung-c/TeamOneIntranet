@@ -24,12 +24,7 @@ public class HomeControllerCJH {
 	@GetMapping("/cjh")
 	public String home() throws Exception {
 		pu.setAttribute("cld","EI01sMOpPT3/l7D2mSsgzA==");
-		pu.setAttribute("clp","ye6FAdE0OZD64xwKbR+snw==");
-		System.out.println(enc.aesEncode("INC10H","mrone"));
-		System.out.println(enc.aesEncode("1234qwer","mrone"));
-		
-		
-		
+		pu.setAttribute("clp","53D1d7E5HaiPOYKNcQs+jw==");
 		return "homeCJH";
 	}
 	

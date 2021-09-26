@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import intranet.teamone.bean.DeliveryBean;
 import intranet.teamone.bean.MroneOrderBean;
 import intranet.teamone.bean.MroneOrderDetailBean;
+import intranet.teamone.bean.connectionBean;
 
 @Service
 public class OrderManageServiceEntrance {
@@ -44,5 +45,9 @@ public class OrderManageServiceEntrance {
 	
 	public DeliveryBean getDelivery(String os_code) {
 		return omc.getDelivery(os_code);
+	}
+	
+	public String connectOs(connectionBean cb){
+		return omc.connectOs(cb);
 	}
 }

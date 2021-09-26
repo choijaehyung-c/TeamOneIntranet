@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import intranet.teamone.bean.DeliveryBean;
 import intranet.teamone.bean.MroneOrderBean;
 import intranet.teamone.bean.MroneOrderDetailBean;
+import intranet.teamone.bean.connectionBean;
 import intranet.teamone.utils.ProjectUtils;
 
 @Service
@@ -28,18 +29,26 @@ public class OrderManageServiceCtl {
 		 * (String)pu.getAttribute("dp");
 		 */
 		List<MroneOrderBean> mos = null;
-		if(type.equals("O"))
-		mos = dao.getOrderList(os_region);
+		if(type.equals("O")) {
+			mos = dao.getOrderList(os_region);
+			List<String>rrList = dao.getRRList(os_region);
+			int mCount = mos.size();
+				for(int i = mCount-1 ; i >= 0 ; i--) {
+					if(rrList.contains(mos.get(i).getOs_code())) {
+						mos.remove(i);
+					}
+				}
+		}
 		else if(type.equals("R"))
-		mos = dao.getRefundList(os_region);
+			mos = dao.getRefundList(os_region);
 		else if(type.equals("E"))
-		mos = dao.getExchangeList(os_region);
+			mos = dao.getExchangeList(os_region);
 		else if(type.equals("OC"))
-		mos = dao.getOrderCompleteList(os_region);
+			mos = dao.getOrderCompleteList(os_region);
 		else if(type.equals("EC"))
-		mos = dao.getExchangeCompleteList(os_region);
+			mos = dao.getExchangeCompleteList(os_region);
 		else if(type.equals("RC"))
-		mos = dao.getRefundCompleteList(os_region);
+			mos = dao.getRefundCompleteList(os_region);
 		
 		Map<String,String> map = new HashMap<String,String>();
 		
@@ -77,6 +86,15 @@ public class OrderManageServiceCtl {
 		}
 		
 		return mos;
+	}
+	
+	String connectOs(connectionBean cb) {
+		cb.setRegion("KOR001SEO01BMK");
+		/*
+		 * try { cb.setRegion((String)pu.getAttribute("region")); } catch (Exception e)
+		 * { // TODO Auto-generated catch block e.printStackTrace(); }
+		 */
+		return dao.connectOs(cb)?"successs":"failed";
 	}
 	
 	List<MroneOrderDetailBean> getOrderDetail(String os_code){

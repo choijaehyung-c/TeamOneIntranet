@@ -43,8 +43,10 @@ function getcl(){
 	<%
 		String cld = (String) session.getAttribute("cld");
 		String clp = (String) session.getAttribute("clp");
+		//String region = (String) session.getAttribute("region");
+		String region = "KOR001SEO01BMK";
 	%>
-	return {cld:'<%=cld%>', clp:'<%= clp%>'};
+	return {cld:'<%=cld%>', clp:'<%=clp%>', region:'<%=region%>'};
 }
 </script>
 
@@ -564,8 +566,9 @@ function getcl(){
 				     <div id="modalBack" v-if="modalcjh2.show" :style="styleObject">
 							<div style="width:70%; max-height:80%; background: #fff; transform:translate(-50%,0%);
 							border-radius: 10px; padding: 20px; z-index:1; position: absolute; margin-top:3%; left:50%; overflow:auto;">
-							<button @click="modalcjh2Close()" type="button"
-										class="btn btn-dark" style="float: right;">닫기</button><br>
+							<div style="float: left; width:95%; color:#000; font-weight: 900; font-size:35px">&nbsp&nbsp배송 조회</div>
+							<button @click="modalcjh2Close()" type="button" class="btn btn-dark" style="font-weight: 900; font-size:16px;">X</button>
+										<hr style="display:block;">
 								<table class="dataTable-table">
 									<tr>
 										<td style="text-align:center; vertical-align:middle;">운송장 번호</td>
@@ -606,8 +609,10 @@ function getcl(){
 				     <div id="modalBack" v-if="modal.show" :style="styleObject">
 							<div style="width:70%; max-height:80%; background: #fff; transform:translate(-50%,0%);
 							border-radius: 10px; padding: 20px; z-index:1; position: absolute; margin-top:3%; left:50%; overflow:auto;">
-							<button @click="modalClose()" type="button"
-										class="btn btn-dark" style="float: right;">닫기</button><br>
+							
+							<div style="float: left; width:95%; color:#000; font-weight: 900; font-size:35px">&nbsp&nbsp주문 정보</div>
+							<button @click="modalClose()" type="button" class="btn btn-dark" style="font-weight: 900; font-size:16px;">X</button>
+										<hr style="display:block;">
 								<table class="dataTable-table" id="modalTable">
 								     <thead>
                                         <tr>
@@ -636,8 +641,9 @@ function getcl(){
 				     <div id="modalBack" v-if="modalcjh.show" :style="styleObject">
 							<div style="width:70%; max-height:80%; background: #fff; transform:translate(-50%,0%);
 							border-radius: 10px; padding: 20px; z-index:1; position: absolute; margin-top:3%; left:50%; overflow:auto;">
-							<button @click="modalcjhClose()" type="button"
-										class="btn btn-dark" style="float: right;">닫기</button><br>
+							<div style="float: left; width:95%; color:#000; font-weight: 900; font-size:35px">&nbsp&nbsp교환/반품</div>
+							<button @click="modalcjhClose()" type="button" class="btn btn-dark" style="font-weight: 900; font-size:16px;">X</button>
+										<hr style="display:block;">
 								<table class="dataTable-table" id="modalTable">
 								     <thead>
                                         <tr>
@@ -650,17 +656,21 @@ function getcl(){
                                         </tr>
                                     </thead>
 									<tbody><!-- OD_PRSPCODE,OD_OSCODE AS "OS_ORIGIN",OD_PRCODE,OD_QUANTITY,PR_NAME,PR_IMAGE,PR_PRICE,PR_TAX,PR_INFO,PR_ORIGIN,OD_STCODE -->
-										<tr v-for="(item,index) in modalList" @click="insReason(index,item.od_prcode)">
+										<tr v-for="(item,index) in modalList" @click="insReason(index,item)">
 											<td><img :src="item.pr_image" width="100%" height="100%" alt="no search image"></td>
 											<td style="text-align:center; vertical-align:middle;">{{item.pr_name}}</td>
 											<td style="text-align:center; vertical-align:middle;">{{item.pr_info}}</td>
 											<td style="text-align:center; vertical-align:middle;">{{item.perPrice}}</td>
 											<td style="text-align:center; vertical-align:middle;">{{item.od_quantity}}</td>
-											<td style="text-align:center; vertical-align:middle;"><input style="zoom:2.0;" type="checkbox" /></td>
-										</tr>
-										<tr><td colspan="6" style="text-align:center; vertical-align:middle;"> 총 가격(VAT포함) : {{modalList.ttPrice}} 원</td></tr>
-									</tbody>
+											<td style="text-align:center; vertical-align:middle;"><input style="zoom:2.0;" type="checkbox" name="As_Checkbox" :value="item.od_prcode" /></td>
+										</tr>										
+									</tbody>									
 								</table>
+								<hr>
+								<div style="text-align: center;">
+								<button @click="exchangeCheckbox()" type="button" class="btn btn-outline-secondary" style="display: inline-block;">교환하기</button>
+								<button @click="refundCheckbox()" type="button" class="btn btn-outline-secondary" style="display: inline-block;">반품하기</button>
+								</div>
 							</div>
 						</div>
 				<div style="z-index: 3;">
@@ -671,7 +681,6 @@ function getcl(){
 					  </ul>
 					</div>
 					<div v-if="display2[0].show">
-					
 					<div style="margin:1%; padding:1%; box-shadow: 0px 0px 10px #222;" v-for="ios in list3">
 								<p style="color:#000; font-weight:bold;">내부 주문 번호 {{ios}}</p><br>
 									<table id="datatablesSimple" class="dataTable-table">
@@ -693,7 +702,7 @@ function getcl(){
 													<td @click="getOrderDetail(order.os_code)">{{order.os_summary}}</td>
 													<td @click="getOrderDetail(order.os_code)">{{order.os_date}}</td>
 													<td><div v-if="order.os_state==='OA'" @click="sendOrderDecide(order.os_code)">구매 확정</div><div v-else>-</div></td>
-													<td><div v-if="order.os_state==='OA'" @click="getOrderDetail2(order.os_code)">교환/반품</div><div v-else>-</div></td>
+													<td><div v-if="order.os_state==='OA'" @click="getOrderDetail2(order.os_code,order.ios)">교환/반품</div><div v-else>-</div></td>
 													<td><div v-if="order.os_state==='OA'" @click="getDelivery(order.os_code)">배송 조회</div><div v-else>-</div></td>
 												</tr>
 											</tbody>
@@ -751,7 +760,7 @@ function getcl(){
                                         </tr>
                                     </thead>
 									<tbody><!-- OD_PRSPCODE,OD_OSCODE AS "OS_ORIGIN",OD_PRCODE,OD_QUANTITY,PR_NAME,PR_IMAGE,PR_PRICE,PR_TAX,PR_INFO,PR_ORIGIN,OD_STCODE -->
-										<tr v-for="(item,index) in modalList">
+										<tr v-for="(item,index) in modalList" v-if="item.od_stcode ==='RR'">
 											<td><img :src="item.pr_image" width="100%" height="100%" alt="no search image"></td>
 											<td style="text-align:center; vertical-align:middle;">{{item.pr_name}}</td>
 											<td style="text-align:center; vertical-align:middle;">{{item.pr_info}}</td>
