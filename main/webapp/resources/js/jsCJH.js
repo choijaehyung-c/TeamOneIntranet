@@ -122,7 +122,7 @@ const main = new Vue({
 			let data = getcl();
 			let cData = {os_code:code,clcode:data.cld,clpwd:data.clp};
 			console.log(cData);
-			postAjaxJson('http://172.30.1.21/vue/clientOrderDecide','getReload','s',JSON.stringify(cData));
+			postAjaxJson('http://cleverc.online/vue/clientOrderDecide','getReload','s',JSON.stringify(cData));
 		},
 		exchangeCheckbox:function(){
 			let check = document.getElementsByName("As_Checkbox");
@@ -141,7 +141,7 @@ const main = new Vue({
 			let data = getcl();
 			let cData = {os_clcode:data.cld,cl_pwd:data.clp,os_origin:this.modalList[0].os_origin,os_region:data.region,od:odData};
 			console.log(cData);
-			postAjaxJson('http://172.30.1.21/vue/clientExchange','getResultAs','j',JSON.stringify(cData));
+			postAjaxJson('http://cleverc.online/vue/clientExchange','getResultAs','j',JSON.stringify(cData));
 			this.modalcjh.show = false;
 			orderList();
 		},
@@ -169,7 +169,7 @@ const main = new Vue({
 			let data = getcl();
 			let cData = {os_clcode:data.cld,cl_pwd:data.clp,os_origin:this.modalList[0].os_origin,os_region:data.region,od:odData};
 			console.log(cData);
-			postAjaxJson('http://172.30.1.21/vue/clientRefund','getResultAs','j',JSON.stringify(cData));
+			postAjaxJson('http://cleverc.online/vue/clientRefund','getResultAs','j',JSON.stringify(cData));
 			this.modalcjh.show = false;
 		}
 	
