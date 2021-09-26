@@ -1,5 +1,6 @@
 package intranet.teamone.purchase;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -52,9 +53,9 @@ public class PurchaseDAO {
 	}
 
 
-	 List<OrderBean> getPrname(String ob) {
-		
-			return  sql.selectList("getPrname",ob);
+	 List<OrderBean> getPrname(OrderBean ob) {
+
+			return sql.selectList("getPrname",ob);
 	}
 
 }

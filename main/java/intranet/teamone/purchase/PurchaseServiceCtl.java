@@ -47,15 +47,20 @@ public class PurchaseServiceCtl {
 		
 		List<OrderBean> list;
 		list = dao.getRanking(ab);
-		 
-		
 		for(int i=0; i<list.size();i++) {
-			List<OrderBean> list2 = new ArrayList<OrderBean>();
-			list.get(i).setOd_prcode(list.get(i).getOd_prcode());
-			
+			System.out.println(this.getPrname(list));
 		}
 		
 		return dao.getRanking(ab);
+	}
+	
+	List<OrderBean> getPrname(List<OrderBean> orderBean){
+		
+		for(int i=0; i<orderBean.size(); i++) {
+			 dao.getPrname(orderBean.get(i));
+		}
+		
+		return orderBean;
 	}
 	
 	

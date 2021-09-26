@@ -72,7 +72,7 @@ $(window).scroll(function(){
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" onClick="mainPage()">
+                <a class="nav-link" onClick="mainPage();chartMain('${of}','${Dp }')">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span >Dashboard</span></a>
             </li>
@@ -410,12 +410,12 @@ $(window).scroll(function(){
 							</svg>                       	 
                         </div>                        
                     </div>
-                     <div class="col-xl-4 col-lg-5" >
-						<div class="card shadow mb-4" >
-							<div class="card-header py-3">
-								<h6 class="m-0 font-weight-bold text-primary">베스트 상품 </h6></div>
+                     <div class="col-lg-5" style="max-width:35%; margin-left:30%; margin-top:-31%;" >
+						<div class="mb-4 card" >
+							<div class="card-header">
+								<h6 class="card-heading">베스트 상품 </h6></div>
 					
-						<div class="container" >
+						<div class="container card-body" >
 							<div class="row">
 								<div class="col-md-16">
 									<canvas id="myChartOne" style="display: block; height: 253px; width: 358px;"></canvas>
@@ -424,7 +424,36 @@ $(window).scroll(function(){
 						</div>
 						
 				</div>
+			</div >
+			<div style="margin-left:85%; margin-top:-29%; ">
+			<div class="card shadow mb-4" style="border:0.5px solid #FDFFFF; border-radius:5px; width:200px; height:200px; background:#fff;">
+				<div class="card-header" ><h6 class ="card-heading" style="font-weight:bold;">To Do <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+  					<path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+  					<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+					</svg></h6>				
+				</div>
+				<ul><li></li></ul>
+				
+				</div>
 			</div>
+			
+			<div class="col-lg-5" style="max-width:70%; margin-top:13%;" >
+						<div class="mb-4 card" >
+							<div class="card-header">
+								<h6 class="card-heading"> </h6></div>
+					
+						<div class="container card-body" >
+							<div class="row">
+								<div class="col-md-16">
+									<canvas id="myChartTwo" style="display: block; height: 253px; width: 358px;"></canvas>
+								</div>
+							</div>
+						</div>
+						
+						
+				</div>
+			</div >
+
 				</template>
 <!-------------------------------------------IYJ-------------------------------------------->			
 							
@@ -698,9 +727,12 @@ $(window).scroll(function(){
     </div>
   <script >
   function gettingRanking(data){
-	  
+	  let date = JSON.stringify(data);
+	  //alert(date);
 	  
 	  	let myChartOne = document.getElementById('myChartOne').getContext('2d');
+	
+	  	
 	  	
 	  	let doughnut = new Chart(myChartOne,{
 	  		type:'doughnut',
@@ -725,7 +757,73 @@ $(window).scroll(function(){
 	  		}
 	  	
 	  	});
+	  	
 	  }
+  
+  const DATA_COUNT = 7;
+  const NUMBER_CFG = {count: DATA_COUNT, min: -100, max: 100};
+
+  const labels = Utils.months({count: 7});
+  const data = {
+    labels: labels,
+    datasets: [
+      {
+        label: 'Dataset 1',
+        data: labels.map(() => {
+          return [Utils.rand(-100, 100), Utils.rand(-100, 100)];
+        }),
+        backgroundColor: Utils.CHART_COLORS.red,
+      },
+      {
+        label: 'Dataset 2',
+        data: labels.map(() => {
+          return [Utils.rand(-100, 100), Utils.rand(-100, 100)];
+        }),
+        backgroundColor: Utils.CHART_COLORS.blue,
+      },
+    ]
+  };
+  const config = {
+		  type: 'bar',
+		  data: data,
+		  options: {
+		    responsive: true,
+		    plugins: {
+		      legend: {
+		        position: 'top',
+		      },
+		      title: {
+		        display: true,
+		        text: 'Chart.js Floating Bar Chart'
+		      }
+		    }
+		  }
+		};
+  
+	let myChartTwo = document.getElementById('myChartTwo').getContext('2d');
+	let bar = new Chart(myChartTwo,{
+  		type:'bar',
+  		data : {
+  			labels:[data[0].od_prcode, data[1].od_prcode, data[2].od_prcode, data[3].od_prcode],
+  			datasets :[{
+  				label:'베스트상품 5',
+  				data : [
+  					data[0].od_quantity,data[1].od_quantity,data[2].od_quantity,data[3].od_quantity,
+  				],
+  				backgroundColor:['rgb(2,117,216)','rgb(255,100,95)','rgb(255,100,132)','rgb(255,205,86)'],
+  				hoverBorderWidth : 5
+  			}]
+  		},
+  		option : {
+  			title :{
+  				display:true,
+  				text:'베스트상품 5',
+  				fontSize:20,
+  				fontColor:'red'
+  			}
+  		}
+  	
+  	});
   </script>
 		
 	<script src="${pageContext.request.contextPath}/resources/vue/vue.js"></script>
