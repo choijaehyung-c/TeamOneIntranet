@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
 
+<meta charset="UTF-8">
+        
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -14,37 +15,40 @@
     <title>ICIA Technology</title>
 
     <!-- Custom fonts for this template-->
+    	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js"></script>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" >
    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
-    
+
     <link href="${pageContext.request.contextPath}/resources/css/IYJ.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<link href="${pageContext.request.contextPath}/resources/css/styles.css" rel="stylesheet" />
+
     <!-- Custom styles for this template-->
     <link href="${pageContext.request.contextPath}/resources/css/sb-admin-2.min.css" rel="stylesheet">
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.js"></script> 
-  
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
  
-
 <script>
 
 $(window).scroll(function(){
-	var scrollTop = $(document).scrollTop()+100;
-	if (scrollTop < 150) {
-	 scrollTop = 150;
+	var scrollTop = $(document).scrollTop()+200;
+	if (scrollTop < 300) {
+	 scrollTop = 300;
 	}
 	$("#sidebarLayer").stop();
 	$("#sidebarLayer").animate( { "top" : scrollTop });
 	});
+	
+
 
 </script>
-
-
+        
 
 
 </head>
 
-<body id="page-top" onLoad="mainPage()">
+<body id="page-top" onLoad="mainPage();chartMain('${of}','${Dp }')">
 
     <!-- Page Wrapper -->
     <div id="wrapper">
@@ -353,7 +357,7 @@ $(window).scroll(function(){
   <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
   <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm12 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1v-1c0-1-1-4-6-4s-6 3-6 4v1a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12z"/>
 </svg>           
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">${Name }</span>
                                 
                             </a>
                             <!-- Dropdown - User Information -->
@@ -403,100 +407,24 @@ $(window).scroll(function(){
   									<div>부서 : <span>${Dp} </span></div>
   									<div>연락처 : <span>${email }</span></div>
   								</div>
-							</svg>
-                        	 
-                        </div>
+							</svg>                       	 
+                        </div>                        
                     </div>
-                    <!-- Content Row -->
-                    <div class="row">
-                        <!-- Area Chart -->
-                        <div class="col-xl-8 col-lg-7">
-                            <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Earnings Overview</h6>
-                                    <div class="dropdown no-arrow">
-                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                            aria-labelledby="dropdownMenuLink">
-                                            <div class="dropdown-header">Dropdown Header:</div>
-                                            <a class="dropdown-item" href="#">Action</a>
-                                            <a class="dropdown-item" href="#">Another action</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">Something else here</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Card Body -->
-                                <div class="card-body">
-                                    <div class="chart-area">
-                                        <canvas id="myAreaChart"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Pie Chart -->
-                        <div class="col-xl-4 col-lg-5">
-                            <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Revenue Sources</h6>
-                                    <div class="dropdown no-arrow">
-                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                            aria-labelledby="dropdownMenuLink">
-                                            <div class="dropdown-header">Dropdown Header:</div>
-                                            <a class="dropdown-item" href="#">Action</a>
-                                            <a class="dropdown-item" href="#">Another action</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">Something else here</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Card Body -->
-                                <div class="card-body">
-                                    <div class="chart-pie pt-4 pb-2">
-                                        <canvas id="myPieChart"></canvas>
-                                    </div>
-                                    <div class="mt-4 text-center small">
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle text-primary"></i> Direct
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle text-success"></i> Social
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle text-info"></i> Referral
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Content Row -->
-                    <div class="row">
-
-                        <!-- Content Column -->
-                        <div class="col-lg-6 mb-4">
-
-                        </div>
-
-                        <div class="col-lg-6 mb-4">
-
-                        </div>
-                    </div>
-
-                </div>
+                     <div class="col-xl-4 col-lg-5" >
+						<div class="card shadow mb-4" >
+							<div class="card-header py-3">
+								<h6 class="m-0 font-weight-bold text-primary">베스트 상품 </h6></div>
+					
+						<div class="container" >
+							<div class="row">
+								<div class="col-md-16">
+									<canvas id="myChartOne" style="display: block; height: 253px; width: 358px;"></canvas>
+								</div>
+							</div>
+						</div>
+						
+				</div>
+			</div>
 				</template>
 <!-------------------------------------------IYJ-------------------------------------------->			
 							
@@ -700,11 +628,11 @@ $(window).scroll(function(){
                                     <tbody id="table">        
                                   		<tr class="odd" v-for="li in cart">
                                   			<td id="img" ><input type='checkbox'name='chkYn' :value=li.spcode+li.prname+li.prcode+li.price+li.count+li.price*li.count /><img :src="li.img" style='width:150px; cursor:zoom-in' @click="getPrDetail(li.prcode)" onclick="document.getElementById('modal01').style.display='block'"/></td>
-                                  			<td id="spcode">{{li.spcode}}</td>
+                                  			<td id="spcode"  >{{li.spcode}}</td>
                                   			<td id="prname">{{li.prname}}</td>
                                   			<td id="prcode">{{li.prcode}}</td>
                                   			<td id="price">{{li.price}}</td>
-                                  			<td id="count"><input type="number"  :value=li.count v-model="li.count" style="width:45%;"></td>
+                                  			<td id="count"><input type="number"   v-model="li.count" style="width:45%;"></td>
                                   			<td id="tt_price"><input type='text' readonly name='tt_price' :value=li.price*li.count>원</td>
                                   			
                                   		</tr>
@@ -749,29 +677,61 @@ $(window).scroll(function(){
     </a>
 
     <!-- Logout Modal-->
+   <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">로그아웃해?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-body">로그아웃할거야?</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <a class="btn btn-primary"  onclick = "readyAccessIntranet('-1','/AccessOutIntranet')" >Logout</a>
                 </div>
             </div>
         </div>
     </div>
-
-	
+  <script >
+  function gettingRanking(data){
+	  
+	  
+	  	let myChartOne = document.getElementById('myChartOne').getContext('2d');
+	  	
+	  	let doughnut = new Chart(myChartOne,{
+	  		type:'doughnut',
+	  		data : {
+	  			labels:[data[0].od_prcode, data[1].od_prcode, data[2].od_prcode, data[3].od_prcode],
+	  			datasets :[{
+	  				label:'베스트상품 5',
+	  				data : [
+	  					data[0].od_quantity,data[1].od_quantity,data[2].od_quantity,data[3].od_quantity,
+	  				],
+	  				backgroundColor:['rgb(2,117,216)','rgb(255,100,95)','rgb(255,100,132)','rgb(255,205,86)'],
+	  				hoverBorderWidth : 5
+	  			}]
+	  		},
+	  		option : {
+	  			title :{
+	  				display:true,
+	  				text:'베스트상품 5',
+	  				fontSize:20,
+	  				fontColor:'red'
+	  			}
+	  		}
+	  	
+	  	});
+	  }
+  </script>
+		
 	<script src="${pageContext.request.contextPath}/resources/vue/vue.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/js.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/jsIYJ.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/js.js"></script>
+	
 	<!-- Bootstrap core JavaScript-->
     <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/bootstrap.bundle.min.js"></script>
@@ -781,6 +741,8 @@ $(window).scroll(function(){
 
     <!-- Custom scripts for all pages-->
     <script src="${pageContext.request.contextPath}/resources/js/sb-admin-2.min.js"></script>
+     		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+		<script src="${pageContext.request.contextPath}/resources/js/Chart.min.js"></script>
 
 
 

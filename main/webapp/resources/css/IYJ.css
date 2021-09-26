@@ -112,3 +112,8 @@ a{
 	text-decoration : underline;
 	
 }
+
+
+.chart{
+	border:1px solid #ddd;
+}

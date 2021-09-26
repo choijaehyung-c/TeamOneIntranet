@@ -5,11 +5,15 @@
 
 <mapper namespace="intranet.teamone.mapper.dashboard">
 
-	<select id = "getRanking" resultType="intranet.teamone.bean.OrderBean">
-	SELECT SUM(OD_QUANTITY) AS OD_QUANTITY, OD.OD_CODE AS OD_PRCODE
+	<select id = "getRanking" parameterType="intranet.teamone.bean.AccessInfoBean" resultType="intranet.teamone.bean.OrderBean">
+		SELECT SUM(OD_QUANTITY) AS OD_QUANTITY, OD.OD_CODE AS OD_PRCODE
 		FROM OS INNER JOIN OD ON OS.OS_CODE = OD.OD_OSCODE
-		WHERE OS.OS_OFCODE='SEO01B' AND OS_DPCODE='MK' AND OS_DATE <![CDATA[>]]> TRUNC(SYSDATE,'MM') AND OS_DATE <![CDATA[<]]> LAST_DAY(SYSDATE) 
-	GROUP BY OD.OD_CODE, OD_QUANTITY
-	ORDER BY OD_QUANTITY DESC
+                INNER JOIN DP ON OS.OS_DPCODE = DP.DP_CODE
+                INNER JOIN "OF" ON OS.OS_OFCODE = "OF".OF_CODE
+			WHERE DP.DP_NAME=#{dp_name} AND "OF".OF_NAME=#{of_name} AND OS_DATE <![CDATA[>]]> TRUNC(SYSDATE,'MM') AND OS_DATE <![CDATA[<]]> LAST_DAY(SYSDATE) 
+			GROUP BY OD.OD_CODE, OD_QUANTITY
+			ORDER BY OD_QUANTITY DESC
 	</select>
+	
+	
 </mapper>
