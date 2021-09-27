@@ -8,9 +8,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import intranet.teamone.approval.HSMApprovalServiceEntrance;
+import intranet.teamone.account.AccountancyServiceEntrance;
+import intranet.teamone.approval.ApprovalServiceEntrance;
 import intranet.teamone.bean.AccessInfoBean;
 import intranet.teamone.bean.ApprovalBean;
+import intranet.teamone.bean.BudgetBean;
 import intranet.teamone.bean.EmployeeBean;
 import intranet.teamone.bean.IntranetOrderBean;
 import intranet.teamone.bean.OrderBean;
@@ -27,8 +29,10 @@ public class RestControllersIYJ {
 	PurchaseServiceEntrance pse;
 	
 	@Autowired
-	HSMApprovalServiceEntrance ase;
+	ApprovalServiceEntrance ase;
 	
+	@Autowired
+	AccountancyServiceEntrance jae;
 	
 
 	@PostMapping ("/getSearchItem")
@@ -42,10 +46,10 @@ public class RestControllersIYJ {
 		return pse.getPrDetail(pr);
 	}
 	
-	//아직 구현중
+	
 	@PostMapping("/getRanking")
 	public List<OrderBean> getRanking(@RequestBody AccessInfoBean ab){
-		System.out.println(pse.getRanking(ab));
+		//System.out.println(pse.getRanking(ab));
 		return pse.getRanking(ab);
 	}
 	
@@ -131,5 +135,10 @@ public class RestControllersIYJ {
 			return ase.getIssuedTaxDetail(tbcode);			
 		}
 
-	
+	//////////////////////jes////////////////////////////
+		@PostMapping("/getBudgetList") //확인했는데 못알아먹을때 앞에 다 문자열도 붙이기
+		   public BudgetBean getBudgetList(){
+		      
+		      return jae.getBudgetList();
+		   }   
 }

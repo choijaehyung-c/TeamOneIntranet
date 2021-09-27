@@ -79,6 +79,13 @@ public class Authentication {
                      }
                      ck.setMaxAge(60*60*12); // 쿠키 유효기간 설정 (초 단위) : 반나절
                      pu.setAttribute("userSs",enc.aesEncode(ah.getAh_epcode(),"session"));
+                     System.out.println(dao.getUserInfo(ah.getAh_epcode()));
+                     pu.setAttribute("userCp",enc.aesEncode(dao.getUserInfo(ah.getAh_epcode()).getEp_cpcode(), "session"));
+                     pu.setAttribute("userOf",enc.aesEncode(dao.getUserInfo(ah.getAh_epcode()).getEp_ofcode(), "session"));
+                     pu.setAttribute("userDp",enc.aesEncode(dao.getUserInfo(ah.getAh_epcode()).getEp_dpcode(), "session"));
+                     System.out.println(pu.getAttribute("userCp"));
+                     System.out.println(pu.getAttribute("userOf"));
+                     System.out.println(pu.getAttribute("userDp"));
                   }else {
                      mav.setViewName("accessForm");
                      mav.addObject("message","alert('로그인실패');");
@@ -134,7 +141,7 @@ public class Authentication {
             ah.setAh_epcode(enc.aesDecode((String)pu.getAttribute("userSs"),"session"));
             //남아 있는 세션이(해당아이디가) DB에 로그인 되어 있는상태 => 마이페이지로
             if(dao.getAccessHistorySum(ah) && ck.getValue().substring(3,ck.getValue().length()).equals((String)pu.getAttribute("userSs"))) {
-               mav.setViewName("homeIYJ");
+               mav.setViewName("home");
                mav.addObject("Name",dao.getUserInfo(ah.getAh_epcode()).getEp_name());
                mav.addObject("Dp",dao.getUserInfo(ah.getAh_epcode()).getDp_name());
                mav.addObject("of", dao.getUserInfo(ah.getAh_epcode()).getOf_name());

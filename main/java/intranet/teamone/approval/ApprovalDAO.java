@@ -18,7 +18,7 @@ import intranet.teamone.bean.TaxBean;
 
 
 @Repository
-public class HSMApprovalDAO {
+public class ApprovalDAO {
 	
 	@Autowired
 	@Qualifier("mroneDB")

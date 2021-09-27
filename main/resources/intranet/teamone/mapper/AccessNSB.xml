@@ -37,16 +37,17 @@
    </insert>
    
    <select id="getUserInfo" parameterType="string" resultType="intranet.teamone.bean.EmployeeBean">
- 		SELECT EP_CODE,
+     		SELECT EP_CODE,
         EP_NAME,
-        OF_CODE,
+        OF_CODE AS EP_OFCODE,
         OF_NAME,
-        DP_CODE,
+        DP_CODE AS EP_DPCODE,
         DP_NAME,
-        EP_EMAIL
+        EP_EMAIL,
+        EP_CPCODE
  FROM EP INNER JOIN DP ON EP.EP_DPCODE=DP.DP_CODE
          INNER JOIN "OF" ON EP.EP_OFCODE = "OF".OF_CODE
-         WHERE EP_CODE=#{epcode}  
+         WHERE EP_CODE=#{ep_code}
    </select>
    
    

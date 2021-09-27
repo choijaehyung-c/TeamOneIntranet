@@ -3,9 +3,9 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="intranet.teamone.mapper.dashboard">
+<mapper namespace="intranet.teamone.mapper.Dashboard">
 
-	<select id = "getRanking" parameterType="intranet.teamone.bean.AccessInfoBean" resultType="intranet.teamone.bean.OrderBean">
+	<select id = "getRank" parameterType="intranet.teamone.bean.AccessInfoBean" resultType="intranet.teamone.bean.OrderBean">
 		SELECT SUM(OD_QUANTITY) AS OD_QUANTITY, OD.OD_CODE AS OD_PRCODE
 		FROM OS INNER JOIN OD ON OS.OS_CODE = OD.OD_OSCODE
                 INNER JOIN DP ON OS.OS_DPCODE = DP.DP_CODE

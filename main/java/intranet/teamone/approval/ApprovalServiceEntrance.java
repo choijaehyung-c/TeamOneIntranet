@@ -14,10 +14,10 @@ import intranet.teamone.bean.ProductBean;
 import intranet.teamone.bean.TaxBean;
 
 @Service
-public class HSMApprovalServiceEntrance {
+public class ApprovalServiceEntrance {
 
 	@Autowired
-	HSMApprovalServiceCtl asc;
+	ApprovalServiceCtl asc;
 
 	//받은 결재리스트 불러오기
 	public List<ApprovalBean> getApprovalList(ApprovalBean ab) {

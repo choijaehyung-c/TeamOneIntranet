@@ -315,7 +315,13 @@ const main = new Vue({
 	  },
 	  taxDetail:function(tbcode){
 		postAjaxJson('rest/getIssuedTaxDetail','IssuedTaxDetailVue','j',tbcode);
-	  }
+	  },
+		
+      getBudgetPage:function(){
+         postAjaxJson('rest/getBudgetList','getBudgetList','j');
+         
+      }
+
 				
 		
 }
@@ -646,5 +652,17 @@ function IssuedTaxDetailVue(jsondata){
 }
 
 
+/////////////////JES///////////////
 
+function getBudgetList(jsonData){ 
+   console.log(jsonData); //alert로도 모르겠다면 console.log로 찍어볼것
+   main.list = jsonData;
+   
+}
+
+
+function getBudget(){
+   main.changePage(10);
+   main.getBudgetPage();
+}
 

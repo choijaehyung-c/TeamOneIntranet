@@ -48,7 +48,7 @@ public class PurchaseServiceCtl {
 		List<OrderBean> list;
 		list = dao.getRanking(ab);
 		for(int i=0; i<list.size();i++) {
-			System.out.println(this.getPrname(list));
+			//System.out.println(this.getPrname(list));
 		}
 		
 		return dao.getRanking(ab);

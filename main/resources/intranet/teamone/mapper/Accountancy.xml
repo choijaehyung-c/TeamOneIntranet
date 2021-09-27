@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="intranet.teamone.mapper.Accountancy"> 
+<select id="getBudgetList" parameterType="string" resultType="intranet.teamone.bean.BudgetBean">
+      SELECT BG_CPCODE, BG_OFCODE, BG_DPCODE, BG_BUDGET, OF_NAME
+      FROM BG INNER JOIN OFFICE ON BG.BG_OFCODE = OFFICE.OF_CODE
+      WHERE BG_OFCODE = #{ofcode}
+   </select> 
+</mapper>

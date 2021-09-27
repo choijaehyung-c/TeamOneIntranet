@@ -29,10 +29,10 @@ import intranet.teamone.utils.ProjectUtils;
 
 
 @Service
-public class HSMApprovalServiceCtl {
+public class ApprovalServiceCtl {
 
 	@Autowired
-	HSMApprovalDAO dao;
+	ApprovalDAO dao;
 
 	@Autowired
 	ProjectUtils pu;
