@@ -445,7 +445,7 @@ function getcl(){
 <!-------------------------------------------IYJ-------------------------------------------->			
 							
 				<template v-if="display[1].show">
-								<div id="id01" class="w3-modal w3-animate-opacity" >
+								<div id="id01" class="w3-modal w3-animate-opacity" style="display:none;">
 									<div class="w3-modal-content" style="width:450px;" >
 										<div class="w3-container" style="max-width: 100%; width: auto; display: table;">
 											<span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
@@ -1251,7 +1251,7 @@ function getcl(){
 								<button class="btn btn-dark" v-on:click="refundApprovalPage()">반품
 									결재 작성</button>
 
-								<div id="id01" class="w3-modal">
+								<div id="id01" class="w3-modal" style="display:none;">
 									<div class="w3-modal-content">
 										<div class="w3-container">
 											<span
