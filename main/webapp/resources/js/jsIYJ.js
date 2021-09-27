@@ -238,7 +238,6 @@ const main = new Vue({
 			}
 		},
 		getAnyApprovalDetail:function(apcode){
-			this.list2 = {ap_code: apcode};
 			let sendJsonData = { ap_code: apcode};
 			let clientData = JSON.stringify(sendJsonData);
 			postAjaxJson('rest/GetAnyApprovalDetail', 'getAnyApprovalDetailPush', 'j', clientData);
@@ -619,9 +618,9 @@ function getApprovalListPush(jsondata){
 }
 
 function getAnyApprovalListPush(jsondata){
-	main.list2Push(jsondata);
 	main.selectPage[0].show=false;
 	main.selectPage[1].show=true;
+	main.list2Push(jsondata);
 }
 
 
