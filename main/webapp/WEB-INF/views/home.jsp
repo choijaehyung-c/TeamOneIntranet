@@ -1647,70 +1647,8 @@ $(window).scroll(function(){
 	  	
 	  }
   
-  const DATA_COUNT = 7;
-  const NUMBER_CFG = {count: DATA_COUNT, min: -100, max: 100};
 
-  const labels = Utils.months({count: 7});
-  const data = {
-    labels: labels,
-    datasets: [
-      {
-        label: 'Dataset 1',
-        data: labels.map(() => {
-          return [Utils.rand(-100, 100), Utils.rand(-100, 100)];
-        }),
-        backgroundColor: Utils.CHART_COLORS.red,
-      },
-      {
-        label: 'Dataset 2',
-        data: labels.map(() => {
-          return [Utils.rand(-100, 100), Utils.rand(-100, 100)];
-        }),
-        backgroundColor: Utils.CHART_COLORS.blue,
-      },
-    ]
-  };
-  const config = {
-		  type: 'bar',
-		  data: data,
-		  options: {
-		    responsive: true,
-		    plugins: {
-		      legend: {
-		        position: 'top',
-		      },
-		      title: {
-		        display: true,
-		        text: 'Chart.js Floating Bar Chart'
-		      }
-		    }
-		  }
-		};
-  
-	let myChartTwo = document.getElementById('myChartTwo').getContext('2d');
-	let bar = new Chart(myChartTwo,{
-  		type:'bar',
-  		data : {
-  			labels:[data[0].od_prcode, data[1].od_prcode, data[2].od_prcode, data[3].od_prcode, data[4].od_prcode],
-  			datasets :[{
-  				label:'베스트상품 5',
-  				data : [
-  					data[0].od_quantity,data[1].od_quantity,data[2].od_quantity,data[3].od_quantity,data[4].od_quantity
-  				],
-  				backgroundColor:['rgb(2,117,216)','rgb(255,100,95)','rgb(255,100,132)','rgb(255,205,86)'],
-  				hoverBorderWidth : 5
-  			}]
-  		},
-  		option : {
-  			title :{
-  				display:true,
-  				text:'베스트상품 5',
-  				fontSize:20,
-  				fontColor:'red'
-  			}
-  		}
-  	
-  	});
+
   </script>
 		
 	<script src="${pageContext.request.contextPath}/resources/vue/vue.js"></script>
