@@ -229,16 +229,12 @@ const main = new Vue({
 			let clientData = JSON.stringify(sendJsonData);
 			postAjaxJson('rest/GetApprovalDetail', 'sendToMro', 'j', clientData);
 		},
-		changeReceiveApproval:function(){
+		changeReceiveApproval:function(){//*//
 			let num = document.getElementById("changeList").value;
 			if(num == 0){
-				let sendJsonData = { ap_todpcode: "MT", ap_toofcode: "INC01H" };
-				let clientData = JSON.stringify(sendJsonData);
-				postAjaxJson('rest/GetApprovalList', 'getApprovalListPush', 'j', clientData);
+				postAjaxJson('rest/GetApprovalList', 'getApprovalListPush', 'j');
 			}else{
-				let sendJsonData = { ap_todpcode: "MT", ap_toofcode: "INC01H" };
-				let clientData = JSON.stringify(sendJsonData);
-				postAjaxJson('rest/GetAnyApprovalList', 'getAnyApprovalListPush', 'j', clientData);
+				postAjaxJson('rest/GetAnyApprovalList', 'getAnyApprovalListPush', 'j');
 			}
 		},
 		getAnyApprovalDetail:function(apcode){
@@ -253,16 +249,12 @@ const main = new Vue({
 			alert(clientData);
 			postAjaxJson('rest/ResponseAnyAppoval', 'getAnyApprovalList', 's', clientData);	
 		},
-		changeSendApprovalList:function(){
+		changeSendApprovalList:function(){//*//
 			let num = document.getElementById("changeSendApproval").value;
 			if(num == 0){
-				let sendJsonData = { ap_fromdpcode: "MK", ap_fromofcode: "SEO01B" };
-				let clientData = JSON.stringify(sendJsonData);
-				postAjaxJson('rest/GetSendApprovalList', 'getSendApprovalListPush', 'j', clientData);
+				postAjaxJson('rest/GetSendApprovalList', 'getSendApprovalListPush', 'j');
 			}else{
-				let sendJsonData = { ap_fromdpcode: "MK", ap_fromofcode: "SEO01B" };
-				let clientData = JSON.stringify(sendJsonData);
-				postAjaxJson('rest/GetSendAnyApprovalList', 'getSendAnyApprovalListPush', 'j', clientData);
+				postAjaxJson('rest/GetSendAnyApprovalList', 'getSendAnyApprovalListPush', 'j');
 			}
 		},
 		getSendAnyApprovalDetail:function(apcode){
@@ -604,23 +596,18 @@ function chartMain(of,dp){
 
 /////////////////////////////////HSM////////////////////////////////////////
 
-function receiveApprovalPage(msg){
-	loadingOpen();
+function receiveApprovalPage(msg){//*//
 	if(msg !=''){
 		alert(msg);
 	}
-	let sendJsonData = { ap_todpcode: "MT", ap_toofcode: "INC01H" };
-	let clientData = JSON.stringify(sendJsonData);
-	postAjaxJson('rest/GetApprovalList', 'getApprovalListPush', 'j', clientData);
+	postAjaxJson('rest/GetApprovalList', 'getApprovalListPush', 'j');
 }
 
-function getAnyApprovalList(msg){
+function getAnyApprovalList(msg){//*//
 	if(msg !=''){
 		alert(msg);
 	}
-	let sendJsonData = { ap_todpcode: "MT", ap_toofcode: "INC01H" };
-	let clientData = JSON.stringify(sendJsonData);
-	postAjaxJson('rest/GetAnyApprovalList', 'getAnyApprovalListPush', 'j', clientData);
+	postAjaxJson('rest/GetAnyApprovalList', 'getAnyApprovalListPush', 'j');
 }
 
 function getApprovalListPush(jsondata){
@@ -680,16 +667,19 @@ function sendToMro(jsondata){
 	for(i=0; i<jsondataLength; i++){
 		OD.push({od_prspcode:jsondata[i].od_prspcode, od_quantity:jsondata[i].od_quantity, od_prcode:jsondata[i].od_prcode})
 	}
-	let sendJsonData = { os_clcode: "INC10H", os_region:"KOR001SEO01BMK",od:OD };
+	let CL = getcl();
+	let sendJsonData = { os_clcode: CL.cld, cl_pwd:CL.clp, os_region:CL.clr, od:OD };
 	let clientData = JSON.stringify(sendJsonData);
+	alert(clientData);
 	postAjaxJson("http://cleverc.online/vue/clientOrder", 'returnStringData', 'j', clientData);
 }
 
 function returnStringData(jsondata){
+	let CL = getcl();
 	let jsondataLength = jsondata.length;
 	let MOS = [];
 	 for(i=0; i<jsondataLength; i++){
-		MOS.push({os_code:jsondata[i], os_region:"KOR001SEO01BMK"})
+		MOS.push({os_code:jsondata[i], os_region:CL.clr})
 	}
 	let sendJsonData = { rl_ioscode: main.list2.os_code,
 						 aa_apcode: main.list2.ap_code, 

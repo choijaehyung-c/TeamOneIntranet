@@ -60,15 +60,15 @@ public class RestControllersIYJ {
 		return pse.getRanking(ab);
 	}
 	
-	@PostMapping("/GetApprovalList")
-	public List<ApprovalBean> getApprovalList(@RequestBody ApprovalBean ab) {
-		return ase.getApprovalList(ab);
-	}
+	   @PostMapping("/GetApprovalList")
+	   public List<ApprovalBean> getApprovalList() {
+	      return ase.getApprovalList();
+	   }
 
-	@PostMapping("/GetAnyApprovalList")
-	public List<ApprovalBean> getAnyApprovalList(@RequestBody ApprovalBean ab) {
-		return ase.getAnyApprovalList(ab);
-	}
+	   @PostMapping("/GetAnyApprovalList")
+	   public List<ApprovalBean> getAnyApprovalList() {
+	      return ase.getAnyApprovalList();
+	   }
 
 	@PostMapping("/GetApprovalDetail")
 	public List<OrderDetailBean> getApprovalDetail(@RequestBody ApprovalBean ab) {
@@ -88,15 +88,15 @@ public class RestControllersIYJ {
 		return ase.responseAnyAppoval(ab);
 	}
 	
-	@PostMapping("/GetSendApprovalList")
-	public List<ApprovalBean> getSendApprovalList(@RequestBody ApprovalBean ab) {
-		return ase.getSendApprovalList(ab);
-	}
+	  @PostMapping("/GetSendApprovalList")
+	   public List<ApprovalBean> getSendApprovalList() {
+	      return ase.getSendApprovalList();
+	   }
 
-	@PostMapping("/GetSendAnyApprovalList")
-	public List<ApprovalBean> getSendAnyApprovalList(@RequestBody ApprovalBean ab) {
-		return ase.getSendAnyApprovalList(ab);
-	}
+	   @PostMapping("/GetSendAnyApprovalList")
+	   public List<ApprovalBean> getSendAnyApprovalList() {
+	      return ase.getSendAnyApprovalList();
+	   }
 
 	@PostMapping("/ResponseAppovalAccept")
 	public String responseAppovalAccept(@RequestBody IntranetOrderBean iob) {

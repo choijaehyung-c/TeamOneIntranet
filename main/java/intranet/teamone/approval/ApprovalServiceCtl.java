@@ -40,10 +40,16 @@ public class ApprovalServiceCtl {
 	@Autowired
 	Encryption enc;
 
-	public List<ApprovalBean> getApprovalList(ApprovalBean ab) {
-
-		return dao.getApprovalList(ab);
-	}
+	public List<ApprovalBean> getApprovalList() {   
+	      ApprovalBean ab = new ApprovalBean();
+	      try {
+	         ab.setAp_todpcode((String)pu.getAttribute("userDp"));
+	         ab.setAp_toofcode((String)pu.getAttribute("userOf"));
+	         } catch (Exception e) {
+	            e.printStackTrace();
+	         }
+	      return dao.getApprovalList(ab);
+	   }
 
 
 	public List<OrderDetailBean> getApprovalDetail(ApprovalBean ab) {
@@ -52,10 +58,16 @@ public class ApprovalServiceCtl {
 	}
 
 
-	public List<ApprovalBean> getAnyApprovalList(ApprovalBean ab) {
-
-		return dao.getAnyApprovalList(ab);
-	}
+	public List<ApprovalBean> getAnyApprovalList() {
+	      ApprovalBean ab = new ApprovalBean();
+	      try {
+	         ab.setAp_todpcode((String)pu.getAttribute("userDp"));
+	         ab.setAp_toofcode((String)pu.getAttribute("userOf"));
+	         } catch (Exception e) {
+	            e.printStackTrace();
+	         }
+	      return dao.getAnyApprovalList(ab);
+	   }
 
 
 	public String responseAppovalRefuse(ApprovalBean ab) {
@@ -69,10 +81,16 @@ public class ApprovalServiceCtl {
 	}
 
 
-	public List<ApprovalBean> getSendApprovalList(ApprovalBean ab) {
-
-		return dao.getSendApprovalList(ab);
-	}
+	public List<ApprovalBean> getSendApprovalList() {
+	      ApprovalBean ab = new ApprovalBean();
+	      try {
+	         ab.setAp_fromdpcode((String)pu.getAttribute("userDp"));
+	         ab.setAp_fromofcode((String)pu.getAttribute("userOf"));
+	         } catch (Exception e) {
+	            e.printStackTrace();
+	         }
+	      return dao.getSendApprovalList(ab);
+	   }
 
 
 	public String IntranetOrderBean(IntranetOrderBean iob) {
@@ -141,10 +159,16 @@ public class ApprovalServiceCtl {
 	}
 
 
-	public List<ApprovalBean> getSendAnyApprovalList(ApprovalBean ab) {
-
-		return dao.getSendAnyApprovalList(ab);
-	}
+	public List<ApprovalBean> getSendAnyApprovalList() {
+	      ApprovalBean ab = new ApprovalBean();
+	      try {
+	         ab.setAp_fromdpcode((String)pu.getAttribute("userDp"));
+	         ab.setAp_fromofcode((String)pu.getAttribute("userOf"));
+	         } catch (Exception e) {
+	            e.printStackTrace();
+	         }
+	      return dao.getSendAnyApprovalList(ab);
+	   }
 
 	EmployeeBean getDrafterCtl() {
 

@@ -20,9 +20,9 @@ public class ApprovalServiceEntrance {
 	ApprovalServiceCtl asc;
 
 	//받은 결재리스트 불러오기
-	public List<ApprovalBean> getApprovalList(ApprovalBean ab) {
+	public List<ApprovalBean> getApprovalList() {
 
-		return asc.getApprovalList(ab);
+		return asc.getApprovalList();
 	}
 
 	//해당 os코드의 주문디테일 가져오기
@@ -31,9 +31,9 @@ public class ApprovalServiceEntrance {
 		return asc.getApprovalDetail(ab);
 	}
 
-	public List<ApprovalBean> getAnyApprovalList(ApprovalBean ab) {
+	public List<ApprovalBean> getAnyApprovalList() {
 
-		return asc.getAnyApprovalList(ab);
+		return asc.getAnyApprovalList();
 	}
 
 	public String responseAppovalRefuse(ApprovalBean ab) {
@@ -41,9 +41,9 @@ public class ApprovalServiceEntrance {
 		return asc.responseAppovalRefuse(ab);
 	}
 
-	public List<ApprovalBean> getSendApprovalList(ApprovalBean ab) {
+	public List<ApprovalBean> getSendApprovalList() {
 
-		return asc.getSendApprovalList(ab);
+		return asc.getSendApprovalList();
 	}
 
 	public String responseAppovalAccept(IntranetOrderBean iob) {
@@ -61,9 +61,9 @@ public class ApprovalServiceEntrance {
 		return asc.responseAnyAppoval(ab);
 	}
 
-	public List<ApprovalBean> getSendAnyApprovalList(ApprovalBean ab) {
+	public List<ApprovalBean> getSendAnyApprovalList() {
 
-		return asc.getSendAnyApprovalList(ab);
+		return asc.getSendAnyApprovalList();
 	}
 
 	public EmployeeBean getDrafter() {   
