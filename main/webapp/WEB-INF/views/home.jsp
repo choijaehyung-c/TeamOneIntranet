@@ -1628,7 +1628,7 @@ $(window).scroll(function(){
 	  			datasets :[{
 	  				label:'베스트상품 5',
 	  				data : [
-	  					data[0].od_quantity,data[1].od_quantity,data[2].od_quantity,data[3].od_quantity,
+	  					data[0].od_quantity,data[1].od_quantity,data[2].od_quantity,data[3].od_quantity
 	  				],
 	  				backgroundColor:['rgb(2,117,216)','rgb(255,100,95)','rgb(255,100,132)','rgb(255,205,86)'],
 	  				hoverBorderWidth : 5
