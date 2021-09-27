@@ -1482,8 +1482,11 @@ function getcl(){
 <!-------------------------------------------HSM-------------------------------------------->
 			<template v-if="display[7].show">
 				
-					<div v-if="modal.show" style="height: 100%; width: 100%; background: rgba(0,0,0,0.5); position: absolute; padding: 20px; z-index: 2;">
-           	 	<div style="max-width: 100%; width: auto; display: table; background: #fff; border-radius: 10px; padding: 20px; z-index: 1;">
+					<div id="modalBack" v-if="modal.show" :style="styleObject">
+                     <div style="width:70%; max-height:80%; background: #fff; transform:translate(-50%,0%);
+                     border-radius: 10px; padding: 20px; z-index:1; position: absolute; margin-top:3%; left:50%; overflow:auto;">
+                     <div style="float: left; width:95%; color:#000; font-weight: 900; font-size:35px">&nbsp&nbsp</div>
+                     <button @click="modalClose()" type="button" class="btn btn-dark" style="font-weight: 900; font-size:16px;">X</button>
                    		<table id="datatablesSimple" class="dataTable-table">
 											<thead>
 												<tr>
@@ -1504,14 +1507,18 @@ function getcl(){
                    		<div  style="text-align: center">
                    		<button @click="getDetailInfo(list2.os_code, list2.ap_code, list2.of_code)" type="button" class="btn btn-dark">허가</button>
                    		<button @click="responseAppovalRefuse(list2.ap_code)" type="button" class="btn btn-dark">반려</button>
-                   		<button @click="modalClose()" type="button" class="btn btn-dark">닫기</button>
+                   		
                   		</div>
                    		
                   	</div>
                    	</div>				
 					
-					<div v-if="modal2.show" style="height: 100%; width: 100%; background: rgba(0,0,0,0.5); position: absolute; padding: 20px; z-index: 2;">
-           	 	<div style="max-width: 100%; width: auto; display: table; background: #fff; border-radius: 10px; padding: 20px; z-index: 1;">
+					  <div id="modalBack" v-if="modal2.show" :style="styleObject">
+                     <div style="width:70%; max-height:80%; background: #fff; transform:translate(-50%,0%);
+                     border-radius: 10px; padding: 20px; z-index:1; position: absolute; margin-top:3%; left:50%; overflow:auto;">
+                     <div style="float: left; width:95%; color:#000; font-weight: 900; font-size:35px">&nbsp&nbsp</div>
+                     <button @click="modal2.show=false" type="button" class="btn btn-dark" style="font-weight: 900; font-size:16px;">X</button>
+                       
                    		<table id="datatablesSimple" class="dataTable-table">
 											<thead>
 												<tr>
@@ -1530,7 +1537,6 @@ function getcl(){
                    		<div  style="text-align: center">
                    		<button @click="responseAnyAppoval(list2.ap_code, 'NA')" type="button" class="btn btn-dark">허가</button>
                    		<button @click="responseAnyAppoval(list2.ap_code, 'NF')" type="button" class="btn btn-dark">반려</button>
-                   		<button @click="modal2.show =false" type="button" class="btn btn-dark">닫기</button>
                   		</div>
                    		
                   	</div>
@@ -1604,8 +1610,11 @@ function getcl(){
 				
 				<template v-if="display[8].show">
 				
-					<div v-if="modal.show" style="height: 100%; width: 100%; background: rgba(0,0,0,0.5); position: absolute; padding: 20px; z-index: 2;">
-           	 	<div style="max-width: 100%; width: auto; display: table; background: #fff; border-radius: 10px; padding: 20px; z-index: 1;">
+					<div id="modalBack" v-if="modal.show" :style="styleObject">
+                     <div style="width:70%; max-height:80%; background: #fff; transform:translate(-50%,0%);
+                     border-radius: 10px; padding: 20px; z-index:1; position: absolute; margin-top:3%; left:50%; overflow:auto;">
+                     <div style="float: left; width:95%; color:#000; font-weight: 900; font-size:35px">&nbsp&nbsp</div>
+                     <button @click="modalClose()" type="button" class="btn btn-dark" style="font-weight: 900; font-size:16px;">X</button>
                    		<table id="datatablesSimple" class="dataTable-table">
 											<thead>
 												<tr>
@@ -1623,16 +1632,17 @@ function getcl(){
 												</tr>
 											</tbody>
 										</table>
-                   		<div  style="text-align: center">
-                   		<button @click="modalClose()" type="button" class="btn btn-dark">닫기</button>
-                  		</div>
+             
                    		
                   	</div>
                    	</div>
                    	
                    	
-                   	<div v-if="modal2.show" style="height: 100%; width: 100%; background: rgba(0,0,0,0.5); position: absolute; padding: 20px; z-index: 2;">
-           	 	<div style="max-width: 100%; width: auto; display: table; background: #fff; border-radius: 10px; padding: 20px; z-index: 1;">
+                   	<div id="modalBack" v-if="modal2.show" :style="styleObject">
+                     <div style="width:70%; max-height:80%; background: #fff; transform:translate(-50%,0%);
+                     border-radius: 10px; padding: 20px; z-index:1; position: absolute; margin-top:3%; left:50%; overflow:auto;">
+                     <div style="float: left; width:95%; color:#000; font-weight: 900; font-size:35px">&nbsp&nbsp</div>
+                     <button @click="modal2.show=false" type="button" class="btn btn-dark" style="font-weight: 900; font-size:16px;">X</button>
                    		<table id="datatablesSimple" class="dataTable-table">
 											<thead>
 												<tr>
@@ -1648,9 +1658,7 @@ function getcl(){
 												</tr>
 											</tbody>
 										</table>
-                   		<div  style="text-align: center">
-                   		<button @click="modal2.show =false" type="button" class="btn btn-dark">닫기</button>
-                  		</div>
+                 
                    		
                   	</div>
                    	</div>

@@ -625,10 +625,12 @@ function getAnyApprovalListPush(jsondata){
 
 
 function getApprovalDetailPush(jsondata){
+	modalStyle();
 	main.detailPush2(jsondata);
 	main.modalOpen();
 }
 function getAnyApprovalDetailPush(jsondata){
+	modalStyle();
 	main.detailPush2(jsondata);
 	main.modal2.show = true;
 }
@@ -654,6 +656,7 @@ function getSendAnyApprovalListPush(jsondata){
 }
 
 function getSendAnyApprovalDetailPush(jsondata){
+	modalStyle();
 	main.detailPush2(jsondata);
 	main.modal2.show = true;
 }
