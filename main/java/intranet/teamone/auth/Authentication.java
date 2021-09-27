@@ -80,9 +80,9 @@ public class Authentication {
                      ck.setMaxAge(60*60*12); // 쿠키 유효기간 설정 (초 단위) : 반나절
                      pu.setAttribute("userSs",enc.aesEncode(ah.getAh_epcode(),"session"));
                      System.out.println(dao.getUserInfo(ah.getAh_epcode()));
-                     pu.setAttribute("userCp",enc.aesEncode(dao.getUserInfo(ah.getAh_epcode()).getEp_cpcode(), "session"));
-                     pu.setAttribute("userOf",enc.aesEncode(dao.getUserInfo(ah.getAh_epcode()).getEp_ofcode(), "session"));
-                     pu.setAttribute("userDp",enc.aesEncode(dao.getUserInfo(ah.getAh_epcode()).getEp_dpcode(), "session"));
+                     pu.setAttribute("userCp",dao.getUserInfo(ah.getAh_epcode()).getEp_cpcode());
+                     pu.setAttribute("userOf",dao.getUserInfo(ah.getAh_epcode()).getEp_ofcode());
+                     pu.setAttribute("userDp",dao.getUserInfo(ah.getAh_epcode()).getEp_dpcode());
                      System.out.println(pu.getAttribute("userCp"));
                      System.out.println(pu.getAttribute("userOf"));
                      System.out.println(pu.getAttribute("userDp"));
