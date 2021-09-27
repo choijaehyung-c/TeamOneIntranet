@@ -134,7 +134,7 @@ public class Authentication {
             ah.setAh_epcode(enc.aesDecode((String)pu.getAttribute("userSs"),"session"));
             //남아 있는 세션이(해당아이디가) DB에 로그인 되어 있는상태 => 마이페이지로
             if(dao.getAccessHistorySum(ah) && ck.getValue().substring(3,ck.getValue().length()).equals((String)pu.getAttribute("userSs"))) {
-               mav.setViewName("homeNSB");
+               mav.setViewName("homeIYJ");
                mav.addObject("Name",dao.getUserInfo(ah.getAh_epcode()).getEp_name());
                mav.addObject("Dp",dao.getUserInfo(ah.getAh_epcode()).getDp_name());
                mav.addObject("of", dao.getUserInfo(ah.getAh_epcode()).getOf_name());

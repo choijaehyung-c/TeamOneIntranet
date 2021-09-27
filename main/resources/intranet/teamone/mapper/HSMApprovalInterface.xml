@@ -84,4 +84,33 @@
 		UPDATE ANYAPPROVAL SET AN_ATCODE = #{at_code} WHERE AN_CODE = #{ap_code}
 	</update>
 	
+	
+	   <select id="getDrafter" parameterType="string" resultType="intranet.teamone.bean.EmployeeBean">
+   SELECT  
+   EP_CODE, EP_OFCODE, EP_DPCODE, EP_NAME, OF_NAME, DP_NAME 
+   FROM EP INNER JOIN "OF" ON EP_OFCODE = OF_CODE  
+    INNER JOIN DP ON EP_DPCODE = DP_CODE 
+   WHERE EP_CODE= #{epcode} 
+    </select>
+    
+    <select id="getDP" resultType="intranet.teamone.bean.EmployeeBean">
+   SELECT  
+   EP_CODE, EP_OFCODE, EP_DPCODE, EP_NAME, OF_NAME, DP_NAME 
+   FROM EP INNER JOIN "OF" ON EP_OFCODE = OF_CODE  
+    INNER JOIN DP ON EP_DPCODE = DP_CODE  
+    </select>
+    
+    <select id="inputDP" parameterType="string" resultType="intranet.teamone.bean.EmployeeBean">
+   SELECT  
+   EP_CODE, EP_OFCODE, EP_DPCODE, EP_NAME, OF_NAME, DP_NAME 
+   FROM EP INNER JOIN "OF" ON EP_OFCODE = OF_CODE  
+    INNER JOIN DP ON EP_DPCODE = DP_CODE 
+   WHERE EP_CODE= #{epcode} 
+    </select>
+    
+    <select id="getofcode"  parameterType="string" resultType="string">
+   SELECT  
+   EP_OFCODE 
+   FROM EP WHERE EP_CODE = #{epcode}
+    </select>
 </mapper>
