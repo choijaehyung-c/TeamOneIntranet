@@ -636,9 +636,7 @@ function getAnyApprovalDetailPush(jsondata){
 
 function sendApprovalPage(){
 	loadingOpen();
-	let sendJsonData = { ap_fromdpcode: "MK", ap_fromofcode: "SEO01B" };
-	let clientData = JSON.stringify(sendJsonData);
-	postAjaxJson('rest/GetSendApprovalList', 'getSendApprovalListPush', 'j', clientData);
+	postAjaxJson('rest/GetSendApprovalList', 'getSendApprovalListPush', 'j');
 }
 
 function getSendApprovalListPush(jsondata){
