@@ -25,6 +25,8 @@ const main = new Vue({
 		bean:{},
       	bean2:{},
       	bean3:{},
+		sendbean:{},
+     	sendbean2:{},
 		styleObject:{
 			height:'',
 			width: 'calc( 100% - 224px )',
@@ -98,6 +100,12 @@ const main = new Vue({
       	bean3Push:function(jsondata){
          this.bean3 = jsondata;
       	},
+     	sendbeanPush:function(jsondata){
+         this.sendbean = jsondata;
+      },
+     sendbean2Push:function(jsondata){
+         this.sendbean2 = jsondata;
+      },
 		modalListPush:function(jsondata){
 			this.modalList = jsondata;
 		},
@@ -348,6 +356,12 @@ const main = new Vue({
          postAjaxJson('rest/getBudgetList','getBudgetList','j');
          
       },
+	issueApproval:function(){
+      let sendJsonData = {ap_fromdpcode:this.sendbean.ep_dpcode, ap_fromofcode:this.sendbean.ep_ofcode, cp_code:this.sendbean.ep_cpcode, ap_todpcode:this.sendbean2.ep_dpcode, ap_toofcode:this.sendbean2.ep_ofcode, cg_type:document.getElementById("div_apv_sq").value, cart:this.inputcart};
+      console.log(this.inputcart);
+      let clientData = JSON.stringify(sendJsonData);      
+      postAjaxJson('rest/issueApproval','ApprovalPage2','s', clientData);
+     },
 		////////////////////////////////////////////////////////////////
 		tabSet:function(tabNum){
 			let count = this.display2.length;
@@ -490,17 +504,12 @@ function setCookie(name,value,day){
 }
 
 //쿠키삭제
-function delCookie(name,value){
-	var date = new Date();
-			
-	date.setDate(date.getDate()-1);
-			
-	//쿠키삭제 
-	var setCookie = '';
-	setCookie += name +'='+ value+';';
-	setCookie += 'Expires=' + date.toUTCString();
-				
-	document.cookie = setCookie;
+function delCookie(prcode){
+   var date = new Date();
+   let name ='addCart-'+ prcode;
+   date.setDate(date.getDate()-1);
+            
+   document.cookie = `${name}=; expires= ${date}`;
 }
 
 
@@ -666,9 +675,10 @@ function sendToMro(jsondata){
 		OD.push({od_prspcode:jsondata[i].od_prspcode, od_quantity:jsondata[i].od_quantity, od_prcode:jsondata[i].od_prcode})
 	}
 	let CL = getcl();
-	let sendJsonData = { os_clcode: CL.cld, cl_pwd:CL.clp, os_region:CL.clr, od:OD };
+	let sendJsonData = { os_clcode: CL.cld, cl_pwd:CL.clp, os_region:CL.region, od:OD };
 	let clientData = JSON.stringify(sendJsonData);
 	alert(clientData);
+	console.log(CL);
 	postAjaxJson("http://cleverc.online/vue/clientOrder", 'returnStringData', 'j', clientData);
 }
 
@@ -677,7 +687,7 @@ function returnStringData(jsondata){
 	let jsondataLength = jsondata.length;
 	let MOS = [];
 	 for(i=0; i<jsondataLength; i++){
-		MOS.push({os_code:jsondata[i], os_region:CL.clr})
+		MOS.push({os_code:jsondata[i], os_region:CL.region})
 	}
 	let sendJsonData = { rl_ioscode: main.list2.os_code,
 						 aa_apcode: main.list2.ap_code, 
@@ -702,11 +712,23 @@ function ApprovalPage(){
  
 }
 
+function ApprovalPage2(message){
+   alert(message);
+   main.changePage(5);
+   main.changePageNSB(6);
+   document.getElementById('id01').style.display='none';
+   document.getElementById('id02').style.display='none';
+   
+   for(i=0; i<main.inputcart.length; i++){
+   this.delCookie(main.inputcart[i].prcode);   
+   }  
+}
+
 //기안자세션기입
 function oDrafterVue(jsondata){
    main.changePageNSB(0);
    main.display[5].show=false;
-   main.beanPush(jsondata);
+   main.sendbeanPush(jsondata);
 	loadingClose();
 }
 
@@ -718,7 +740,7 @@ function DPVue(jsondata){
 
 //선택한 부서정보 기입
 function inputDPVue(jsondata){
-   main.bean2Push(jsondata);
+   main.sendbean2Push(jsondata);
    main.displayNSB[0].show=true;
    main.displayNSB[1].show=true;
 }
@@ -728,7 +750,7 @@ function rDrafterVue(jsondata){
 
    main.changePageNSB(2);
    main.display[5].show=false;
-   main.beanPush(jsondata); 
+   main.sendbeanPush(jsondata); 
 	loadingClose();  
 }
 
@@ -738,7 +760,7 @@ function DPVue2(jsondata){
 }
 //선택한 부서정보 기입
 function inputDPVue2(jsondata){
-   main.bean2Push(jsondata);
+   main.sendbean2Push(jsondata);
    main.displayNSB[2].show=true;
    main.displayNSB[3].show=true;
 }
@@ -762,7 +784,7 @@ function anyApprovalPage(){
 function aDrafterVue(jsondata){
    main.changePage(6);
    main.changePageNSB(6);
-   main.beanPush(jsondata);
+   main.sendbeanPush(jsondata);
 	loadingClose();
 }
 //일반결재 부서찾기 모달
@@ -771,7 +793,7 @@ function DPVue3(jsondata){
 }
 //일반결재 부서 기입
 function inputDPVue3(jsondata){
-   main.bean2Push(jsondata);
+   main.sendbean2Push(jsondata);
    main.display[6].show=true;
    main.displayNSB[5].show=true;
 }
@@ -936,6 +958,5 @@ function loadingCloseCallback(){
 		if(main.loading){loadingClose();}
 	},300);
 }
-
 
 

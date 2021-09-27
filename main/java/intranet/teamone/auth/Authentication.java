@@ -83,6 +83,9 @@ public class Authentication {
                      pu.setAttribute("userCp",dao.getUserInfo(ah.getAh_epcode()).getEp_cpcode());
                      pu.setAttribute("userOf",dao.getUserInfo(ah.getAh_epcode()).getEp_ofcode());
                      pu.setAttribute("userDp",dao.getUserInfo(ah.getAh_epcode()).getEp_dpcode());
+                     pu.setAttribute("cld",enc.aesEncode("INC10H","mrone"));
+                     pu.setAttribute("clp",enc.aesEncode("1234qwer","mrone"));
+                     
                      System.out.println(pu.getAttribute("userCp"));
                      System.out.println(pu.getAttribute("userOf"));
                      System.out.println(pu.getAttribute("userDp"));

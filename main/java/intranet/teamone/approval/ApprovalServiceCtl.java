@@ -96,7 +96,11 @@ public class ApprovalServiceCtl {
 	public String IntranetOrderBean(IntranetOrderBean iob) {
 		String msg = null;
 		int check = 0;
-		iob.setEp_code("21001");
+		try {
+			iob.setEp_code(enc.aesDecode((String)pu.getAttribute("userSs"),"session"));
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
 		boolean tran = false;
 		pu.setTransactionConf(TransactionDefinition.PROPAGATION_REQUIRED,
 				TransactionDefinition.ISOLATION_READ_COMMITTED, false);
@@ -197,11 +201,11 @@ public class ApprovalServiceCtl {
 		return dao.getApprovalOrderList(ofcode);
 	}
 
-	public OrderBean inputOrder(String oscode) {
+	 OrderBean inputOrder(String oscode) {
 		return dao.inputOrder(oscode);   
 	}
 
-	public List<TaxBean> getIssuedTaxCtl() {
+	 List<TaxBean> getIssuedTaxCtl() {
 		String epcode = null;
 		String ofcode = null;
 
@@ -217,12 +221,42 @@ public class ApprovalServiceCtl {
 		return dao.getIssuedTax(ofcode);
 	}
 
-	public TaxBean getIssuedTaxDetailCtl(String tbcode) {
+	 TaxBean getIssuedTaxDetailCtl(String tbcode) {
 		TaxBean tb = dao.getIssuedTaxDetail(tbcode);
 		tb.setOd(dao.getTaxProduct(tb.getTb_oscode()));
 		return tb;
 
 	}
+
+
+	 String issueApprovalCtl(ApprovalBean ab) {
+		   String message = "Try Again";   
+		   
+		   
+		   ab.setAp_fromdpcode(ab.getAp_fromdpcode() ); 
+		   ab.setAp_fromofcode(ab.getAp_fromofcode() );
+		   ab.setAp_todpcode(ab.getAp_todpcode() );
+		   ab.setAp_toofcode(ab.getAp_toofcode());
+		   ab.setCg_type(ab.getCg_type());
+		   ab.setCp_code(ab.getCp_code());
+		   
+
+		   if(dao.insOs(ab)) {
+		      ab.setAp_oscode(dao.getoscode());
+		         if(dao.issueApproval(ab)) {
+		            for(int i=0; i<ab.getCart().size(); i++) {            
+		               ab.setOd_code(ab.getCart().get(i).getPrcode());
+		               ab.setOd_price(ab.getCart().get(i).getTtprice());
+		               ab.setOd_quantity(ab.getCart().get(i).getCount());
+		               ab.setSp_code(ab.getCart().get(i).getSpcode());               
+		               dao.insOd(ab);   
+
+		            }         
+		         }
+		         message="SUCCESS";
+		      }
+		      return message;
+		}
 
 
 

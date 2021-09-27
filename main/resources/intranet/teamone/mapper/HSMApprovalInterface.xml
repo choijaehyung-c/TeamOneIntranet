@@ -87,7 +87,7 @@
 	
 	   <select id="getDrafter" parameterType="string" resultType="intranet.teamone.bean.EmployeeBean">
    SELECT  
-   EP_CODE, EP_OFCODE, EP_DPCODE, EP_NAME, OF_NAME, DP_NAME 
+   EP_CODE, EP_OFCODE, EP_DPCODE, EP_CPCODE, EP_NAME, OF_NAME, DP_NAME 
    FROM EP INNER JOIN "OF" ON EP_OFCODE = OF_CODE  
     INNER JOIN DP ON EP_DPCODE = DP_CODE 
    WHERE EP_CODE= #{epcode} 
@@ -95,14 +95,14 @@
     
     <select id="getDP" resultType="intranet.teamone.bean.EmployeeBean">
    SELECT  
-   EP_CODE, EP_OFCODE, EP_DPCODE, EP_NAME, OF_NAME, DP_NAME 
+   EP_CODE, EP_OFCODE, EP_DPCODE, EP_CPCODE, EP_NAME, OF_NAME, DP_NAME 
    FROM EP INNER JOIN "OF" ON EP_OFCODE = OF_CODE  
     INNER JOIN DP ON EP_DPCODE = DP_CODE  
     </select>
     
     <select id="inputDP" parameterType="string" resultType="intranet.teamone.bean.EmployeeBean">
    SELECT  
-   EP_CODE, EP_OFCODE, EP_DPCODE, EP_NAME, OF_NAME, DP_NAME 
+   EP_CODE, EP_OFCODE, EP_DPCODE, EP_CPCODE, EP_NAME, OF_NAME, DP_NAME 
    FROM EP INNER JOIN "OF" ON EP_OFCODE = OF_CODE  
     INNER JOIN DP ON EP_DPCODE = DP_CODE 
    WHERE EP_CODE= #{epcode} 
@@ -113,4 +113,23 @@
    EP_OFCODE 
    FROM EP WHERE EP_CODE = #{epcode}
     </select>
+    
+        <insert id="issueApproval" parameterType="intranet.teamone.bean.ApprovalBean">
+      INSERT INTO AP VALUES('AP'||TO_CHAR(SYSDATE,'YYMMDD')||#{ap_fromdpcode}||SEQ_APPROVAL_NUM.NEXTVAL, #{ap_oscode}, #{ap_fromdpcode}, #{ap_fromofcode}, #{ap_todpcode}, #{ap_toofcode}, sysdate, #{cg_type}, 'OR')
+    </insert>
+    
+      <insert id="insOs" parameterType="intranet.teamone.bean.ApprovalBean">
+     INSERT INTO OS VALUES(TO_CHAR(SYSDATE,'YYMMDD')||SEQ_ORDER_NUM.NEXTVAL, #{ap_fromdpcode}, #{ap_fromofcode}, #{cp_code}, SYSDATE, #{cg_type})
+        </insert>
+        
+      <select id="getoscode" resultType="string">
+    SELECT  
+      OS_CODE 
+      FROM OS WHERE OS_DATE = (SELECT MAX(OS_DATE) FROM OS)
+    </select>
+    
+    <insert id="insOd" parameterType="intranet.teamone.bean.ApprovalBean">
+     INSERT INTO OD VALUES(#{ap_oscode}, #{od_code}, #{od_quantity}, #{sp_code}, '', #{od_price})
+      </insert>
+    
 </mapper>

@@ -141,6 +141,11 @@ public class RestControllersIYJ {
 		public TaxBean getIssuedTaxDetail(@RequestBody String tbcode) {		
 			return ase.getIssuedTaxDetail(tbcode);			
 		}
+		
+		 @PostMapping("/issueApproval")
+		  public String issueApproval(@RequestBody ApprovalBean ab) {      
+		     return ase.issueApproval(ab);         
+		   }
 
 	//////////////////////jes////////////////////////////
 		@PostMapping("/getBudgetList") //확인했는데 못알아먹을때 앞에 다 문자열도 붙이기

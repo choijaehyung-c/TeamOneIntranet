@@ -49,8 +49,7 @@ function getcl(){
 	<%
 		String cld = (String) session.getAttribute("cld");
 		String clp = (String) session.getAttribute("clp");
-		//String region = (String) session.getAttribute("region");
-		String region = "KOR001SEO01BMK";
+		String region = (String)session.getAttribute("userCp") + (String)session.getAttribute("userOf") + (String)session.getAttribute("userDp");
 	%>
 	return {cld:'<%=cld%>', clp:'<%=clp%>', region:'<%=region%>'};
 }
@@ -1088,328 +1087,281 @@ function getcl(){
 
 <!-------------------------------------------NSB-------------------------------------------->				
 				<template v-if="display[5].show">
-            		
-             	
+            	            	
              		<input id="detectRandering" type="hidden" value="ccc"/>
             	</template>
 
-							<template v-if="displayNSB[0].show">
-							
-								
-								<div id="id01" class="w3-modal">
-									<div class="w3-modal-content">
-										<div class="w3-container">
-											<span
-												onclick="document.getElementById('id01').style.display='none'"
-												class="w3-button w3-display-topright">&times;</span>
-											<div
-												style="max-width: 100%; width: 100%; display: table; background: #fff; border-radius: 10px; padding: 20px; z-index: 1;">
-												<table id="datatablesSimple" class="dataTable-table">
-													<thead>
-														<tr>
-															<th data-sortable
-																style="width: 33.3333%; background-color: #E0E0E0;"><a>부서명</a></th>
-															<th data-sortable
-																style="width: 33.3333%; background-color: #E0E0E0;"><a>담당자명</a></th>
-															<th data-sortable
-																style="width: 33.3333%; background-color: #E0E0E0;"><a>지사명</a></th>
-														</tr>
-													</thead>
-													<tbody>
-														<tr v-for="list in list" @click="inputDP(list.ep_code)">
-															<td>{{list.dp_name}}</td>
-															<td>{{list.ep_name}}</td>
-															<td>{{list.of_name}}</td>
-														</tr>
+			 <template v-if="displayNSB[0].show">
 
-													</tbody>
-												</table>
-											</div>
-										</div>
-									</div>
-								</div>
+                <div id="id01" class="w3-modal">
+                   <div class="w3-modal-content">
+                        <div class="w3-container">
+                          <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                     <div style="max-width: 100%; width: 100%; display: table; background: #fff; border-radius: 10px; padding: 20px; z-index: 1;">
+                        <table id="datatablesSimple" class="dataTable-table">
+                           <thead>
+                                 <tr>
+                                    <th data-sortable style="width: 33.3333%; background-color: #E0E0E0;"><a>부서명</a></th>
+                                    <th data-sortable style="width: 33.3333%; background-color: #E0E0E0;"><a>담당자명</a></th>
+                                    <th data-sortable style="width: 33.3333%; background-color: #E0E0E0;"><a>지사명</a></th>   
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                 <tr v-for="list in list" @click="inputDP(list.ep_code)">
+                                    <td>{{list.dp_name}}</td>
+                                    <td>{{list.ep_name}}</td>
+                                    <td>{{list.of_name}}</td>                              
+                                 </tr>                     
+                                                                                                                                                                                                        
+                                  </tbody>                                         
+                           </table>                     
+                          </div>
+                     </div>
+                     </div>
+                     </div>
+                     
+                   <div id="id02" class="w3-modal">
+                   <div class="w3-modal-content">
+                        <div class="w3-container">
+                          <span onclick="document.getElementById('id02').style.display='none'" class="w3-button w3-display-topright">&times;</span>    
+                     <div style="max-width: 100%; width: 100%; display: table; background: #fff; border-radius: 10px; padding: 20px; z-index: 1;">
+                        <table id="datatablesSimple" class="dataTable-table">
+                           <thead>
+                                 <tr>
+                                    <th data-sortable style="width: 14%; background-color: #E0E0E0;"><a>공급사코드</a></th>
+                                    <th data-sortable style="width: 30%; background-color: #E0E0E0;"><a>품명</a></th>
+                                    <th data-sortable style="width: 14%; background-color: #E0E0E0;"><a>품목코드</a></th>
+                                    <th data-sortable style="width: 14%; background-color: #E0E0E0;"><a>개별가격</a></th>
+                                    <th data-sortable style="width: 14%; background-color: #E0E0E0;"><a>수량</a></th>
+                                    <th data-sortable style="width: 14%; background-color: #E0E0E0;"><a>총가격</a></th>   
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                 <tr v-for="list in cartNSB"  @click="inputCart(list)">
+                                    <td>{{list.spcode}}</td>
+                                    <td>{{list.prname}}</td>
+                                    <td>{{list.prcode}}</td>
+                                    <td>{{list.price}}</td> 
+                                    <td>{{list.count}}</td> 
+                                    <td>{{list.ttprice}}</td>                               
+                                 </tr>                     
+                                                                                                                                                                            
+                                  </tbody>                                         
+                           </table>                     
+                          </div>
+                     </div>
+                     </div>
+                     </div>
+                     
+      <table id="datatablesSimple" class="dataTable-table">
+                        <colgroup>
+                           <col width="20%" />
+                           <col width="20%" />
+                           <col width="20%" />
+                           <col width="20%" />
+                           <col width="20%" />
+                        </colgroup>
 
-								<div id="id02" class="w3-modal">
-									<div class="w3-modal-content">
-										<div class="w3-container">
-											<span
-												onclick="document.getElementById('id02').style.display='none'"
-												class="w3-button w3-display-topright">&times;</span>
-											<div
-												style="max-width: 100%; width: 100%; display: table; background: #fff; border-radius: 10px; padding: 20px; z-index: 1;">
-												<table id="datatablesSimple" class="dataTable-table">
-													<thead>
-														<tr>
-															<th data-sortable
-																style="width: 14%; background-color: #E0E0E0;"><a>공급사코드</a></th>
-															<th data-sortable
-																style="width: 30%; background-color: #E0E0E0;"><a>품명</a></th>
-															<th data-sortable
-																style="width: 14%; background-color: #E0E0E0;"><a>품목코드</a></th>
-															<th data-sortable
-																style="width: 14%; background-color: #E0E0E0;"><a>개별가격</a></th>
-															<th data-sortable
-																style="width: 14%; background-color: #E0E0E0;"><a>수량</a></th>
-															<th data-sortable
-																style="width: 14%; background-color: #E0E0E0;"><a>총가격</a></th>
-														</tr>
-													</thead>
-													<tbody>
-														<tr v-for="list in cartNSB" @click="inputCart(list)">
-															<td>{{list.spcode}}</td>
-															<td>{{list.prname}}</td>
-															<td>{{list.prcode}}</td>
-															<td>{{list.price}}</td>
-															<td>{{list.count}}</td>
-															<td>{{list.ttprice}}</td>
-														</tr>
+                        <tbody>
+                           <tr>
+                              <th>기안부서</th>
+                              <td>{{sendbean.dp_name}}</td>
+                              <th>기안자</th>
+                              <td colspan="2">{{sendbean.ep_name}}</td>
+                           </tr>
+                           <tr>
+                              <th>결재구분</th>
+                              <td colspan="4"><select id="div_apv_sq" class="form-control"
+                                 name="div_apv_sq">
+                                    <option value="O">주문</option>
+                              </select></td>
+                           </tr>
+                           <tr >
+                              <th>수신부서</th>
+                              <td v-if="displayNSB[1].show">{{sendbean2.dp_name}}</td>
+                              <th>수신자</th>
+                              <td v-if="displayNSB[1].show">{{sendbean2.ep_name}}</td>
+                              <td><button class="btn btn-dark"  onclick="document.getElementById('id01').style.display='block'" @click="getDP()">부서찾기</button></td>
+                              </tr>
 
-													</tbody>
-												</table>
-											</div>
-										</div>
-									</div>
-								</div>
+                           <table id="datatablesSimple" class="dataTable-table"> 
+                              <tr>
+                              <th>기안내용</th>
+                              </tr>
+                              <tr>
+                              <td><button class="btn btn-dark" onclick="document.getElementById('id02').style.display='block'" @click="getApprovalCart()">장바구니</button></td>                           
+                               </tr>
+                              <tr v-if="displayNSB[6].show" >
+                              <th>공급사코드</th>
+                              <th>품명</th>
+                              <th>품목코드</th>
+                              <th>개별가격</th>
+                              <th>수량</th>
+                              <th>총가격</th>
+                              </tr>
+                              <tr v-if="displayNSB[6].show" v-for="list in inputcart">
+                              <td >{{list.spcode}}</td>
+                              <td >{{list.prname}}</td>
+                              <td >{{list.prcode}}</td>
+                              <td >{{list.price}}</td>
+                              <td >{{list.count}}</td>
+                              <td >{{list.ttprice}}</td>
 
-								<table id="datatablesSimple" class="dataTable-table">
-									<colgroup>
-										<col width="20%" />
-										<col width="20%" />
-										<col width="20%" />
-										<col width="20%" />
-										<col width="20%" />
-									</colgroup>
+                              </tr>
+                              
+                              </table>
+                              <tr>                           
+                              <td ><button class="btn btn-dark" @click="issueApproval()" style="float:right">기안하기</button></td>
+                              </tr>
+                              </table>                                    
+               </tbody>               
+            <tr>
+            <td>
+            </td>
+            </tr>            
+            <input id="detectRandering" type="hidden" value="ccc"/>
+            </template>
+<!-- -------------------------------------------------------------------------------------------- -->            
+            <template v-if="displayNSB[2].show">
+            <button class="btn btn-dark"  v-on:click="orderApprovalPage()">주문 결재 작성</button>
+             <button class="btn btn-dark"  v-on:click="refundApprovalPage()">반품 결재 작성</button>
+              
+                <div id="id01" class="w3-modal">
+                   <div class="w3-modal-content">
+                        <div class="w3-container">
+                          <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                     <div style="max-width: 100%; width: 100%; display: table; background: #fff; border-radius: 10px; padding: 20px; z-index: 1;">
+                        <table id="datatablesSimple" class="dataTable-table">
+                           <thead>
+                                 <tr>
+                                    <th data-sortable style="width: 33.3333%; background-color: #E0E0E0;"><a>부서명</a></th>
+                                    <th data-sortable style="width: 33.3333%; background-color: #E0E0E0;"><a>담당자명</a></th>
+                                    <th data-sortable style="width: 33.3333%; background-color: #E0E0E0;"><a>지사명</a></th>   
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                 <tr v-for="list in list" @click="inputDP2(list.ep_code)">
+                                    <td>{{list.dp_name}}</td>
+                                    <td>{{list.ep_name}}</td>
+                                    <td>{{list.of_name}}</td>                              
+                                 </tr>                     
+                                                                                                                                                                                                                             
+                                  </tbody>                                         
+                           </table>                     
+                          </div>
+                     </div>
+                     </div>
+                     </div>
+              
+                       <div id="id02" class="w3-modal">
+                   <div class="w3-modal-content">
+                        <div class="w3-container">
+                          <span onclick="document.getElementById('id02').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                  <div style="max-width: 100%; width: 100%; display: table; background: #fff; border-radius: 10px; padding: 20px; z-index: 1;">
+                        <table id="datatablesSimple" class="dataTable-table">
+                           <thead>
+                                 <tr>
+                                    <th data-sortable style="width: 14.2857%; background-color: #E0E0E0;"><a>주문코드</a></th>
+                                    <th data-sortable style="width: 14.2857%; background-color: #E0E0E0;"><a>주문날짜</a></th>
+                                    <th data-sortable style="width: 14.2857%; background-color: #E0E0E0;"><a>주문상태</a></th>
+                                    <th data-sortable style="width: 14.2857%; background-color: #E0E0E0;"><a>상품코드</a></th>
+                                    <th data-sortable style="width: 14.2857%; background-color: #E0E0E0;"><a>상품명</a></th>
+                                    <th data-sortable style="width: 14.2857%; background-color: #E0E0E0;"><a>수량</a></th>
+                                    <th data-sortable style="width: 14.2857%; background-color: #E0E0E0;"><a>가격</a></th>            
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                 <tr v-for="list in list" @click="inputOrder(list.os_code)">
+                                    <td>{{list.os_code}}</td>
+                                    <td>{{list.os_date}}</td>
+                                    <td>{{list.os_state}}</td>   
+                                    <td>{{list.od_prcode}}</td>   
+                                    <td>{{list.pr_name}}</td>   
+                                    <td>{{list.od_quantity}}</td>   
+                                    <td>{{list.pr_price + list.pr_tax}}</td>                              
+                                 </tr>                     
+                                                                                                                                                                                                                           
+                                  </tbody>                                         
+                           </table>                     
+                          </div>
+                     </div>      
+      </div>
+    </div>
 
-									<tbody>
-										<tr>
-											<th>기안부서</th>
-											<td>{{bean.dp_name}}</td>
-											<th>기안자</th>
-											<td colspan="2">{{bean.ep_name}}</td>
-										</tr>
-										<tr>
-											<th>결재구분</th>
-											<td colspan="4"><select id="div_apv_sq"
-												class="form-control" name="div_apv_sq">
-													<option value="O">주문</option>
-											</select></td>
-										</tr>
-										<tr>
-											<th>수신부서</th>
-											<td v-if="displayNSB[1].show">{{bean2.dp_name}}</td>
-											<th>수신자</th>
-											<td v-if="displayNSB[1].show">{{bean2.ep_name}}</td>
-											<td><button class="btn btn-dark"
-													onclick="document.getElementById('id01').style.display='block'"
-													@click="getDP()">부서찾기</button></td>
-										</tr>
+                                        
+                     
+               <table id="datatablesSimple" class="dataTable-table">
+                        <colgroup>
+                           <col width="20%" />
+                           <col width="20%" />
+                           <col width="20%" />
+                           <col width="20%" />
+                           <col width="20%" />
+                        </colgroup>
 
-										<table id="datatablesSimple" class="dataTable-table">
-											<tr>
-												<th>기안내용</th>
-											</tr>
-											<tr>
-												<td><button class="btn btn-dark"
-														onclick="document.getElementById('id02').style.display='block'"
-														@click="getApprovalCart()">장바구니</button></td>
-											</tr>
-											<tr v-if="displayNSB[6].show">
-												<th>공급사코드</th>
-												<th>품명</th>
-												<th>품목코드</th>
-												<th>개별가격</th>
-												<th>수량</th>
-												<th>총가격</th>
-											</tr>
-											<tr v-if="displayNSB[6].show" v-for="list in inputcart">
-												<td>{{list.spcode}}</td>
-												<td>{{list.prname}}</td>
-												<td>{{list.prcode}}</td>
-												<td>{{list.price}}</td>
-												<td>{{list.count}}</td>
-												<td>{{list.ttprice}}</td>
+                        <tbody>
+                           <tr>
+                              <th>기안부서</th>
+                              <td>{{bean.dp_name}}</td>
+                              <th>기안자</th>
+                              <td colspan="2">{{bean.ep_name}}</td>
+                           </tr>
+                           <tr>
+                              <th>결재구분</th>
+                              <td colspan="4"><select id="div_apv_sq2" class="form-control"
+                                 name="div_apv_sq">
+                                    <option value="R">반품</option>
+                                    <option value="E">교환</option>
+                              </select></td>
+                           </tr>
+                           <tr >
+                              <th>수신부서</th>
+                              <td v-if="displayNSB[3].show">{{bean2.dp_name}}</td>
+                              <th>수신자</th>
+                              <td v-if="displayNSB[3].show">{{bean2.ep_name}}</td>
+                              <td><button class="btn btn-dark" onclick="document.getElementById('id01').style.display='block'" @click="getDP2()">부서찾기</button></td>
+                              </tr>
 
-											</tr>
+                           <table id="datatablesSimple" class="dataTable-table" v-if="displayNSB[3].show" > 
+                              <tr >
+                              <th>기안내용</th>
+                              <td><button class="btn btn-dark" onclick="document.getElementById('id02').style.display='block'" @click="getApprovalOrderList(bean.ep_ofcode)">거래내역</button></td>
+                              </tr>
 
-										</table>
-										<tr>
-											<td><button class="btn btn-dark"
-													@click="issueApproval()" style="float: right">기안하기</button></td>
-										</tr>
-								</table>
-								</tbody>
-								<tr>
-									<td></td>
-								</tr>
-								<input id="detectRandering" type="hidden" value="ccc"/>
-							</template>
-
-							<!-- -------------------------------------------------------------------------------------------- -->
-							<template v-if="displayNSB[2].show">
-								<button class="btn btn-dark" v-on:click="orderApprovalPage()">주문
-									결재 작성</button>
-								<button class="btn btn-dark" v-on:click="refundApprovalPage()">반품
-									결재 작성</button>
-
-								<div id="id01" class="w3-modal" style="display:none;">
-									<div class="w3-modal-content">
-										<div class="w3-container">
-											<span
-												onclick="document.getElementById('id01').style.display='none'"
-												class="w3-button w3-display-topright">&times;</span>
-											<div
-												style="max-width: 100%; width: 100%; display: table; background: #fff; border-radius: 10px; padding: 20px; z-index: 1;">
-												<table id="datatablesSimple" class="dataTable-table">
-													<thead>
-														<tr>
-															<th data-sortable
-																style="width: 33.3333%; background-color: #E0E0E0;"><a>부서명</a></th>
-															<th data-sortable
-																style="width: 33.3333%; background-color: #E0E0E0;"><a>담당자명</a></th>
-															<th data-sortable
-																style="width: 33.3333%; background-color: #E0E0E0;"><a>지사명</a></th>
-														</tr>
-													</thead>
-													<tbody>
-														<tr v-for="list in list" @click="inputDP2(list.ep_code)">
-															<td>{{list.dp_name}}</td>
-															<td>{{list.ep_name}}</td>
-															<td>{{list.of_name}}</td>
-														</tr>
-
-													</tbody>
-												</table>
-											</div>
-										</div>
-									</div>
-								</div>
-
-								<div id="id02" class="w3-modal">
-									<div class="w3-modal-content">
-										<div class="w3-container">
-											<span
-												onclick="document.getElementById('id02').style.display='none'"
-												class="w3-button w3-display-topright">&times;</span>
-											<div
-												style="max-width: 100%; width: 100%; display: table; background: #fff; border-radius: 10px; padding: 20px; z-index: 1;">
-												<table id="datatablesSimple" class="dataTable-table">
-													<thead>
-														<tr>
-															<th data-sortable
-																style="width: 14.2857%; background-color: #E0E0E0;"><a>주문코드</a></th>
-															<th data-sortable
-																style="width: 14.2857%; background-color: #E0E0E0;"><a>주문날짜</a></th>
-															<th data-sortable
-																style="width: 14.2857%; background-color: #E0E0E0;"><a>주문상태</a></th>
-															<th data-sortable
-																style="width: 14.2857%; background-color: #E0E0E0;"><a>상품코드</a></th>
-															<th data-sortable
-																style="width: 14.2857%; background-color: #E0E0E0;"><a>상품명</a></th>
-															<th data-sortable
-																style="width: 14.2857%; background-color: #E0E0E0;"><a>수량</a></th>
-															<th data-sortable
-																style="width: 14.2857%; background-color: #E0E0E0;"><a>가격</a></th>
-														</tr>
-													</thead>
-													<tbody>
-														<tr v-for="list in list" @click="inputOrder(list.os_code)">
-															<td>{{list.os_code}}</td>
-															<td>{{list.os_date}}</td>
-															<td>{{list.os_state}}</td>
-															<td>{{list.od_prcode}}</td>
-															<td>{{list.pr_name}}</td>
-															<td>{{list.od_quantity}}</td>
-															<td>{{list.pr_price + list.pr_tax}}</td>
-														</tr>
-
-													</tbody>
-												</table>
-											</div>
-										</div>
-									</div>
-								</div>
-
-
-
-								<table id="datatablesSimple" class="dataTable-table">
-									<colgroup>
-										<col width="20%" />
-										<col width="20%" />
-										<col width="20%" />
-										<col width="20%" />
-										<col width="20%" />
-									</colgroup>
-
-									<tbody>
-										<tr>
-											<th>기안부서</th>
-											<td>{{bean.dp_name}}</td>
-											<th>기안자</th>
-											<td colspan="2">{{bean.ep_name}}</td>
-										</tr>
-										<tr>
-											<th>결재구분</th>
-											<td colspan="4"><select id="div_apv_sq"
-												class="form-control" name="div_apv_sq">
-													<option value="R">반품</option>
-													<option value="E">교환</option>
-											</select></td>
-										</tr>
-										<tr>
-											<th>수신부서</th>
-											<td v-if="displayNSB[3].show">{{bean2.dp_name}}</td>
-											<th>수신자</th>
-											<td v-if="displayNSB[3].show">{{bean2.ep_name}}</td>
-											<td><button class="btn btn-dark"
-													onclick="document.getElementById('id01').style.display='block'"
-													@click="getDP2()">부서찾기</button></td>
-										</tr>
-
-										<table id="datatablesSimple" class="dataTable-table"
-											v-if="displayNSB[3].show">
-											<tr>
-												<th>기안내용</th>
-												<td><button class="btn btn-dark"
-														onclick="document.getElementById('id02').style.display='block'"
-														@click="getApprovalOrderList(bean.ep_ofcode)">거래내역</button></td>
-											</tr>
-
-											<tr>
-												<th>주문코드</th>
-												<th>주문날짜</th>
-												<th>주문상태</th>
-												<th>상품코드</th>
-												<th>상품명</th>
-												<th>주문수량</th>
-												<th>가격</th>
-											</tr>
-											<tr v-if="displayNSB[4].show">
-												<td>{{bean3.os_code}}</td>
-												<td>{{bean3.os_date}}</td>
-												<td>{{bean3.os_state}}</td>
-												<td>{{bean3.od_prcode}}</td>
-												<td>{{bean3.pr_name}}</td>
-												<td>{{bean3.od_quantity}}</td>
-												<td>{{bean3.pr_price + bean3.pr_tax}}</td>
-											</tr>
-
-										</table>
-										<tr>
-											<td><button class="btn btn-dark"
-													@click="issueApproval()" style="float: right">기안하기</button></td>
-										</tr>
-									</tbody>
-								</table>
-								<input id="detectRandering" type="hidden" value="ccc"/>
-							</template>
-
-
-							<template v-if="display[6].show">            
+                              <tr >
+                              <th>주문코드</th>
+                              <th>주문날짜</th>
+                              <th>주문상태</th>
+                              <th>상품코드</th>
+                              <th>상품명</th>
+                              <th>주문수량</th>
+                              <th>가격</th>
+                              </tr>
+                              <tr v-if="displayNSB[4].show">
+                              <td >{{bean3.os_code}}</td>
+                              <td >{{bean3.os_date}}</td>
+                              <td >{{bean3.os_state}}</td>
+                              <td >{{bean3.od_prcode}}</td>
+                              <td >{{bean3.pr_name}}</td>
+                              <td >{{bean3.od_quantity}}</td>
+                              <td >{{bean3.pr_price + bean3.pr_tax}}</td>
+                              </tr>
+                              
+                              </table>
+                              <tr>                           
+                              <td ><button class="btn btn-dark" @click="issueApproval()" style="float:right">기안하기</button></td>
+                              </tr>                                    
+                           </tbody>
+                        </table> 
+                        <input id="detectRandering" type="hidden" value="ccc"/>                 
+               </template>
+      <!-- -------------------------------------------------------------------------------------------- -->      
+            <template v-if="display[6].show">            
                   
                   <div id="id01" class="w3-modal">
-    					<div class="w3-modal-content">
-      						<div class="w3-container">
-        						<span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                   <div class="w3-modal-content">
+                        <div class="w3-container">
+                          <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
                      <div style="max-width: 100%; width: 100%; display: table; background: #fff; border-radius: 10px; padding: 20px; z-index: 1;">
                         <table id="datatablesSimple" class="dataTable-table">
                            <thead>
@@ -1474,10 +1426,10 @@ function getcl(){
                               </tr>
                               </table>                                    
                </tbody>
-            </table>  
-            <input id="detectRandering" type="hidden" value="ccc"/>             
+            </table>   
+            <input id="detectRandering" type="hidden" value="ccc"/>            
             </template>
-            
+							
 
 <!-------------------------------------------HSM-------------------------------------------->
 			<template v-if="display[7].show">
@@ -1716,21 +1668,21 @@ function getcl(){
 				</template>
 
 <!-------------------------------------------JES-------------------------------------------->
-				    <template v-if="display[9].show" >
+				   <template v-if="display[9].show" >
             
             
             
             <div id="id01" class="w3-modal">
-    					<div class="w3-modal-content">
-      						<div class="w3-container">
-        						<span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                   <div class="w3-modal-content">
+                        <div class="w3-container">
+                          <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
                      <div style="max-width: 100%; width: 100%; display: table; background: #fff; border-radius: 10px; padding: 20px; z-index: 1;">
-					<table id="datatablesSimple" class="dataTable-table">
-					<table width='700' cellpadding='0' cellspacing='0' align='center' class='border_all'>
+               <table id="datatablesSimple" class="dataTable-table">
+               <table width='700' cellpadding='0' cellspacing='0' align='center' class='border_all'>
 
- 					<tr>
- 					 <td width='100%'>
-   	<table cellpadding='0' cellspacing='0' height='65' width='100%'><tr>
+                <tr>
+                 <td width='100%'>
+      <table cellpadding='0' cellspacing='0' height='65' width='100%'><tr>
       <td rowspan='2' align='center' width='360' class='border_tit'><font size='6'><b>세 금 계 산 서</b></font></td>
       <td rowspan='2' width='5' align='center' class='border_tit'><font size='4'><b>[</b></font></td>
       <td rowspan='2' width='70' align='center' class='border_tit'>공급자&nbsp;<br>보 &nbsp;관 &nbsp;용&nbsp;</td>
@@ -1927,9 +1879,9 @@ function getcl(){
     </table>
    </td>
   </tr> 
-</table>	
-</table>	
-					
+</table>   
+</table>   
+               
                                           
                      </div>
                      </div>
@@ -1938,26 +1890,27 @@ function getcl(){
             
             
             <table id="datatablesSimple" class="dataTable-table">
-										<thead>
-											<tr>
-												<th data-sortable style="width: 25%;"><a>세금계산서코드</a></th>
-												<th data-sortable style="width: 25%;"><a>주문코드</a></th>
-												<th data-sortable style="width: 25%;"><a>고객사코드</a></th>
-												<th data-sortable style="width: 25%;"><a>고객사명</a></th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr v-for="list in list"
-												onclick="document.getElementById('id01').style.display='block'" @click="taxDetail(list.tb_code)">
-												<td>{{list.tb_code}}</td>
-												<td>{{list.tb_oscode}}</td>
-												<td>{{list.tb_clcode}}</td>
-												<td>{{list.tb_clname}}</td>
-											</tr>
-											</tbody>																	
-									</table>
-									<input id="detectRandering" type="hidden" value="ccc"/>
+                              <thead>
+                                 <tr>
+                                    <th data-sortable style="width: 25%;"><a>세금계산서코드</a></th>
+                                    <th data-sortable style="width: 25%;"><a>주문코드</a></th>
+                                    <th data-sortable style="width: 25%;"><a>고객사코드</a></th>
+                                    <th data-sortable style="width: 25%;"><a>고객사명</a></th>
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                 <tr v-for="list in list"
+                                    onclick="document.getElementById('id01').style.display='block'" @click="taxDetail(list.tb_code)">
+                                    <td>{{list.tb_code}}</td>
+                                    <td>{{list.tb_oscode}}</td>
+                                    <td>{{list.tb_clcode}}</td>
+                                    <td>{{list.tb_clname}}</td>
+                                 </tr>
+                                 </tbody>                                                   
+                           </table>
+                           <input id="detectRandering" type="hidden" value="ccc"/>
             </template>
+            
           
 				<template v-if="display[10].show">
                         <div

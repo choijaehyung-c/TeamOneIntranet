@@ -95,6 +95,10 @@ public class ApprovalServiceEntrance {
 		return asc.getIssuedTaxDetailCtl(tbcode);
 	}
 
+	public String issueApproval(ApprovalBean ab) {
+		   return asc.issueApprovalCtl(ab);
+		}
+
 
 
 }

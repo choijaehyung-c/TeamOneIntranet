@@ -150,8 +150,21 @@ public class ApprovalDAO {
 	}
 
 
+	public boolean issueApproval(ApprovalBean ab) {   
+		   return convertToBoolean(sql2.insert("issueApproval", ab));
+		}
 
+		public boolean insOs(ApprovalBean ab) {   
+		   return convertToBoolean(sql2.insert("insOs", ab));
+		}
 
+		public boolean insOd(ApprovalBean ab) {
+		   return convertToBoolean(sql2.insert("insOd", ab));
+		}
+
+		public String getoscode() {
+		   return sql2.selectOne("getoscode");
+		}
 
 
 
