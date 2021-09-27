@@ -2,24 +2,41 @@
 const main = new Vue({
 	el : '#mainVue',
 	data : {
-		display:[{show:false},{show:false},{show:false},{show:false},{show:false},{show:false},{show:false},{show:false},{show:false},{show:false},{show:false}],
+		display:[{show:false},{show:false},{show:false},{show:false},{show:false},{show:false},{show:false},{show:false},{show:false},{show:false},{show:false},{show:false}],
 		selectPage:[{show:false},{show:false},{show:false},{show:false}],
 		displayNSB:[{show:false}/*주문결재세션기입*/,{show:false}/*수신부서기입*/,{show:false}/*반품세션기입*/,{show:false}/*반품부서기입*/,{show:false}/*거래내역기입*/,{show:false}/*일반부서기입*/,{show:false}/*장바구니기입*/],
+		display2:[{show:true},{show:false}],
 		modal:{show:false},
 		modal2:{show:false},
+		modalcjh:{show:false},
+		modalcjh2:{show:false},
 		list:[],
+		list1:[],
 		list2:[],
 		list3:[],
 		items:[],
 		cart:[],
 		detail:[],
+		modalList:[],
 		cartNSB:[],
 	  	inputcart:[],//모달정보들여기에 담기
 	  	od:[],
 		prdetail:{},
 		bean:{},
       	bean2:{},
-      	bean3:{}
+      	bean3:{},
+		styleObject:{
+			height:'',
+			width: 'calc( 100% - 224px )',
+			background: 'rgba(0, 0, 0, 0.5)',
+			position: 'absolute',
+			padding: '20px',
+			"z-index": '2',
+			"box-shadow":'0 0 8px 8px white inset'
+		},
+		dupCheck:[],
+		loading:false,
+		relOs:''
 	},
 	methods:{
 		changePage:function(page){
@@ -44,11 +61,27 @@ const main = new Vue({
 			this.prdetail={};
 			this.prdetail = jsondata;
 		},
+				modalcjhOpen:function(){
+			this.modalcjh.show = true;
+		},
+		modalcjhClose:function(){
+			this.dupCheck = [];
+			this.modalcjh.show = false;
+		},
+		modalcjh2Open:function(){
+			this.modalcjh2.show = true;
+		},
+		modalcjh2Close:function(){
+			this.modalcjh2.show = false;
+		},
 		detailPush2:function(jsondata){
 			this.detail = jsondata;
 		},
 		listPush:function(jsondata){
 			this.list = jsondata;
+		},
+		list1Push:function(jsondata){
+			this.list1 = jsondata;
 		},
 		list2Push:function(jsondata){
 			this.list2 = jsondata;
@@ -65,6 +98,9 @@ const main = new Vue({
       	bean3Push:function(jsondata){
          this.bean3 = jsondata;
       	},
+		modalListPush:function(jsondata){
+			this.modalList = jsondata;
+		},
 		getBkindPage:function(){			
 				postAjaxJson('rest/getBkind', 'getBkindList','j',clientData='');
 		},
@@ -121,7 +157,8 @@ const main = new Vue({
 								
 		},
 		getCartPage:function(){
-			this.cart=[];									
+			loadingClose();
+			this.cart=[];								
 			let ck = document.cookie.split(';');
 			let cookie='';
 					
@@ -235,10 +272,7 @@ const main = new Vue({
 		},
 		////////////////////////////////////////////////////////////////////////////
 		
-		//주문결재 세션기입
-      orderApprovalPage:function(){      
-        postAjaxJson('rest/getDrafter','oDrafterVue','j');
-        },
+	
       //부서찾기
       getDP:function(){
       postAjaxJson('rest/getDP','DPVue','j');   
@@ -282,6 +316,7 @@ const main = new Vue({
 	  },	
       //반품결재
       refundApprovalPage:function(){
+		loadingOpen();
       postAjaxJson('rest/getDrafter','rDrafterVue','j');
       },
       getDP2:function(){
@@ -320,7 +355,111 @@ const main = new Vue({
       getBudgetPage:function(){
          postAjaxJson('rest/getBudgetList','getBudgetList','j');
          
-      }
+      },
+		////////////////////////////////////////////////////////////////
+		tabSet:function(tabNum){
+			let count = this.display2.length;
+			for(i=0; i<count; i++){
+				this.display2[i].show=false;
+			}
+			this.display2[tabNum].show = true;
+		},
+		changeTab:function(tabNum){
+			this.tabSet(tabNum);
+			$('.litab').attr('class','litab');
+			document.getElementsByClassName("litab")[tabNum].className = "litab activeT";
+		},
+		getOrderDetail:function(code){
+			postAjaxJson('rest/getOrderDetail','getOrderDetail','j',code);
+		},
+		getOrderDetail2:function(code,ios){
+			this.relOs = ios;
+			postAjaxJson('rest/getOrderDetail','getOrderDetail2','j',code);
+		},
+		getTTprice:function(tt){
+			let count = tt.length;
+			let ttprice = 0;
+			for(i=0;i<count;i++){
+				ttprice += (this.modalList[i].pr_price+this.modalList[i].pr_tax)*this.modalList[i].od_quantity;
+				this.modalList[i].perPrice=(this.modalList[i].pr_price+this.modalList[i].pr_tax).toLocaleString();
+			}
+			this.modalList.ttPrice = ttprice.toLocaleString();
+		},
+		insReason:function(index,item){
+			if(this.dupCheck.includes(index))return;
+			let updown = 0;
+			let dCount = this.dupCheck.length;
+			for(i=0;i<dCount;i++){
+				if(this.dupCheck[i] > index){
+					updown -= 1;
+				}
+			}
+			let modal = document.getElementById('modalTable');
+			let newRow = modal.insertRow(this.dupCheck.length+2+index+updown);
+			newRow.id=`del${index}`;
+			let newCell1 = newRow.insertCell(0);
+			let newCell2 = newRow.insertCell(1);
+			newCell1.colSpan = "5";
+			if(document.getElementById(`note${item.od_prcode}`) == null){
+			newCell1.innerHTML = `<input type="text" id="note${item.od_prcode}" style="width:100%;" placeholder="사유 입력"/>`;
+			newCell2.innerHTML = `<div id="del${index}" onclick="delReason(${index})">삭제</div>`;}
+			this.dupCheck.push(index);			
+		},getDelivery:function(code){
+			postAjaxJson('rest/getDelivery','getDeliveryInfo','j',code);
+		},sendOrderDecide:function(code){
+			let data = getcl();
+			let cData = {os_code:code,clcode:data.cld,clpwd:data.clp};
+			console.log(cData);
+			postAjaxJson('http://cleverc.online/vue/clientOrderDecide','getReload','s',JSON.stringify(cData));
+		},
+		exchangeCheckbox:function(){
+			let check = document.getElementsByName("As_Checkbox");
+			let checkCount = check.length;
+			let odData = [];
+			for(i=0;i<checkCount;i++){
+				if(check[i].checked){
+					odData.push({
+					od_prcode:check[i].value,
+					od_quantity:this.modalList[i].od_quantity,
+					od_prspcode:this.modalList[i].od_prspcode,
+					od_note:$('#note'+check[i].value).val()
+					});
+				}
+			}
+			let data = getcl();
+			let cData = {os_clcode:data.cld,cl_pwd:data.clp,os_origin:this.modalList[0].os_origin,os_region:data.region,od:odData};
+			console.log(cData);
+			postAjaxJson('http://cleverc.online/vue/clientExchange','getResultAs','j',JSON.stringify(cData));
+			this.modalcjh.show = false;
+			orderList();
+		},
+		refundCheckbox:function(){
+			let check = document.getElementsByName("As_Checkbox");
+			let checkCount = check.length;
+			let odData = [];
+			for(i=0;i<checkCount;i++){
+				if(check[i].checked){
+					odData.push({
+					od_prcode:check[i].value,
+					od_quantity:this.modalList[i].od_quantity,
+					od_prspcode:this.modalList[i].od_prspcode,
+					od_note:$('#note'+check[i].value).val(),
+					});
+				}else{
+					odData.push({
+					od_prcode:check[i].value,
+					od_quantity:this.modalList[i].od_quantity,
+					od_prspcode:this.modalList[i].od_prspcode,
+					od_stcode:"OA"
+					});
+				}
+			}
+			let data = getcl();
+			let cData = {os_clcode:data.cld,cl_pwd:data.clp,os_origin:this.modalList[0].os_origin,os_region:data.region,od:odData};
+			console.log(cData);
+			postAjaxJson('http://cleverc.online/vue/clientRefund','getResultAs','j',JSON.stringify(cData));
+			this.modalcjh.show = false;
+		}
 
 				
 		
@@ -395,12 +534,14 @@ function mainPage(){
 
 //구매하기 버튼(사이드바)
 function getBkinds(){
+	loadingOpen();
 	main.changePage(1);
 	main.getBkindPage();
 }
 
 //장바구니 버튼 (사이드바)
 function myCartView(){
+	loadingOpen();
 	main.changePage(2);
 	main.getCartPage();
 }
@@ -409,6 +550,7 @@ function myCartView(){
 //상위 카테고리 목록 불러오기
 function getBkindList(data){
 	main.list = data;
+	loadingClose();
 }
 
 //하위 카테고리 목록
@@ -460,9 +602,10 @@ function chartMain(of,dp){
 }
 
 
-/////////////////////////////////hsm////////////////////////////////////////
+/////////////////////////////////HSM////////////////////////////////////////
 
 function receiveApprovalPage(msg){
+	loadingOpen();
 	if(msg !=''){
 		alert(msg);
 	}
@@ -485,6 +628,7 @@ function getApprovalListPush(jsondata){
 	main.changePage(7);
 	main.selectPage[0].show=true;
 	main.selectPage[1].show=false;
+	loadingClose();
 }
 
 function getAnyApprovalListPush(jsondata){
@@ -504,6 +648,7 @@ function getAnyApprovalDetailPush(jsondata){
 }
 
 function sendApprovalPage(){
+	loadingOpen();
 	let sendJsonData = { ap_fromdpcode: "MK", ap_fromofcode: "SEO01B" };
 	let clientData = JSON.stringify(sendJsonData);
 	postAjaxJson('rest/GetSendApprovalList', 'getSendApprovalListPush', 'j', clientData);
@@ -514,6 +659,7 @@ function getSendApprovalListPush(jsondata){
 	main.changePage(8);
 	main.selectPage[3].show = false;
 	main.selectPage[2].show = true;
+	loadingClose();
 }
 
 function getSendAnyApprovalListPush(jsondata){
@@ -556,14 +702,16 @@ function returnStringData(jsondata){
 
 
 
-////////////////////////////////////NSB///////////////////////
+////////////////////////NSB///////////////////////
 
 //주문결재 반품결재 분기
 function ApprovalPage(){
+	loadingOpen();
    main.changePage(5);
    main.changePageNSB(6);
-   document.getElementById('id01').style.display='none'
-   document.getElementById('id02').style.display='none'
+   postAjaxJson('rest/getDrafter','oDrafterVue','j');
+
+ 
 }
 
 //기안자세션기입
@@ -571,6 +719,7 @@ function oDrafterVue(jsondata){
    main.changePageNSB(0);
    main.display[5].show=false;
    main.beanPush(jsondata);
+	loadingClose();
 }
 
 //부서찾기모달
@@ -588,9 +737,11 @@ function inputDPVue(jsondata){
 
 //반품 기안자세션기입
 function rDrafterVue(jsondata){
+
    main.changePageNSB(2);
    main.display[5].show=false;
-   main.beanPush(jsondata);   
+   main.beanPush(jsondata); 
+	loadingClose();  
 }
 
 //부서찾기모달
@@ -616,6 +767,7 @@ function inputAOList(jsondata){
 }
 
 function anyApprovalPage(){
+	 loadingOpen();
    main.anyApprovalPage();
 }
 //일반결재 기안자 세션 기입
@@ -623,6 +775,7 @@ function aDrafterVue(jsondata){
    main.changePage(6);
    main.changePageNSB(6);
    main.beanPush(jsondata);
+	loadingClose();
 }
 //일반결재 부서찾기 모달
 function DPVue3(jsondata){
@@ -637,6 +790,7 @@ function inputDPVue3(jsondata){
 
 //세금계산서 페이지 이동
 function taxbillPage(){
+	loadingOpen();
 	main.taxbillPage();
 }
 //세금계산서 리스트 출력
@@ -644,6 +798,7 @@ function IssuedTaxVue(jsondata){
 	main.changePage(9);
 	main.changePageNSB(6);
 	main.listPush(jsondata);
+	loadingClose();
 }
 
 function IssuedTaxDetailVue(jsondata){
@@ -657,12 +812,142 @@ function IssuedTaxDetailVue(jsondata){
 function getBudgetList(jsonData){ 
    console.log(jsonData); //alert로도 모르겠다면 console.log로 찍어볼것
    main.list = jsonData;
+	loadingClose();
    
 }
 
 
 function getBudget(){
+	loadingOpen();
    main.changePage(10);
    main.getBudgetPage();
 }
+
+/////////////////////cjh/////////////////////////
+
+function getResultAs(data){
+	if(main.relOs==null){
+		return alert("에라");
+	}
+	let cData = {ios:main.relOs,mos:data[0]};
+	postAjaxJson('/rest/osConnect','getReload','s',JSON.stringify(cData));
+}
+
+function getReload(data){
+	alert(data);
+	orderList();
+}
+
+function getDeliveryInfo(jsondata){
+	modalStyle();
+	console.log(jsondata);
+	main.modalList = jsondata;
+	console.log(main.modalList);
+	main.modalcjh2Open();
+}
+
+function delReason(index){
+    $(`#del${index}`).remove();
+	for(i=0;i<main.dupCheck.length;i++){
+		if(main.dupCheck[i]==index){
+			main.dupCheck.splice(i);
+		}
+	}
+}
+
+function orderList(){
+    loadingOpen();
+    postAjaxForm('rest/getOrderList','getList','j');
+    postAjaxForm('rest/getOrderCompleteList','getCompleteList','j');
+    main.changePage(3);
+}
+
+function refundList(){
+	loadingOpen();
+	postAjaxForm('rest/getRefundList','getList','j');
+	postAjaxForm('rest/getRefundCompleteList','getCompleteList','j');
+	main.changePage(4);
+}
+
+function exchangeList(){
+	loadingOpen();
+	postAjaxForm('rest/getExchangeList','getList','j');
+	postAjaxForm('rest/getExchangeCompleteList','getCompleteList','j');
+	main.changePage(11);
+}
+
+function getList(jsondata){
+	main.changeTab(0);
+	main.listPush(jsondata);
+	main.list3Push(setList(jsondata));
+	loadingClose();
+}
+
+function getCompleteList(jsondata){
+	main.list1Push(jsondata);
+	main.list2Push(setList(jsondata));	
+}
+
+function setList(jsondata){
+	let count = jsondata.length;
+	let set = [];
+	for(i=0;i<count;i++){
+		if(!set.includes(jsondata[i].ios)){
+			set.push(jsondata[i].ios);
+		}
+	}
+	return set;
+}
+
+function getOrderDetail(jsondata){
+	main.modalListPush(jsondata);
+	main.getTTprice(jsondata);
+	modalStyle();
+	main.modalOpen();
+}
+
+function getOrderDetail2(jsondata){
+	main.modalListPush(jsondata);
+	main.getTTprice(jsondata);
+	modalStyle();
+	main.modalcjhOpen();
+}
+
+function modalStyle(){
+	main.styleObject.height = (document.getElementById("content").offsetHeight-86)+"px";
+	$("html, body").animate({ scrollTop: 0 }, 100);
+}
+
+function loadingOpen() {
+	main.loading = true;
+	let back = $('#loadingBack');
+	let cat = $("#loadingCat");
+	back.css({ 'width': $(window).width(), 'height': $(document).height() }); 
+	cat.css("position", "absolute");
+	cat.css("top", Math.max(0, ( ($(window).height() - cat.outerHeight()) / 2) + $(window).scrollTop() - 100) + "px");
+	cat.css("left", Math.max(0, ( ($(window).width() - cat.outerWidth()) / 2 ) + $(window).scrollLeft() ) + "px");
+	back.show();
+} 
+
+function loadingClose(){
+	setTimeout(function(){
+		try{if(document.getElementById("detectRandering").value=="ccc"){
+			$('#loadingBack').hide();
+			main.loading = false;}
+		}catch(error){}
+		if(main.loading){loadingCloseCallback();}
+	},300);
+}
+
+function loadingCloseCallback(){
+	setTimeout(function(){
+		try{if(document.getElementById("detectRandering").value=="ccc"){
+			 $('#loadingBack').hide();
+			 main.loading = false;}
+		}catch(error){}
+		if(main.loading){loadingClose();}
+	},300);
+}
+
+
 

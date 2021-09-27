@@ -19,7 +19,9 @@
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" >
    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
 
+	
     <link href="${pageContext.request.contextPath}/resources/css/IYJ.css" rel="stylesheet" type="text/css">
+    <link href="${pageContext.request.contextPath}/resources/css/CJH.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<link href="${pageContext.request.contextPath}/resources/css/styles.css" rel="stylesheet" />
@@ -40,8 +42,18 @@ $(window).scroll(function(){
 	$("#sidebarLayer").animate( { "top" : scrollTop });
 	});
 	
+</script>
 
-
+<script>
+function getcl(){
+	<%
+		String cld = (String) session.getAttribute("cld");
+		String clp = (String) session.getAttribute("clp");
+		//String region = (String) session.getAttribute("region");
+		String region = "KOR001SEO01BMK";
+	%>
+	return {cld:'<%=cld%>', clp:'<%=clp%>', region:'<%=region%>'};
+}
 </script>
         
 
@@ -114,9 +126,10 @@ $(window).scroll(function(){
                 <div id="collapseUtilities2" class="collapse" aria-labelledby="headingUtilities2"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header" onClick="orderManage()">주문관리</h6>
-                        <div class="collapse-item"  onClick="orderList()">주문함</div>
-                        <div class="collapse-item"  onClick="shipList()">배송조회</div>
+                        <h6 class="collapse-header" >주문관리</h6>
+                        <div class="collapse-item"  onClick="orderList()">주문 내역</div>
+                        <div class="collapse-item"  onClick="refundList()">반품 내역</div>
+                        <div class="collapse-item"  onClick="exchangeList()">교환 내역</div>
                     </div>
                 </div>
             </li>
@@ -397,7 +410,7 @@ $(window).scroll(function(){
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4" style="float:left;">
                         <div class="card shadow mb-4" style="border:0.5px solid #FDFFFF; border-radius:5px; width:350px; height:350px; background:#fff;">
                         	<svg style="margin:20px 35%;" xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
   								<path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
@@ -410,7 +423,7 @@ $(window).scroll(function(){
 							</svg>                       	 
                         </div>                        
                     </div>
-                     <div class="col-lg-5" style="max-width:35%; margin-left:30%; margin-top:-31%;" >
+                     <div class="col-lg-5" style="max-width:35%; float:left;" >
 						<div class="mb-4 card" >
 							<div class="card-header">
 								<h6 class="card-heading">베스트 상품 </h6></div>
@@ -425,35 +438,9 @@ $(window).scroll(function(){
 						
 				</div>
 			</div >
-			<div style="margin-left:85%; margin-top:-29%; ">
-			<div class="card shadow mb-4" style="border:0.5px solid #FDFFFF; border-radius:5px; width:200px; height:200px; background:#fff;">
-				<div class="card-header" ><h6 class ="card-heading" style="font-weight:bold;">To Do <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
-  					<path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
-  					<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-					</svg></h6>				
-				</div>
-				<ul><li></li></ul>
-				
-				</div>
-			</div>
-			
-			<div class="col-lg-5" style="max-width:70%; margin-top:13%;" >
-						<div class="mb-4 card" >
-							<div class="card-header">
-								<h6 class="card-heading"> </h6></div>
-					
-						<div class="container card-body" >
-							<div class="row">
-								<div class="col-md-16">
-									<canvas id="myChartTwo" style="display: block; height: 253px; width: 358px;"></canvas>
-								</div>
-							</div>
-						</div>
-						
-						
-				</div>
-			</div >
 
+			
+				<input id="detectRandering" type="hidden" value="ccc"/>
 				</template>
 <!-------------------------------------------IYJ-------------------------------------------->			
 							
@@ -575,10 +562,11 @@ $(window).scroll(function(){
 									</div>
 								</div>
 							</div>
+							<input id="detectRandering" type="hidden" value="ccc"/>
 							</template>
 							
 				<template v-if="display[2].show">
-						<div id="modal01" class="w3-modal" onclick="this.style.display='none'">
+						<div id="modal01" class="w3-modal" onclick="this.style.display='none'" style="display:none;">
    							<span class="w3-button w3-hover-red w3-xlarge w3-display-topright">&times;</span>
    								<div class="w3-modal-content w3-animate-zoom" style="width:450px; padding:10px;">
      		 						<div style="border: 1px solid #ddd; display: inline-block; margin-top:15px;">상품코드:{{prdetail.pr_code}}</div>
@@ -674,22 +662,440 @@ $(window).scroll(function(){
                 </div>
 										
 					</div>
-				
+				<input id="detectRandering" type="hidden" value="ccc"/>
 				</template>
 <!-------------------------------------------CJH-------------------------------------------->				
-				<template v-if="display[3].show"></template>
-				<template v-if="display[4].show"></template>
+			
+            
+            <div id="loadingBack" style="display: none; position: absolute; top: 0%; left: 0%; width: 100%;
+            height: 100% ; z-index:1001; -moz-opacity: 0.8; opacity:.80; filter: alpha(opacity=60);">
+            	<div id="loadingCat" style="position: absolute; transform:translate(-50%,-50%); z-index:1000; overflow: auto;">
+	            	<img src="${pageContext.request.contextPath}/resources/img/loadcat.gif">
+	            </div>
+			</div>
+	
+				<template v-if="display[3].show">
+				
+				     <div id="modalBack" v-if="modalcjh2.show" :style="styleObject">
+							<div style="width:70%; max-height:80%; background: #fff; transform:translate(-50%,0%);
+							border-radius: 10px; padding: 20px; z-index:1; position: absolute; margin-top:3%; left:50%; overflow:auto;">
+							<div style="float: left; width:95%; color:#000; font-weight: 900; font-size:35px">&nbsp&nbsp배송 조회</div>
+							<button @click="modalcjh2Close()" type="button" class="btn btn-dark" style="font-weight: 900; font-size:16px;">X</button>
+										<hr style="display:block;">
+								<table class="dataTable-table">
+									<tr>
+										<td style="text-align:center; vertical-align:middle;">운송장 번호</td>
+										<td style="text-align:center; vertical-align:middle;">{{modalList.dl_code}}</td>
+										<td style="text-align:center; vertical-align:middle;">주문서 번호</td>
+										<td style="text-align:center; vertical-align:middle;">{{modalList.dl_oscode}}</td>
+									</tr>
+									<tr>
+										<td style="text-align:center; vertical-align:middle;">배송 기사</td>
+										<td style="text-align:center; vertical-align:middle;">{{modalList.dv_name}}</td>
+										<td style="text-align:center; vertical-align:middle;">연락처</td>
+										<td style="text-align:center; vertical-align:middle;">{{modalList.dv_hp}}</td>
+									</tr>
+									<tr>
+										<td style="text-align:center; vertical-align:middle;" colspan="4" v-if="modalList.dl_dscode == 1">상품준비중</td>
+										<td style="text-align:center; vertical-align:middle;" colspan="4" v-else-if="modalList.dl_dscode == 2">배송중</td>
+										<td style="text-align:center; vertical-align:middle;" colspan="4" v-else>배송완료</td>
+									</tr>
+								</table>
+								<table class="dataTable-table">
+								     <thead>
+                                        <tr>
+                                            <th style="width: 25%; text-align:center;"><a>x좌표</a></th>
+                                            <th style="width: 25%; text-align:center;"><a>y좌표</a></th>
+                                            <th style="width: 50%; text-align:center;"><a>날짜</a></th>
+                                        </tr>
+                                    </thead>
+									<tbody>
+										<tr v-for="item in modalList.lc">
+											<td style="text-align:center; vertical-align:middle;">{{item.lc_x}}</td>
+											<td style="text-align:center; vertical-align:middle;">{{item.lc_y}}</td>
+											<td style="text-align:center; vertical-align:middle;">{{item.lc_date}}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+					 </div>
+				     <div id="modalBack" v-if="modal.show" :style="styleObject">
+							<div style="width:70%; max-height:80%; background: #fff; transform:translate(-50%,0%);
+							border-radius: 10px; padding: 20px; z-index:1; position: absolute; margin-top:3%; left:50%; overflow:auto;">
+							
+							<div style="float: left; width:95%; color:#000; font-weight: 900; font-size:35px">&nbsp&nbsp주문 정보</div>
+							<button @click="modalClose()" type="button" class="btn btn-dark" style="font-weight: 900; font-size:16px;">X</button>
+										<hr style="display:block;">
+								<table class="dataTable-table" id="modalTable">
+								     <thead>
+                                        <tr>
+                                            <th style="width: 10%; text-align:center;"><a>이미지</a></th>
+                                            <th style="width: 27%; text-align:center;"><a>상품명</a></th>
+                                            <th style="width: 37%; text-align:center;"><a>상품정보</a></th>
+                                            <th style="width: 10%; text-align:center;"><a>가격(원)</a></th>
+                                            <th style="width: 6%; text-align:center;"><a>수량</a></th>
+                                            <th style="width: 10%; text-align:center;"><a>원산지</a></th>                                          
+                                        </tr>
+                                    </thead>
+									<tbody>
+										<tr v-for="(item,index) in modalList">
+											<td><img :src="item.pr_image" width="100%" height="100%" alt="no search image"></td>
+											<td style="text-align:center; vertical-align:middle;">{{item.pr_name}}</td>
+											<td style="text-align:center; vertical-align:middle;">{{item.pr_info}}</td>
+											<td style="text-align:center; vertical-align:middle;">{{item.perPrice}}</td>
+											<td style="text-align:center; vertical-align:middle;">{{item.od_quantity}}</td>
+											<td style="text-align:center; vertical-align:middle;">{{item.pr_origin}}</td>
+										</tr>
+										<tr><td colspan="6" style="text-align:center; vertical-align:middle;"> 총 가격(VAT포함) : {{modalList.ttPrice}} 원</td></tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+				     <div id="modalBack" v-if="modalcjh.show" :style="styleObject">
+							<div style="width:70%; max-height:80%; background: #fff; transform:translate(-50%,0%);
+							border-radius: 10px; padding: 20px; z-index:1; position: absolute; margin-top:3%; left:50%; overflow:auto;">
+							<div style="float: left; width:95%; color:#000; font-weight: 900; font-size:35px">&nbsp&nbsp교환/반품</div>
+							<button @click="modalcjhClose()" type="button" class="btn btn-dark" style="font-weight: 900; font-size:16px;">X</button>
+										<hr style="display:block;">
+								<table class="dataTable-table" id="modalTable">
+								     <thead>
+                                        <tr>
+                                            <th style="width: 10%; text-align:center;"><a>이미지</a></th>
+                                            <th style="width: 27%; text-align:center;"><a>상품명</a></th>
+                                            <th style="width: 37%; text-align:center;"><a>상품정보</a></th>
+                                            <th style="width: 10%; text-align:center;"><a>가격(원)</a></th>
+                                            <th style="width: 6%; text-align:center;"><a>수량</a></th>
+                                            <th style="width: 10%; text-align:center;"><a>반품/교환</a></th>                                          
+                                        </tr>
+                                    </thead>
+									<tbody><!-- OD_PRSPCODE,OD_OSCODE AS "OS_ORIGIN",OD_PRCODE,OD_QUANTITY,PR_NAME,PR_IMAGE,PR_PRICE,PR_TAX,PR_INFO,PR_ORIGIN,OD_STCODE -->
+										<tr v-for="(item,index) in modalList" @click="insReason(index,item)">
+											<td><img :src="item.pr_image" width="100%" height="100%" alt="no search image"></td>
+											<td style="text-align:center; vertical-align:middle;">{{item.pr_name}}</td>
+											<td style="text-align:center; vertical-align:middle;">{{item.pr_info}}</td>
+											<td style="text-align:center; vertical-align:middle;">{{item.perPrice}}</td>
+											<td style="text-align:center; vertical-align:middle;">{{item.od_quantity}}</td>
+											<td style="text-align:center; vertical-align:middle;"><input style="zoom:2.0;" type="checkbox" name="As_Checkbox" :value="item.od_prcode" /></td>
+										</tr>										
+									</tbody>									
+								</table>
+								<hr>
+								<div style="text-align: center;">
+								<button @click="exchangeCheckbox()" type="button" class="btn btn-outline-secondary" style="display: inline-block;">교환하기</button>
+								<button @click="refundCheckbox()" type="button" class="btn btn-outline-secondary" style="display: inline-block;">반품하기</button>
+								</div>
+							</div>
+						</div>
+				<div style="z-index: 3;">
+					<div class="tabs">
+					  <ul>
+						<li class="litab activeT" @click="changeTab(0)">주문 리스트</li>
+						<li class="litab" @click="changeTab(1)">완료 리스트</li>
+					  </ul>
+					</div>
+					<div v-if="display2[0].show">
+					<div style="margin:1%; padding:1%; box-shadow: 0px 0px 10px #222;" v-for="ios in list3">
+								<p style="color:#000; font-weight:bold;">내부 주문 번호 {{ios}}</p><br>
+									<table id="datatablesSimple" class="dataTable-table">
+	 										<thead>
+												<tr>
+													<th style="width: 12%; text-align:center;"><a>외부 주문 번호</a></th>
+													<th style="width: 10%; text-align:center;"><a>상태</a></th>
+													<th style="width: 40%; text-align:center;"><a>상품명</a></th>
+													<th style="width: 17%; text-align:center;"><a>날짜</a></th>
+													<th colspan="3" style="width: 21%; text-align:center;"><a>Click!</a></th>
+
+												</tr>
+												</thead> 
+
+											<tbody style="text-align:center;">
+												<tr v-for="order in list" v-if="order.ios == ios">
+													<td @click="getOrderDetail(order.os_code)">{{order.os_code}}</td>
+														<td @click="getOrderDetail(order.os_code)">{{order.os_stname}}</td>
+													<td @click="getOrderDetail(order.os_code)">{{order.os_summary}}</td>
+													<td @click="getOrderDetail(order.os_code)">{{order.os_date}}</td>
+													<td><div v-if="order.os_state==='OA'" @click="sendOrderDecide(order.os_code)">구매 확정</div><div v-else>-</div></td>
+													<td><div v-if="order.os_state==='OA'" @click="getOrderDetail2(order.os_code,order.ios)">교환/반품</div><div v-else>-</div></td>
+													<td><div v-if="order.os_state==='OA'" @click="getDelivery(order.os_code)">배송 조회</div><div v-else>-</div></td>
+												</tr>
+											</tbody>
+											
+											
+										</table>		
+					</div>
+					
+					</div>
+					<div v-if="display2[1].show">
+					<div style="margin:1%; padding:1%; box-shadow: 0px 0px 10px #222;" v-for="ios in list2">
+								<p style="color:#000; font-weight:bold;">내부 주문 번호 {{ios}}</p><br>
+									<table id="datatablesSimple" class="dataTable-table">
+	 										<thead>
+												<tr>
+													<th style="width: 15%;"><a>외부 주문 번호</a></th>
+													<th style="width: 15%;"><a>상태</a></th>
+													<th style="width: 50%;"><a>상품명</a></th>
+													<th style="width: 20%;"><a>날짜</a></th>
+						
+												</tr>
+												</thead> 
+
+											<tbody>
+												<tr v-for="order in list1" v-if="order.ios == ios" @click="getOrderDetail(order.os_code)">
+													<td>{{order.os_code}}</td>
+													<td>{{order.os_stname}}</td>
+													<td>{{order.os_summary}}</td>
+													<td>{{order.os_date}}</td>
+												</tr>
+											</tbody>
+											
+											
+										</table>		
+					</div>
+					</div>
+					</div>
+					<input id="detectRandering" type="hidden" value="ccc"/>
+				</template>
+				<template v-if="display[4].show">
+					<div id="modalBack" v-if="modal.show" :style="styleObject">
+							<div style="width:70%; max-height:80%; background: #fff; transform:translate(-50%,0%);
+							border-radius: 10px; padding: 20px; z-index:1; position: absolute; margin-top:3%; left:50%; overflow:auto;">
+							<button @click="modalClose()" type="button"
+										class="btn btn-dark" style="float: right;">닫기</button><br>
+								<table class="dataTable-table" id="modalTable">
+								     <thead>
+                                        <tr>
+                                            <th style="width: 10%; text-align:center;"><a>이미지</a></th>
+                                            <th style="width: 27%; text-align:center;"><a>상품명</a></th>
+                                            <th style="width: 37%; text-align:center;"><a>상품정보</a></th>
+                                            <th style="width: 10%; text-align:center;"><a>가격(원)</a></th>
+                                            <th style="width: 6%; text-align:center;"><a>수량</a></th>
+                                            <th style="width: 10%; text-align:center;"><a>원산지</a></th>                                          
+                                        </tr>
+                                    </thead>
+									<tbody><!-- OD_PRSPCODE,OD_OSCODE AS "OS_ORIGIN",OD_PRCODE,OD_QUANTITY,PR_NAME,PR_IMAGE,PR_PRICE,PR_TAX,PR_INFO,PR_ORIGIN,OD_STCODE -->
+										<tr v-for="(item,index) in modalList" v-if="item.od_stcode ==='RR'">
+											<td><img :src="item.pr_image" width="100%" height="100%" alt="no search image"></td>
+											<td style="text-align:center; vertical-align:middle;">{{item.pr_name}}</td>
+											<td style="text-align:center; vertical-align:middle;">{{item.pr_info}}</td>
+											<td style="text-align:center; vertical-align:middle;">{{item.perPrice}}</td>
+											<td style="text-align:center; vertical-align:middle;">{{item.od_quantity}}</td>
+											<td style="text-align:center; vertical-align:middle;">{{item.pr_origin}}</td>
+										</tr>
+										<tr><td colspan="6" style="text-align:center; vertical-align:middle;"> 총 가격(VAT포함) : {{modalList.ttPrice}} 원</td></tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					<div class="tabs">
+					  <ul>
+						<li class="litab activeT" @click="changeTab(0)">요청 리스트</li>
+						<li class="litab" @click="changeTab(1)">응답 리스트</li>
+					  </ul>
+					</div>
+					<div v-if="display2[0].show">
+					<div style="margin:1%; padding:1%; box-shadow: 0px 0px 10px #222;" v-for="ios in list3">
+								<p style="color:#000; font-weight:bold;">내부 주문 번호 {{ios}}</p><br>
+									<table id="datatablesSimple" class="dataTable-table">
+	 										<thead>
+												<tr>
+													<th style="width: 15%;"><a>외부 주문 번호</a></th>
+													<th style="width: 15%;"><a>상태</a></th>
+													<th style="width: 50%;"><a>상품명</a></th>
+													<th style="width: 20%;"><a>날짜</a></th>
+						
+												</tr>
+												</thead> 
+
+											<tbody>
+												<tr v-for="order in list" v-if="order.ios == ios" @click="getOrderDetail(order.os_code)">
+													<td>{{order.os_code}}</td>
+													<td>{{order.os_stname}}</td>
+													<td>{{order.os_summary}}</td>
+													<td>{{order.os_date}}</td>
+												</tr>
+											</tbody>
+										</table>		
+					</div>
+					</div>
+					<div v-if="display2[1].show">
+					<div style="margin:1%; padding:1%; box-shadow: 0px 0px 10px #222;" v-for="ios in list2">
+								<p style="color:#000; font-weight:bold;">내부 주문 번호 {{ios}}</p><br>
+									<table id="datatablesSimple" class="dataTable-table">
+	 										<thead>
+												<tr>
+													<th style="width: 15%;"><a>외부 주문 번호</a></th>
+													<th style="width: 12%;"><a>상태</a></th>
+													<th style="width: 47%;"><a>상품명</a></th>
+													<th style="width: 18%;"><a>날짜</a></th>
+													<th style="width: 7%;"><a>Click!</a></th>
+												</tr>
+												</thead> 
+
+											<tbody>
+												<tr v-for="order in list1" v-if="order.ios == ios" style="text-align:center; vertical-align:middle;">
+													<td  @click="getOrderDetail(order.os_code)">{{order.os_code}}</td>
+													<td  @click="getOrderDetail(order.os_code)">{{order.os_stname}}</td>
+													<td  @click="getOrderDetail(order.os_code)">{{order.os_summary}}</td>
+													<td  @click="getOrderDetail(order.os_code)">{{order.os_date}}</td>
+													<td><div v-if="order.os_state==='RA'" @click="getDelivery(order.os_code)">배송 조회</div><div v-else>-</div></td>
+												</tr>
+											</tbody>
+											
+											
+										</table>		
+					</div>
+
+					</div>
+					<input id="detectRandering" type="hidden" value="ccc"/>
+				</template>
+				<template v-if="display[11].show">
+				     <div id="modalBack" v-if="modal.show" :style="styleObject">
+							<div style="width:70%; max-height:80%; background: #fff; transform:translate(-50%,0%);
+							border-radius: 10px; padding: 20px; z-index:1; position: absolute; margin-top:3%; left:50%; overflow:auto;">
+							<button @click="modalClose()" type="button"
+										class="btn btn-dark" style="float: right;">닫기</button><br>
+								<table class="dataTable-table" id="modalTable">
+								     <thead>
+                                        <tr>
+                                            <th style="width: 10%; text-align:center;"><a>이미지</a></th>
+                                            <th style="width: 27%; text-align:center;"><a>상품명</a></th>
+                                            <th style="width: 37%; text-align:center;"><a>상품정보</a></th>
+                                            <th style="width: 10%; text-align:center;"><a>가격(원)</a></th>
+                                            <th style="width: 6%; text-align:center;"><a>수량</a></th>
+                                            <th style="width: 10%; text-align:center;"><a>원산지</a></th>                                          
+                                        </tr>
+                                    </thead>
+									<tbody><!-- OD_PRSPCODE,OD_OSCODE AS "OS_ORIGIN",OD_PRCODE,OD_QUANTITY,PR_NAME,PR_IMAGE,PR_PRICE,PR_TAX,PR_INFO,PR_ORIGIN,OD_STCODE -->
+										<tr v-for="(item,index) in modalList">
+											<td><img :src="item.pr_image" width="100%" height="100%" alt="no search image"></td>
+											<td style="text-align:center; vertical-align:middle;">{{item.pr_name}}</td>
+											<td style="text-align:center; vertical-align:middle;">{{item.pr_info}}</td>
+											<td style="text-align:center; vertical-align:middle;">{{item.perPrice}}</td>
+											<td style="text-align:center; vertical-align:middle;">{{item.od_quantity}}</td>
+											<td style="text-align:center; vertical-align:middle;">{{item.pr_origin}}</td>
+										</tr>
+										<tr><td colspan="6" style="text-align:center; vertical-align:middle;"> 총 가격(VAT포함) : {{modalList.ttPrice}} 원</td></tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+				     <div id="modalBack" v-if="modalcjh2.show" :style="styleObject">
+							<div style="width:70%; max-height:80%; background: #fff; transform:translate(-50%,0%);
+							border-radius: 10px; padding: 20px; z-index:1; position: absolute; margin-top:3%; left:50%; overflow:auto;">
+							<div style="float: left; width:95%; color:#000; font-weight: 900; font-size:35px">&nbsp&nbsp배송 조회</div>
+							<button @click="modalcjh2Close()" type="button" class="btn btn-dark" style="font-weight: 900; font-size:16px;">X</button>
+										<hr style="display:block;">
+								<table class="dataTable-table">
+									<tr>
+										<td style="text-align:center; vertical-align:middle;">운송장 번호</td>
+										<td style="text-align:center; vertical-align:middle;">{{modalList.dl_code}}</td>
+										<td style="text-align:center; vertical-align:middle;">주문서 번호</td>
+										<td style="text-align:center; vertical-align:middle;">{{modalList.dl_oscode}}</td>
+									</tr>
+									<tr>
+										<td style="text-align:center; vertical-align:middle;">배송 기사</td>
+										<td style="text-align:center; vertical-align:middle;">{{modalList.dv_name}}</td>
+										<td style="text-align:center; vertical-align:middle;">연락처</td>
+										<td style="text-align:center; vertical-align:middle;">{{modalList.dv_hp}}</td>
+									</tr>
+									<tr>
+										<td style="text-align:center; vertical-align:middle;" colspan="4" v-if="modalList.dl_dscode == 1">상품준비중</td>
+										<td style="text-align:center; vertical-align:middle;" colspan="4" v-else-if="modalList.dl_dscode == 2">배송중</td>
+										<td style="text-align:center; vertical-align:middle;" colspan="4" v-else>배송완료</td>
+									</tr>
+								</table>
+								<table class="dataTable-table">
+								     <thead>
+                                        <tr>
+                                            <th style="width: 25%; text-align:center;"><a>x좌표</a></th>
+                                            <th style="width: 25%; text-align:center;"><a>y좌표</a></th>
+                                            <th style="width: 50%; text-align:center;"><a>날짜</a></th>
+                                        </tr>
+                                    </thead>
+									<tbody>
+										<tr v-for="item in modalList.lc">
+											<td style="text-align:center; vertical-align:middle;">{{item.lc_x}}</td>
+											<td style="text-align:center; vertical-align:middle;">{{item.lc_y}}</td>
+											<td style="text-align:center; vertical-align:middle;">{{item.lc_date}}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+					 </div>
+					<div class="tabs">
+					  <ul>
+						<li class="litab activeT" @click="changeTab(0)">요청 리스트</li>
+						<li class="litab" @click="changeTab(1)">응답 리스트</li>
+					  </ul>
+					</div>
+					<div v-if="display2[0].show">
+					<div style="margin:1%; padding:1%; box-shadow: 0px 0px 10px #222;" v-for="ios in list3">
+								<p style="color:#000; font-weight:bold;">내부 주문 번호 {{ios}}</p><br>
+									<table id="datatablesSimple" class="dataTable-table">
+	 										<thead>
+												<tr>
+													<th style="width: 15%;"><a>외부 주문 번호</a></th>
+													<th style="width: 15%;"><a>상태</a></th>
+													<th style="width: 50%;"><a>상품명</a></th>
+													<th style="width: 20%;"><a>날짜</a></th>
+						
+												</tr>
+												</thead> 
+
+											<tbody>
+												<tr v-for="order in list" v-if="order.ios == ios" @click="getOrderDetail(order.os_code)">
+													<td>{{order.os_code}}</td>
+													<td>{{order.os_stname}}</td>
+													<td>{{order.os_summary}}</td>
+													<td>{{order.os_date}}</td>
+												</tr>
+											</tbody>
+										</table>		
+					</div>
+					</div>
+					<div v-if="display2[1].show">
+					<div style="margin:1%; padding:1%; box-shadow: 0px 0px 10px #222;" v-for="ios in list2">
+								<p style="color:#000; font-weight:bold;">내부 주문 번호 {{ios}}</p><br>
+									<table id="datatablesSimple" class="dataTable-table">
+	 										<thead>
+												<tr>
+													<th style="width: 15%;"><a>외부 주문 번호</a></th>
+													<th style="width: 12%;"><a>상태</a></th>
+													<th style="width: 47%;"><a>상품명</a></th>
+													<th style="width: 18%;"><a>날짜</a></th>
+													<th style="width: 7%;"><a>Click!</a></th>
+												</tr>
+												</thead> 
+
+											<tbody>
+												<tr v-for="order in list1" v-if="order.ios == ios" style="text-align:center; vertical-align:middle;">
+													<td  @click="getOrderDetail(order.os_code)">{{order.os_code}}</td>
+													<td  @click="getOrderDetail(order.os_code)">{{order.os_stname}}</td>
+													<td  @click="getOrderDetail(order.os_code)">{{order.os_summary}}</td>
+													<td  @click="getOrderDetail(order.os_code)">{{order.os_date}}</td>
+													<td><div v-if="order.os_state==='EA'" @click="getDelivery(order.os_code)">배송 조회</div><div v-else>-</div></td>
+												</tr>
+											</tbody>
+											
+											
+										</table>		
+					</div>
+
+					</div>
+					<input id="detectRandering" type="hidden" value="ccc"/>
+				</template>
+
+
 <!-------------------------------------------NSB-------------------------------------------->				
 				<template v-if="display[5].show">
-            		<button class="btn btn-dark"  v-on:click="orderApprovalPage()">주문 결재 작성</button>
-             		<button class="btn btn-dark"  v-on:click="refundApprovalPage()">반품 결재 작성</button>
+            		
+             	
+             		<input id="detectRandering" type="hidden" value="ccc"/>
             	</template>
 
 							<template v-if="displayNSB[0].show">
-								<button class="btn btn-dark" v-on:click="orderApprovalPage()">주문
-									결재 작성</button>
-								<button class="btn btn-dark" v-on:click="refundApprovalPage()">반품
-									결재 작성</button>
+							
+								
 								<div id="id01" class="w3-modal">
 									<div class="w3-modal-content">
 										<div class="w3-container">
@@ -835,6 +1241,7 @@ $(window).scroll(function(){
 								<tr>
 									<td></td>
 								</tr>
+								<input id="detectRandering" type="hidden" value="ccc"/>
 							</template>
 
 							<!-- -------------------------------------------------------------------------------------------- -->
@@ -993,6 +1400,7 @@ $(window).scroll(function(){
 										</tr>
 									</tbody>
 								</table>
+								<input id="detectRandering" type="hidden" value="ccc"/>
 							</template>
 
 
@@ -1066,7 +1474,8 @@ $(window).scroll(function(){
                               </tr>
                               </table>                                    
                </tbody>
-            </table>               
+            </table>  
+            <input id="detectRandering" type="hidden" value="ccc"/>             
             </template>
             
 
@@ -1190,6 +1599,7 @@ $(window).scroll(function(){
 								</div>
 							</div>
 						</div>
+						<input id="detectRandering" type="hidden" value="ccc"/>
 				</template>
 				
 				<template v-if="display[8].show">
@@ -1302,6 +1712,7 @@ $(window).scroll(function(){
 								</div>
 							</div>
 						</div>
+						<input id="detectRandering" type="hidden" value="ccc"/>
 				</template>
 
 <!-------------------------------------------JES-------------------------------------------->
@@ -1545,6 +1956,7 @@ $(window).scroll(function(){
 											</tr>
 											</tbody>																	
 									</table>
+									<input id="detectRandering" type="hidden" value="ccc"/>
             </template>
           
 				<template v-if="display[10].show">
@@ -1574,6 +1986,7 @@ $(window).scroll(function(){
                               </table>
                            </div>
                         </div>
+                        <input id="detectRandering" type="hidden" value="ccc"/>
                      </template>
 <!------------------------------------------------------------------------------------------>
 			</div>
@@ -1666,8 +2079,8 @@ $(window).scroll(function(){
 
     <!-- Custom scripts for all pages-->
     <script src="${pageContext.request.contextPath}/resources/js/sb-admin-2.min.js"></script>
-     		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-		<script src="${pageContext.request.contextPath}/resources/js/Chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/Chart.min.js"></script>
 
 
 

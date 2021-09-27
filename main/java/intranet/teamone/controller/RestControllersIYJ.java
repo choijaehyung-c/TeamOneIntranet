@@ -13,12 +13,17 @@ import intranet.teamone.approval.ApprovalServiceEntrance;
 import intranet.teamone.bean.AccessInfoBean;
 import intranet.teamone.bean.ApprovalBean;
 import intranet.teamone.bean.BudgetBean;
+import intranet.teamone.bean.DeliveryBean;
 import intranet.teamone.bean.EmployeeBean;
 import intranet.teamone.bean.IntranetOrderBean;
+import intranet.teamone.bean.MroneOrderBean;
+import intranet.teamone.bean.MroneOrderDetailBean;
 import intranet.teamone.bean.OrderBean;
 import intranet.teamone.bean.OrderDetailBean;
 import intranet.teamone.bean.ProductBean;
 import intranet.teamone.bean.TaxBean;
+import intranet.teamone.bean.connectionBean;
+import intranet.teamone.order_manage.OrderManageServiceEntrance;
 import intranet.teamone.purchase.PurchaseServiceEntrance;
 
 @RestController
@@ -34,6 +39,8 @@ public class RestControllersIYJ {
 	@Autowired
 	AccountancyServiceEntrance jae;
 	
+	@Autowired
+	OrderManageServiceEntrance ome;
 
 	@PostMapping ("/getSearchItem")
 	public List<ProductBean> getSearchItem(@RequestBody String word){
@@ -96,7 +103,7 @@ public class RestControllersIYJ {
 		return ase.responseAppovalAccept(iob);
 	}
 	
-	///////nsb///////////////////
+	///////////////////////////nsb///////////////////
 
 	   @PostMapping("/getDrafter")
 	   public EmployeeBean getDrafter() {   
@@ -141,4 +148,51 @@ public class RestControllersIYJ {
 		      
 		      return jae.getBudgetList();
 		   }   
+		
+	////////////////////////////cjh///////////////////////////////
+		
+		@PostMapping("/getOrderList")
+		public List<MroneOrderBean> getOrderList() throws Exception{
+			return ome.getOrderList();
+		}
+		
+		@PostMapping("/getRefundList")
+		public List<MroneOrderBean> getRefundList() throws Exception{
+			return ome.getRefundList();
+		}
+
+		@PostMapping("/getExchangeList")
+		public List<MroneOrderBean> getExchangeList() throws Exception{
+			return ome.getExchangeList();
+		}
+		
+		@PostMapping("/getOrderCompleteList")
+		public List<MroneOrderBean> getOrderCompleteList() throws Exception{
+			return ome.getOrderCompleteList();
+		}
+		
+		@PostMapping("/getRefundCompleteList")
+		public List<MroneOrderBean> getRefundCompleteList() throws Exception{
+			return ome.getRefundCompleteList();
+		}
+		
+		@PostMapping("/getExchangeCompleteList")
+		public List<MroneOrderBean> getExchangeCompleteList() throws Exception{
+			return ome.getExchangeCompleteList();
+		}
+		
+		@PostMapping("/getOrderDetail")
+		public List<MroneOrderDetailBean> getOrderDetail(@RequestBody String os_code){
+			return ome.getOrderDetail(os_code);
+		}
+		
+		@PostMapping("/getDelivery")
+		public DeliveryBean getDelivery(@RequestBody String os_code){
+			return ome.getDelivery(os_code);
+		}
+		
+		@PostMapping("/osConnect")
+		public String connectOs(@RequestBody connectionBean cb) {
+			return ome.connectOs(cb);
+		}
 }
