@@ -202,6 +202,11 @@ const main = new Vue({
 			}	 
 		}
 	},
+	delItem:function(prcode){
+		delCookie(prcode);
+		alert("장바구니에서 삭제되었습니다.");
+		this.getCartPage();
+	},
 	searchItem:function(){
 	let word = document.getElementsByName("word")[0].value;
 		if(word!=""){
@@ -945,5 +950,4 @@ function loadingCloseCallback(){
 		if(main.loading){loadingClose();}
 	},300);
 }
-
 
