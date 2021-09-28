@@ -356,9 +356,8 @@ const main = new Vue({
      },
 	issueApproval2:function(){
 	  let sendJsonData = {ap_fromdpcode:this.sendbean.ep_dpcode, ap_fromofcode:this.sendbean.ep_ofcode, cp_code:this.sendbean.ep_cpcode, ap_todpcode:this.sendbean2.ep_dpcode, ap_toofcode:this.sendbean2.ep_ofcode, cg_type:document.getElementById("div_apv_sq").value, text:document.getElementById("text").value};
-      console.log(this.inputcart);
       let clientData = JSON.stringify(sendJsonData);      
-      postAjaxJson('rest/issueApproval','ApprovalPage2','s', clientData);
+      postAjaxJson('rest/issueApproval2','ApprovalPage3','s', clientData);
 	},
 
 		////////////////////////////////////////////////////////////////
@@ -708,7 +707,7 @@ function returnStringData(jsondata){
 
 ////////////////////////NSB///////////////////////
 
-//주문결재 반품결재 분기
+//주문결재 탭
 function ApprovalPage(){
 	loadingOpen();
 	main.nsbchangePage();
@@ -726,6 +725,14 @@ main.nsbchangePage();
    for(i=0; i<main.inputcart.length; i++){
    this.delCookie(main.inputcart[i].prcode);   
    }  
+}
+
+function ApprovalPage3(message){
+   alert(message);
+   main.nsbchangePage();
+   main.changePage(6);
+   document.getElementById('id01').style.display='none';
+   document.getElementById('id02').style.display='none';
 }
 
 //기안자세션기입
