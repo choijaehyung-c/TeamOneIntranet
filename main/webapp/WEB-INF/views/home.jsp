@@ -59,7 +59,7 @@ function getcl(){
 
 </head>
 
-<body id="page-top" onLoad="mainPage();chartMain('${of}','${Dp }')">
+<body id="page-top" onLoad="mainPage();chartMain()">
 	
     <!-- Page Wrapper -->
     <div id="wrapper">
@@ -83,7 +83,7 @@ function getcl(){
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" onClick="mainPage();chartMain('${of}','${Dp }')">
+                <a class="nav-link" onClick="mainPage();chartMain()">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span >Dashboard</span></a>
             </li>
@@ -1863,7 +1863,7 @@ function getcl(){
 	  	let doughnut = new Chart(myChartOne,{
 	  		type:'doughnut',
 	  		data : {
-	  			labels:[data[0].od_prcode, data[1].od_prcode, data[2].od_prcode, data[3].od_prcode,data[4].od_prcode],
+	  			labels:[data[0].pr_name, data[1].pr_name, data[2].pr_name, data[3].pr_name,data[4].pr_name],
 	  			datasets :[{
 	  				label:'베스트상품 5',
 	  				data : [

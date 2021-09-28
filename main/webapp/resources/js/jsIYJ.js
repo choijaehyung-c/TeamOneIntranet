@@ -585,10 +585,9 @@ function ItemDetail(jsonData){
 	main.detailPush(jsonData); //detail의 데이터공간에 밀어넣음	
 }
 
-function chartMain(of,dp){
-	let data = {of_name:of,dp_name:dp};
-	let client = JSON.stringify(data);
-	postAjaxJson('rest/getRanking', 'gettingRanking','j',client);
+function chartMain(){
+
+	postAjaxJson('rest/getRanking', 'gettingRanking','j');
 	
 }
 
