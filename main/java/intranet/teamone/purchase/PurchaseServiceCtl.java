@@ -48,7 +48,7 @@ public class PurchaseServiceCtl {
 
 	 //해당 부서의 많이 구매한 상품 탑 5
 	List<OrderBean> getRanking(){
-		
+		System.out.println("inin?");
 		//세션으로 지사, 부서 정보 set
 		AccessInfoBean ai = new AccessInfoBean();
 		try {
@@ -60,6 +60,13 @@ public class PurchaseServiceCtl {
 		List<OrderBean> list = dao.getRanking(ai);
 		for(int i=0; i<list.size();i++) {
 			 list.get(i).setPr_name(this.getPrname(list.get(i).getOd_prcode()));	
+		}
+		
+		int lcount = list.size();
+		if(lcount < 5) {
+			for(int i=0 ; i < 5-lcount ; i++) {
+				OrderBean ob = new OrderBean();
+			}
 		}
 		
 		return list;
