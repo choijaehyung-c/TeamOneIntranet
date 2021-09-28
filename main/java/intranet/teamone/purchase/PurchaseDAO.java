@@ -49,7 +49,6 @@ public class PurchaseDAO {
 	}
 	 //해당 부서의 많이 구매한 상품 탑 5
 	List<OrderBean> getRanking(AccessInfoBean ai){
-		//System.out.println("Dao : "+ab);
 		return sql2.selectList("getRank", ai);
 	}
 

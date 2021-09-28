@@ -528,6 +528,7 @@ function checkCookie(name){
 }
 //onLoad
 function mainPage(){
+	chartMain();
 	main.changePage(0);
 }
 
@@ -596,7 +597,7 @@ function ItemDetail(jsonData){
 }
 
 function chartMain(){
-
+console.log("in?");
 	postAjaxJson('rest/getRanking', 'gettingRanking','j');
 	
 }

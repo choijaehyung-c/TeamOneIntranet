@@ -59,7 +59,7 @@ function getcl(){
 
 </head>
 
-<body id="page-top" onLoad="mainPage();chartMain()">
+<body id="page-top" onLoad="mainPage()">
 	
     <!-- Page Wrapper -->
     <div id="wrapper">
@@ -1853,13 +1853,8 @@ function getcl(){
     </div>
   <script >
   function gettingRanking(data){
-	  let date = JSON.stringify(data);
-	  //alert(date);
-	  
+	  console.log(data);
 	  	let myChartOne = document.getElementById('myChartOne').getContext('2d');
-	
-	  	
-	  	
 	  	let doughnut = new Chart(myChartOne,{
 	  		type:'doughnut',
 	  		data : {
