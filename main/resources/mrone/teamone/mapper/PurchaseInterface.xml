@@ -36,7 +36,7 @@
 		SELECT * FROM CHLCHL.PRODUCT WHERE PR_NAME LIKE '%' || #{word} || '%'	
 	</select>
 	
-	<select id="getPrname" parameterType="intranet.teamone.bean.OrderBean" resultType="intranet.teamone.bean.OrderBean">
-		   SELECT PR_NAME FROM CHLCHL.PRODUCT WHERE PR_CODE=#{od_prcode}
+	<select id="getPrname" parameterType="string" resultType="string">
+		   SELECT PR_NAME FROM CHLCHL.PRODUCT WHERE PR_CODE=#{prcode} AND PR_STCODE='PC'
 	</select>
 </mapper>

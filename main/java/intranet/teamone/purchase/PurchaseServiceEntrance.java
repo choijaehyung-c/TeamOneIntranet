@@ -41,9 +41,9 @@ public class PurchaseServiceEntrance {
 	}
 
 	 //해당 부서의 많이 구매한 상품 탑 5
-	public List<OrderBean> getRanking(AccessInfoBean ab){
+	public List<OrderBean> getRanking(){
 		//System.out.println("입구 :  "+psc.getRanking(ab));
-		return psc.getRanking(ab);
+		return psc.getRanking();
 	}
 
 }

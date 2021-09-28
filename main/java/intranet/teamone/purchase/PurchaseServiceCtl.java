@@ -9,12 +9,16 @@ import org.springframework.stereotype.Service;
 import intranet.teamone.bean.AccessInfoBean;
 import intranet.teamone.bean.OrderBean;
 import intranet.teamone.bean.ProductBean;
+import intranet.teamone.utils.ProjectUtils;
 
 @Service
 public class PurchaseServiceCtl {
 	
 	@Autowired
 	PurchaseDAO dao;
+	
+	@Autowired
+	ProjectUtils pu;
 
 	List<ProductBean> getBkind() {
 
@@ -43,24 +47,33 @@ public class PurchaseServiceCtl {
 	}
 
 	 //해당 부서의 많이 구매한 상품 탑 5
-	List<OrderBean> getRanking(AccessInfoBean ab){
+	List<OrderBean> getRanking(){
 		
-		List<OrderBean> list;
-		list = dao.getRanking(ab);
+		//세션으로 지사, 부서 정보 set
+		AccessInfoBean ai = new AccessInfoBean();
+		try {
+			ai.setDp_code((String)pu.getAttribute("userDp"));
+			ai.setOf_code((String)pu.getAttribute("userOf"));
+		} catch (Exception e) {e.printStackTrace();}
+		
+		//return된 데이터
+		List<OrderBean> list = dao.getRanking(ai);
 		for(int i=0; i<list.size();i++) {
-			//System.out.println(this.getPrname(list));
+			 list.get(i).setPr_name(this.getPrname(list.get(i).getOd_prcode()));	
+			 System.out.println(list.get(i));
 		}
 		
-		return dao.getRanking(ab);
+		return list;
 	}
 	
-	List<OrderBean> getPrname(List<OrderBean> orderBean){
+	
+	//상품코드로 상품이름을 가져오는 메서드
+	String getPrname(String prcode){
 		
-		for(int i=0; i<orderBean.size(); i++) {
-			 dao.getPrname(orderBean.get(i));
-		}
+		System.out.println("!!!!!!!!!!!!!!!: "+dao.getPrname(prcode)+"\n");	
 		
-		return orderBean;
+		return dao.getPrname(prcode);
+		
 	}
 	
 	

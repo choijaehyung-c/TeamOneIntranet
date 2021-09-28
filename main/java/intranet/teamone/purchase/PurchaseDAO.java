@@ -48,15 +48,15 @@ public class PurchaseDAO {
 		return sql.selectList("getSearchItem", word);
 	}
 	 //해당 부서의 많이 구매한 상품 탑 5
-	List<OrderBean> getRanking(AccessInfoBean ab){
+	List<OrderBean> getRanking(AccessInfoBean ai){
 		//System.out.println("Dao : "+ab);
-		return sql2.selectList("getRank", ab);
+		return sql2.selectList("getRank", ai);
 	}
 
 
-	 List<OrderBean> getPrname(OrderBean ob) {
-
-			return sql.selectList("getPrname",ob);
+	 String getPrname(String prcode) {
+ 
+			return sql.selectOne("getPrname",prcode);
 	}
 
 }

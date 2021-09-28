@@ -49,15 +49,15 @@ public class RestControllersIYJ {
 	
 	@PostMapping("/getPrDetail")
 	public ProductBean getPrDetail(@RequestBody ProductBean pr) {
-		System.out.println("상품상세정보 : "+pse.getPrDetail(pr));
+		//System.out.println("상품상세정보 : "+pse.getPrDetail(pr));
 		return pse.getPrDetail(pr);
 	}
 	
 	
 	@PostMapping("/getRanking")
-	public List<OrderBean> getRanking(@RequestBody AccessInfoBean ab){
+	public List<OrderBean> getRanking(){
 		//System.out.println(pse.getRanking(ab));
-		return pse.getRanking(ab);
+		return pse.getRanking();
 	}
 	
 	   @PostMapping("/GetApprovalList")
