@@ -129,7 +129,7 @@ const main = new Vue({
 			let add = document.getElementById("add"); //담기버튼
 			let unit_price = price+tax;
 			//let pr_price = (price+tax)*count;
-			let value = prcode +','+ prname+ '>' + spcode +':'+ count + '&' +unit_price+ '#' +img; //split(',')는 상품코드와 공급사코드 (':')갯수 ('/')는 가격
+			let value = prcode +','+ prname+ '>' + spcode +'@@'+ count + '^^' +unit_price+ '#' +img ; //split(',')는 상품코드와 공급사코드 (':')갯수 ('/')는 가격
 			let cart = document.getElementById("space");
 			let html ="";
 				
@@ -144,14 +144,15 @@ const main = new Vue({
 				add.style.display= "block";
 				cart.innerHTML +=html;
 		},
-		addCart:function(){				
-				var val =[];
-				var pr = [];								
-				const values = document.getElementsByName("ckval");
-				const prcode = document.getElementsByName("prcode");
+			addCart:function(){				
+				let val =[];
+				let pr = [];								
+				let values = document.getElementsByName("ckval");
+				let prcode = document.getElementsByName("prcode");
 				const name = 'addCart-';	
-				const cart = document.cookie.split(';');
-				
+				let cart = document.cookie.split(';');
+				let ct = '';
+				let ogCount='';
 				
 				for(r=0; r<prcode.length; r++){
 					let prr = prcode[r].value;
@@ -160,20 +161,20 @@ const main = new Vue({
 					val.push(vall);
 					
 					for(var i in cart){
-						if(cart[i].search(name+pr[r])!=-1){
-							alert("이미 장바구니에 있는 상품은 추가하고 장바구니에 담겼습니다.");
-							val[r].split(':')[1].split('&')[0];						
-						}
-					}
-					
-					setCookie(name + pr[r], val[r], 7);
-						
-				}
-				alert('장바구니에 담겼습니다.');
-				
-
-				
+						if(cart[i].search(name+prr)!=-1){
+							ct = cart[i];
+								ogCount = parseInt(ct.split('@@')[1].split('^^')[0]) + parseInt(vall.split('@@')[1].split('^^')[0]);
+								alert(ogCount);
 								
+								vall=vall.substring(0,vall.indexOf("@@"))+"@@"+ ogCount +"^^"+ vall.substring(vall.indexOf("^^")+2,vall.length);
+								console.log(vall);
+								setCookie(name + prr, vall, 7);	
+						
+						}else{
+							setCookie(name + prr, vall, 7);												
+						}
+					}								
+				}	alert('장바구니에 담겼습니다.');				
 		},
 		getCartPage:function(){
 			loadingClose();
@@ -187,11 +188,11 @@ const main = new Vue({
 				//alert(ck[i].search('addCart-')); //모든 쿠키를 확인해서 쿠키당 addCart가 들어가면 1을반환 없으면 0을반환  
                 cookie = ck[i]								
            	   	let img = cookie.split('#')[1];
-				let spcode = cookie.split('>')[1].split(':')[0];
+				let spcode = cookie.split('>')[1].split('@@')[0];
 				let prname=cookie.split(',')[1].split('>')[0];
 				let prcode=cookie.split('-')[1].split('=')[0];
-				let price = cookie.split('&')[1].split('#')[0];
-				let count = cookie.split(':')[1].split('&')[0];
+				let price = cookie.split('^^')[1].split('#')[0];
+				let count = cookie.split('@@')[1].split('^^')[0];
 				let tt_price = price * count;
 				
 				let ckData = {img:img, spcode:spcode, prname:prname, prcode:prcode,price:price,count:count,ttprice:tt_price};
