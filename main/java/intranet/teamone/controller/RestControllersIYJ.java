@@ -146,6 +146,11 @@ public class RestControllersIYJ {
 		  public String issueApproval(@RequestBody ApprovalBean ab) {      
 		     return ase.issueApproval(ab);         
 		   }
+		 
+		 @PostMapping("/issueApproval2")
+		  public String issueApproval2(@RequestBody ApprovalBean ab) {      
+		     return ase.issueApproval2(ab);         
+		   }
 
 	//////////////////////jes////////////////////////////
 		@PostMapping("/getBudgetList") //확인했는데 못알아먹을때 앞에 다 문자열도 붙이기

@@ -257,6 +257,22 @@ public class ApprovalServiceCtl {
 		      }
 		      return message;
 		}
+	 
+	 String issueApprovalCtl2(ApprovalBean ab) {
+		   String message = "Try Again";   
+		   
+		   ab.setAp_fromdpcode(ab.getAp_fromdpcode() ); 
+		   ab.setAp_fromofcode(ab.getAp_fromofcode() );
+		   ab.setAp_todpcode(ab.getAp_todpcode() );
+		   ab.setAp_toofcode(ab.getAp_toofcode());
+		   ab.setCg_type(ab.getCg_type());
+		   ab.setCp_code(ab.getCp_code());
+		   ab.setAn_text(ab.getAn_text());
+		   if(dao.insAn(ab)) {
+		         message="SUCCESS";
+		   }
+		      return message;
+		}
 
 
 

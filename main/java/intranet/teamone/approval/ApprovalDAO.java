@@ -167,6 +167,11 @@ public class ApprovalDAO {
 		}
 
 
+		public boolean insAn(ApprovalBean ab) {
+			return convertToBoolean(sql2.insert("insAn", ab));
+		}
+
+
 
 	
 

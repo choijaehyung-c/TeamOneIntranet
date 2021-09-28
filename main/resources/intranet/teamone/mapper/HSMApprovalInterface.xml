@@ -131,5 +131,9 @@
     <insert id="insOd" parameterType="intranet.teamone.bean.ApprovalBean">
      INSERT INTO OD VALUES(#{ap_oscode}, #{od_code}, #{od_quantity}, #{sp_code}, '', #{od_price})
       </insert>
+      
+    <insert id="insAn" parameterType="intranet.teamone.bean.ApprovalBean">
+    INSERT INTO ANYAPPROVAL VALUES('AN'||TO_CHAR(SYSDATE,'YYMMDD')||#{ap_fromdpcode}||SEQ_ANYAPPROVAL_NUM.NEXTVAL, #{ap_fromdpcode}, #{ap_todpcode}, sysdate, #{cg_type}, 'NR',  #{ap_fromofcode}, #{ap_toofcode}, #{an_text})
+    </insert>
     
 </mapper>

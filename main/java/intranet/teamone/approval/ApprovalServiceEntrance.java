@@ -98,6 +98,10 @@ public class ApprovalServiceEntrance {
 	public String issueApproval(ApprovalBean ab) {
 		   return asc.issueApprovalCtl(ab);
 		}
+	
+	public String issueApproval2(ApprovalBean ab) {
+		   return asc.issueApprovalCtl2(ab);
+		}
 
 
 
