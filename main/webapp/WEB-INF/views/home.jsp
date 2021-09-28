@@ -1134,7 +1134,7 @@ function getcl(){
                                  </tr>
                               </thead>
                               <tbody>
-                                 <tr v-for="list in cartNSB"  @click="inputCart(list)">
+                                 <tr v-for="(list, index) in cartNSB"  @click="inputCart(list, index)">
                                     <td>{{list.spcode}}</td>
                                     <td>{{list.prname}}</td>
                                     <td>{{list.prcode}}</td>
