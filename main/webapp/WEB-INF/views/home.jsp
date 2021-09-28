@@ -1892,7 +1892,6 @@ function getcl(){
 		
 	<script src="${pageContext.request.contextPath}/resources/vue/vue.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/jsIYJ.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/accessNSB.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/js.js"></script>
 	
 	
