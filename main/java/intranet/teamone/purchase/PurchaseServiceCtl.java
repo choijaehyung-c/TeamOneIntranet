@@ -48,7 +48,6 @@ public class PurchaseServiceCtl {
 
 	 //해당 부서의 많이 구매한 상품 탑 5
 	List<OrderBean> getRanking(){
-		System.out.println("inin?");
 		//세션으로 지사, 부서 정보 set
 		AccessInfoBean ai = new AccessInfoBean();
 		try {
@@ -66,6 +65,9 @@ public class PurchaseServiceCtl {
 		if(lcount < 5) {
 			for(int i=0 ; i < 5-lcount ; i++) {
 				OrderBean ob = new OrderBean();
+				ob.setPr_name("구매내역없음");
+				ob.setOd_quantity(0);
+				list.add(ob);
 			}
 		}
 		
@@ -75,11 +77,7 @@ public class PurchaseServiceCtl {
 	
 	//상품코드로 상품이름을 가져오는 메서드
 	String getPrname(String prcode){
-		
-		System.out.println("!!!!!!!!!!!!!!!: "+dao.getPrname(prcode)+"\n");	
-		
 		return dao.getPrname(prcode);
-		
 	}
 	
 	
