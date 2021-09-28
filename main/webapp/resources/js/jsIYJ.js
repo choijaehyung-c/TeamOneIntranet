@@ -150,6 +150,8 @@ const main = new Vue({
 				const values = document.getElementsByName("ckval");
 				const prcode = document.getElementsByName("prcode");
 				const name = 'addCart-';	
+				const cart = document.cookie.split(';');
+				
 				
 				for(r=0; r<prcode.length; r++){
 					let prr = prcode[r].value;
@@ -157,10 +159,19 @@ const main = new Vue({
 					pr.push(prr);
 					val.push(vall);
 					
+					for(var i in cart){
+						if(cart[i].search(name+pr[r])!=-1){
+							alert("이미 장바구니에 있는 상품은 추가하고 장바구니에 담겼습니다.");
+							val[r].split(':')[1].split('&')[0];						
+						}
+					}
+					
 					setCookie(name + pr[r], val[r], 7);
 						
 				}
 				alert('장바구니에 담겼습니다.');
+				
+
 				
 								
 		},

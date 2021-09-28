@@ -60,7 +60,6 @@ public class PurchaseServiceCtl {
 		List<OrderBean> list = dao.getRanking(ai);
 		for(int i=0; i<list.size();i++) {
 			 list.get(i).setPr_name(this.getPrname(list.get(i).getOd_prcode()));	
-			 System.out.println(list.get(i));
 		}
 		
 		return list;
