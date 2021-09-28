@@ -58,96 +58,87 @@ function postAjaxJson(jobCode, fn, rType, clientData = "") {
 }
 
 function makeForm(action,method,name = null){//name = null => name값이 없다면 null
-	let form = document.createElement("form");
-	if(name!=null){form.setAttribute("name",name);}
-	form.setAttribute("action",action);
-	form.setAttribute("method",method);
-	return form;
+   let form = document.createElement("form");
+   if(name!=null){form.setAttribute("name",name);}
+   form.setAttribute("action",action);
+   form.setAttribute("method",method);
+   return form;
 }
 
 function makeInput(type,name,value){
-	let input = document.createElement("input");
-	input.setAttribute("type",type);
-	input.setAttribute("name",name);
-	input.setAttribute("value",value);
-	return input;
+   let input = document.createElement("input");
+   input.setAttribute("type",type);
+   input.setAttribute("name",name);
+   input.setAttribute("value",value);
+   return input;
 }
 
 let inout = "";
 let jobCodeField = "";
 
-function readyAccessMro(data, jc) {
-	inout = data;
-	jobCodeField = jc;
+function readyAccessIntranet(data, jc) {
+   inout = data;
+   jobCodeField = jc;
 
-	/*if(inout==1){
-		const userId = document.getElementsByName("userId")[0];
-		const userPwd = document.getElementsByName("userPwd")[0];
-		
-		if(userId.value ==""){
-			userId.focus();
-			return;
-		}
-		if(userPwd.value ==""){
-			userPwd.focus();
-			return;
-		}
-	}*/
-	if (data == '1') {
-		getAjax("https://api.ipify.org?format=json","sendAccessInfo","j");
-	}else{
-		getAjax("https://api.ipify.org?format=json","accessOut","j");
-	}
+   /*if(inout==1){
+      const userId = document.getElementsByName("userId")[0];
+      const userPwd = document.getElementsByName("userPwd")[0];
+      
+      if(userId.value ==""){
+         userId.focus();
+         return;
+      }
+      if(userPwd.value ==""){
+         userPwd.focus();
+         return;
+      }
+   }*/
+   if (data == '1') {
+      getAjax("https://api.ipify.org?format=json","sendAccessInfo","j");      
+   }else{
+       getAjax("https://api.ipify.org?format=json","accessOut","j");
+   }
 }
 
 function sendAccessInfo(Ip){
 
-	const method = makeInput("hidden","ah_method",inout);
-	const publicIp = makeInput("hidden","ah_publicip",Ip.ip);
-	const privateIp = makeInput("hidden","ah_privateip",location.host);
-	const browser = makeInput("hidden","ah_browser",navigator.userAgent.replace(/ /g,""));
-	const Id = document.getElementsByName("ah_code")[0];
-	const Pwd = document.getElementsByName("ah_pwd")[0];
-	
-	
-	let type;
-	for(i=0;i<2;i++){
-		if(document.getElementsByName("ah_table")[i].checked){
-			type=document.getElementsByName("ah_table")[i];
-		}
-	}
-	
-	let	f = makeForm(jobCodeField,"post");
-	if(type.value=="AHS"){
-	const spcode = document.getElementsByName("ah_sdspcode")[0];
-	f.appendChild(spcode);}
-	f.appendChild(Id);
-	f.appendChild(Pwd);
-	f.appendChild(method);
-	f.appendChild(publicIp);
-	f.appendChild(privateIp);
-	f.appendChild(browser);
-	f.appendChild(type);
-	
-	document.body.appendChild(f);
-	f.submit();
-	
+   const method = makeInput("hidden","ah_method",inout);
+   const publicIp = makeInput("hidden","ah_publicip",Ip.ip);
+   const privateIp = makeInput("hidden","ah_privateip",location.host);
+   const browser = makeInput("hidden","ah_browser",navigator.userAgent.replace(/ /g,""));
+   const Id = document.getElementsByName("ah_epcode")[0];
+   const Pwd = document.getElementsByName("ah_pwd")[0];
+   
+   
+   let   f = makeForm(jobCodeField,"post");
+
+   f.appendChild(Id);
+   f.appendChild(Pwd);
+   f.appendChild(method);
+   f.appendChild(publicIp);
+   f.appendChild(privateIp);
+   f.appendChild(browser);
+   
+   document.body.appendChild(f);
+   f.submit();
+   
 }
 
 function accessOut(Ip){
-	const method = makeInput("hidden","ah_method",inout);
-	const publicIp = makeInput("hidden","ah_publicip",Ip.ip);
-	const privateIp = makeInput("hidden","ah_privateip",location.host);
-	const browser = makeInput("hidden","ah_browser",navigator.userAgent.replace(/ /g,""));
-	let	f = makeForm(jobCodeField,"post");
-	f.appendChild(method);
-	f.appendChild(publicIp);
-	f.appendChild(privateIp);
-	f.appendChild(browser);
-	
-	document.body.appendChild(f);
-	f.submit();
+   const method = makeInput("hidden","ah_method",inout);
+   const publicIp = makeInput("hidden","ah_publicip",Ip.ip);
+   const privateIp = makeInput("hidden","ah_privateip",location.host);
+   const browser = makeInput("hidden","ah_browser",navigator.userAgent.replace(/ /g,""));
+   let   f = makeForm(jobCodeField,"post");
+   f.appendChild(method);
+   f.appendChild(publicIp);
+   f.appendChild(privateIp);
+   f.appendChild(browser);
+   
+   document.body.appendChild(f);
+   f.submit();
 }
+
 
 function typeChange(){
 	
