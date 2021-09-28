@@ -77,11 +77,7 @@ public class PurchaseServiceCtl {
 	
 	//상품코드로 상품이름을 가져오는 메서드
 	String getPrname(String prcode){
-		
-		System.out.println("!!!!!!!!!!!!!!!: "+dao.getPrname(prcode)+"\n");	
-		
 		return dao.getPrname(prcode);
-		
 	}
 	
 	
