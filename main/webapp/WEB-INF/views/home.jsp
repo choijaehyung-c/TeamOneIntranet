@@ -653,7 +653,7 @@ function getcl(){
                                   			<td id="price">{{li.price}}</td>
                                   			<td id="count"><input type="number"   v-model="li.count" style="width:45%;"></td>
                                   			<td id="tt_price"><input type='text' readonly name='tt_price' :value=li.price*li.count>원</td>
-                                  			<td><span class="btn btn-dark" @click="delItem(li.prcode)">삭제</span></td>
+                                  			<td><span class="btn btn-primary btn-sm" @click="delItem(li.prcode)">삭제</span></td>
                                   		</tr>
                                      </tbody>
                                 </table></div></div>
