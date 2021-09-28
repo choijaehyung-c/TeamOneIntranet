@@ -4,8 +4,8 @@ const main = new Vue({
 	data : {
 		display:[{show:false},{show:false},{show:false},{show:false},{show:false},{show:false},{show:false},{show:false},{show:false},{show:false},{show:false},{show:false}],
 		selectPage:[{show:false},{show:false},{show:false},{show:false}],
-		displayNSB:[{show:false}/*주문결재세션기입*/,{show:false}/*수신부서기입*/,{show:false}/*반품세션기입*/,{show:false}/*반품부서기입*/,{show:false}/*거래내역기입*/,{show:false}/*일반부서기입*/,{show:false}/*장바구니기입*/],
 		display2:[{show:true},{show:false}],
+		nsbPage:[{show:false}/*주문결재부서기입*/, {show:false}/*거래내역기입*/, {show:false}/*일반결재부서기입*/],
 		modal:{show:false},
 		modal2:{show:false},
 		modalcjh:{show:false},
@@ -47,12 +47,12 @@ const main = new Vue({
 			}
 			this.display[page].show = true;
 		},
-		 changePageNSB:function(page){
-         for(i=0;i<this.displayNSB.length; i++){
-            this.displayNSB[i].show=false;
-         }
-         this.displayNSB[page].show = true;
-      },
+		nsbchangePage:function(){
+			for(i=0;i<this.nsbPage.length; i++){
+				this.nsbPage[i].show=false;
+			}
+
+		},
 		modalOpen:function(){
 			this.modal.show = true;
 		},
@@ -304,34 +304,16 @@ const main = new Vue({
 
             this.cartNSB.push(ckData);                                                                                                         
          }    
+
       }
       },
 	  //장바구니 기입
 	  inputCart:function(list){	
 		document.getElementById('id02').style.display='none'
 		this.inputcart.push(list);
-		this.displayNSB[6].show=true;
-		
+		this.nsbPage[0].show=true;
+		this.nsbPage[1].show=true;	
 	  },	
-      //반품결재
-      refundApprovalPage:function(){
-		loadingOpen();
-      postAjaxJson('rest/getDrafter','rDrafterVue','j');
-      },
-      getDP2:function(){
-      postAjaxJson('rest/getDP','DPVue2','j');   
-      },
-      inputDP2:function(epcode){
-      document.getElementById('id01').style.display='none'
-      postAjaxJson('rest/inputDP','inputDPVue2','j',epcode);      
-      },
-      getApprovalOrderList:function(ofcode){
-      postAjaxJson('rest/getApprovalOrderList','getAOList','j',ofcode);
-      },   
-      inputOrder:function(oscode){
-	  document.getElementById('id02').style.display='none'
-      postAjaxJson('rest/inputOrder','inputAOList','j',oscode);
-      },
       
       //일반결재
       anyApprovalPage:function(){   
@@ -361,6 +343,13 @@ const main = new Vue({
       let clientData = JSON.stringify(sendJsonData);      
       postAjaxJson('rest/issueApproval','ApprovalPage2','s', clientData);
      },
+	issueApproval2:function(){
+	  let sendJsonData = {ap_fromdpcode:this.sendbean.ep_dpcode, ap_fromofcode:this.sendbean.ep_ofcode, cp_code:this.sendbean.ep_cpcode, ap_todpcode:this.sendbean2.ep_dpcode, ap_toofcode:this.sendbean2.ep_ofcode, cg_type:document.getElementById("div_apv_sq").value, text:document.getElementById("text").value};
+      console.log(this.inputcart);
+      let clientData = JSON.stringify(sendJsonData);      
+      postAjaxJson('rest/issueApproval','ApprovalPage2','s', clientData);
+	},
+
 		////////////////////////////////////////////////////////////////
 		tabSet:function(tabNum){
 			let count = this.display2.length;
@@ -535,6 +524,7 @@ function mainPage(){
 //구매하기 버튼(사이드바)
 function getBkinds(){
 	loadingOpen();
+	main.nsbchangePage();
 	main.changePage(1);
 	main.getBkindPage();
 }
@@ -542,6 +532,7 @@ function getBkinds(){
 //장바구니 버튼 (사이드바)
 function myCartView(){
 	loadingOpen();
+	main.nsbchangePage();
 	main.changePage(2);
 	main.getCartPage();
 }
@@ -620,6 +611,7 @@ function getAnyApprovalList(msg){//*//
 
 function getApprovalListPush(jsondata){
 	main.listPush(jsondata);
+	main.nsbchangePage();
 	main.changePage(7);
 	main.selectPage[0].show=true;
 	main.selectPage[1].show=false;
@@ -651,6 +643,7 @@ function sendApprovalPage(){
 
 function getSendApprovalListPush(jsondata){
 	main.listPush(jsondata);
+	main.nsbchangePage();
 	main.changePage(8);
 	main.selectPage[3].show = false;
 	main.selectPage[2].show = true;
@@ -659,6 +652,7 @@ function getSendApprovalListPush(jsondata){
 
 function getSendAnyApprovalListPush(jsondata){
 	main.list2Push(jsondata);
+	main.nsbchangePage();
 	main.changePage(8);
 	main.selectPage[2].show = false;
 	main.selectPage[3].show = true;
@@ -707,17 +701,15 @@ function returnStringData(jsondata){
 //주문결재 반품결재 분기
 function ApprovalPage(){
 	loadingOpen();
+	main.nsbchangePage();
    main.changePage(5);
-   main.changePageNSB(6);
    postAjaxJson('rest/getDrafter','oDrafterVue','j');
-
- 
 }
 
 function ApprovalPage2(message){
    alert(message);
+main.nsbchangePage();
    main.changePage(5);
-   main.changePageNSB(6);
    document.getElementById('id01').style.display='none';
    document.getElementById('id02').style.display='none';
    
@@ -728,8 +720,6 @@ function ApprovalPage2(message){
 
 //기안자세션기입
 function oDrafterVue(jsondata){
-   main.changePageNSB(0);
-   main.display[5].show=false;
    main.sendbeanPush(jsondata);
 	loadingClose();
 }
@@ -737,46 +727,16 @@ function oDrafterVue(jsondata){
 //부서찾기모달
 function DPVue(jsondata){
    main.listPush(jsondata);
-   main.displayNSB(0);
+   main.display[5].show=true;
 }
 
 //선택한 부서정보 기입
 function inputDPVue(jsondata){
    main.sendbean2Push(jsondata);
-   main.displayNSB[0].show=true;
-   main.displayNSB[1].show=true;
+   main.nsbPage[0].show = true;
 }
 
-//반품 기안자세션기입
-function rDrafterVue(jsondata){
 
-   main.changePageNSB(2);
-   main.display[5].show=false;
-   main.sendbeanPush(jsondata); 
-	loadingClose();  
-}
-
-//부서찾기모달
-function DPVue2(jsondata){
-   main.listPush(jsondata);
-}
-//선택한 부서정보 기입
-function inputDPVue2(jsondata){
-   main.sendbean2Push(jsondata);
-   main.displayNSB[2].show=true;
-   main.displayNSB[3].show=true;
-}
-//반품 거래내역 모달
-function getAOList(jsondata){
-   main.listPush(jsondata);
-}
-//거래내역 기입
-function inputAOList(jsondata){
-   main.bean3Push(jsondata);
-   main.displayNSB[2].show=true;
-   main.displayNSB[3].show=true;
-   main.displayNSB[4].show=true;
-}
 
 function anyApprovalPage(){
 	 loadingOpen();
@@ -784,8 +744,8 @@ function anyApprovalPage(){
 }
 //일반결재 기안자 세션 기입
 function aDrafterVue(jsondata){
+	main.nsbchangePage();
    main.changePage(6);
-   main.changePageNSB(6);
    main.sendbeanPush(jsondata);
 	loadingClose();
 }
@@ -796,8 +756,8 @@ function DPVue3(jsondata){
 //일반결재 부서 기입
 function inputDPVue3(jsondata){
    main.sendbean2Push(jsondata);
-   main.display[6].show=true;
-   main.displayNSB[5].show=true;
+   main.nsbPage[2].show=true;
+
 }
 
 //세금계산서 페이지 이동
@@ -807,8 +767,8 @@ function taxbillPage(){
 }
 //세금계산서 리스트 출력
 function IssuedTaxVue(jsondata){
+	main.nsbchangePage();
 	main.changePage(9);
-	main.changePageNSB(6);
 	main.listPush(jsondata);
 	loadingClose();
 }
@@ -831,8 +791,9 @@ function getBudgetList(jsonData){
 
 function getBudget(){
 	loadingOpen();
-   main.changePage(10);
-   main.getBudgetPage();
+	main.nsbchangePage();   
+	main.changePage(10);
+    main.getBudgetPage();
 }
 
 /////////////////////cjh/////////////////////////
@@ -871,21 +832,26 @@ function orderList(){
     loadingOpen();
     postAjaxForm('rest/getOrderList','getList','j');
     postAjaxForm('rest/getOrderCompleteList','getCompleteList','j');
-    main.changePage(3);
+	main.nsbchangePage();    
+	main.changePage(3);
+
 }
 
 function refundList(){
 	loadingOpen();
 	postAjaxForm('rest/getRefundList','getList','j');
 	postAjaxForm('rest/getRefundCompleteList','getCompleteList','j');
+	main.nsbchangePage();
 	main.changePage(4);
+
 }
 
 function exchangeList(){
 	loadingOpen();
 	postAjaxForm('rest/getExchangeList','getList','j');
 	postAjaxForm('rest/getExchangeCompleteList','getCompleteList','j');
-	main.changePage(11);
+	main.nsbchangePage();
+	main.changePage(11);   
 }
 
 function getList(jsondata){
