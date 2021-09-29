@@ -39,6 +39,11 @@ public class ApprovalDAO {
 		return sql2.selectList("getApprovalDetail", ab);
 	}
 
+	 String getPrname(String prcode) {
+		 
+		return sql.selectOne("getPrname",prcode);
+	}
+	
 
 	public List<ApprovalBean> getAnyApprovalList(ApprovalBean ab) {
 		
@@ -55,6 +60,7 @@ public class ApprovalDAO {
 		return sql2.selectList("getSendApprovalList", ab);
 	}
 	
+
 	
 	public Boolean insAA(IntranetOrderBean iob) {
 		

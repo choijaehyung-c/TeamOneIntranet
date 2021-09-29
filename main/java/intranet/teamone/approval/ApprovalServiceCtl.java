@@ -54,9 +54,20 @@ public class ApprovalServiceCtl {
 
 	public List<OrderDetailBean> getApprovalDetail(ApprovalBean ab) {
 
-		return dao.getApprovalDetail(ab);
+		//return된 데이터
+		List<OrderDetailBean> list = dao.getApprovalDetail(ab);
+		for(int i=0; i<list.size();i++) {
+			 list.get(i).setPr_name(this.getPrname(list.get(i).getOd_prcode()));
+			 System.out.println(list.get(i).getPr_name());
+		}
+		
+		return list;
 	}
 
+	//상품코드로 상품이름을 가져오는 메서드
+	String getPrname(String prcode){
+		return dao.getPrname(prcode);
+	}
 
 	public List<ApprovalBean> getAnyApprovalList() {
 	      ApprovalBean ab = new ApprovalBean();
@@ -89,8 +100,11 @@ public class ApprovalServiceCtl {
 	         } catch (Exception e) {
 	            e.printStackTrace();
 	         }
+	     
+	      	 
 	      return dao.getSendApprovalList(ab);
 	   }
+	
 
 
 	public String IntranetOrderBean(IntranetOrderBean iob) {
