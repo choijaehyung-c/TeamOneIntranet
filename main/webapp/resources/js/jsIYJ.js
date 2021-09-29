@@ -309,13 +309,13 @@ const main = new Vue({
             if(ck[i].search('addCart-')!=-1) {
             //alert(ck[i].search('addCart-')); //모든 쿠키를 확인해서 쿠키당 addCart가 들어가면 1을반환 없으면 0을반환  
                 cookie = ck[i]                        
-                    let img = cookie.split('#')[1];
-            let spcode = cookie.split('>')[1].split(':')[0];
-            let prname=cookie.split(',')[1].split('>')[0];
-            let prcode=cookie.split('-')[1].split('=')[0];
-            let price = cookie.split('&')[1].split('#')[0];
-            let count = cookie.split(':')[1].split('&')[0];
-            let tt_price = price * count;
+           	   	let img = cookie.split('#')[1];
+				let spcode = cookie.split('>')[1].split('@@')[0];
+				let prname=cookie.split(',')[1].split('>')[0];
+				let prcode=cookie.split('-')[1].split('=')[0];
+				let price = cookie.split('^^')[1].split('#')[0];
+				let count = cookie.split('@@')[1].split('^^')[0];
+				let tt_price = price * count;
             
             let ckData = {img:img, spcode:spcode, prname:prname, prcode:prcode,price:price,count:count,ttprice:tt_price};
 
