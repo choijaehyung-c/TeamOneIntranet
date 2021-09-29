@@ -1318,7 +1318,7 @@ function getcl(){
 
 											<tbody>
 												<tr v-for="ALD in detail">
-													<td></td>
+													<td>{{ALD.pr_name}}</td>
 													<td>{{ALD.od_quantity}}개</td>
 													<td>{{ALD.pr_price}}원</td>
 												</tr>
