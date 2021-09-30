@@ -1178,9 +1178,9 @@ function getcl(){
                            </tr>
                            <tr>
                               <th>수신부서</th>
-                              <td v-if="nsbPage[0].show">{{sendbean2.dp_name}}</td>
+                              <td v-if="nsbPage[0].show"><div name="receiveDp">{{sendbean2.dp_name}}</div></td>
                               <th>수신자</th>
-                              <td v-if="nsbPage[0].show">{{sendbean2.ep_name}}</td>
+                              <td v-if="nsbPage[0].show"><div name="receiverEp">{{sendbean2.ep_name}}</div></td>
                               <td><button class="btn btn-dark"  onclick="document.getElementById('id01').style.display='block'" @click="getDP()">부서찾기</button></td>
                               </tr>
 
@@ -1278,9 +1278,9 @@ function getcl(){
                            </tr>
                            <tr >
                               <th>수신부서</th>
-                              <td v-if="nsbPage[2].show">{{sendbean2.dp_name}}</td>
+                              <td v-if="nsbPage[2].show"><div name="receiverDp2">{{sendbean2.dp_name}}</div></td>
                               <th>수신자</th>
-                              <td v-if="nsbPage[2].show">{{sendbean2.ep_name}}</td>
+                              <td v-if="nsbPage[2].show"><div name="receiverEp2">{{sendbean2.ep_name}}</div></td>
                               <td><button class="btn btn-dark" onclick="document.getElementById('id01').style.display='block'" @click="getDP3()">부서찾기</button></td>
                               </tr>
 
@@ -1289,7 +1289,7 @@ function getcl(){
                               <th colspan="2">기안내용</th>
                               </tr>
                               <tr>
-                              <td style= width:80%><textarea id="text" style="text-align:center; width:100%; height:400px;" ></textarea></td>
+                              <td style= width:80%><textarea id="text" name="text" style="text-align:center; width:100%; height:400px;" ></textarea></td>
                               <td style= width:20%><button class="btn btn-dark" @click="issueApproval2()">기안하기</button></td>
                               </tr>
                               </table>                                    

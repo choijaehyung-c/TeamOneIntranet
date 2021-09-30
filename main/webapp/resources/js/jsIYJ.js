@@ -355,13 +355,58 @@ const main = new Vue({
          
       },
 	issueApproval:function(){
+
       let sendJsonData = {ap_fromdpcode:this.sendbean.ep_dpcode, ap_fromofcode:this.sendbean.ep_ofcode, cp_code:this.sendbean.ep_cpcode, ap_todpcode:this.sendbean2.ep_dpcode, ap_toofcode:this.sendbean2.ep_ofcode, cg_type:document.getElementById("div_apv_sq").value, cart:this.inputcart};
-      console.log(this.inputcart);
+		
+		if(this.sendbean2.ep_dpcode==null){
+			alert("수신자는 필수선택사항입니다.");			
+			return;
+		}else if(this.sendbean2.ep_ofcode==null){
+			alert("수신자는 필수 선택사항입니다.");
+			return;
+		}
+		
+		if(this.sendbean2.ep_dpcode==this.sendbean.ep_dpcode){
+			alert("기안자와 수신자가 같습니다. 다시 선택해주세요.");
+			document.getElementById('id01').style.display='block';
+			return;
+		}
+	
+
+      if(this.inputcart==""){
+			alert("상품이 선택되지않았습니다.");
+			return;
+	}
+
       let clientData = JSON.stringify(sendJsonData);      
       postAjaxJson('rest/issueApproval','ApprovalPage2','s', clientData);
      },
 	issueApproval2:function(){
-	  let sendJsonData = {ap_fromdpcode:this.sendbean.ep_dpcode, ap_fromofcode:this.sendbean.ep_ofcode, cp_code:this.sendbean.ep_cpcode, ap_todpcode:this.sendbean2.ep_dpcode, ap_toofcode:this.sendbean2.ep_ofcode, cg_type:document.getElementById("div_apv_sq").value, an_text:document.getElementById("text").value};
+		const text = document.getElementsByName("text")[0];
+
+
+	  let sendJsonData = {ap_fromdpcode:this.sendbean.ep_dpcode, ap_fromofcode:this.sendbean.ep_ofcode, cp_code:this.sendbean.ep_cpcode, ap_todpcode:this.sendbean2.ep_dpcode, ap_toofcode:this.sendbean2.ep_ofcode, cg_type:document.getElementById("div_apv_sq").value, an_text:text.value};
+		
+		if(this.sendbean2.ep_dpcode==null){
+			alert("수신자는 필수선택사항입니다.");
+			return;
+		}else if(this.sendbean2.ep_ofcode==null){
+			alert("수신자는 필수 선택사항입니다.");
+			return;
+		}
+		
+		if(this.sendbean2.ep_dpcode==this.sendbean.ep_dpcode){
+			alert("기안자와 수신자가 같습니다. 다시 선택해주세요.");
+			document.getElementById('id01').style.display='block';
+			return;
+		}
+		
+		if(text.value==""){
+			alert("내용은 필수입력사항입니다.");
+			text.focus();
+			return;
+		}
+		
       let clientData = JSON.stringify(sendJsonData);      
       postAjaxJson('rest/issueApproval2','ApprovalPage3','s', clientData);
 	},
