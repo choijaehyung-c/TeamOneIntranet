@@ -28,5 +28,10 @@ public class HomeControllerCJH {
 		return "homeCJH";
 	}
 	
+	@GetMapping("/socket")
+	public String hhh() {
+		return "socket";
+	}
+	
 	 
 }

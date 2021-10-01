@@ -28,7 +28,7 @@
 
     <!-- Custom styles for this template-->
     <link href="${pageContext.request.contextPath}/resources/css/sb-admin-2.min.css" rel="stylesheet">
-	<script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.js"></script> 
+	<script src="${pageContext.request.contextPath}/resources/js/jquery.js"></script> 
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
  
 <script>
@@ -58,7 +58,7 @@ function getcl(){
 
  <script>
  
- 	$(document).ready(function(){
+  	$(document).ready(function(){
  		connectWs();
  	});
  
