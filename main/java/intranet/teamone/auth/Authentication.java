@@ -112,7 +112,8 @@ public class Authentication {
             ah.setAh_epcode(enc.aesDecode((String)pu.getAttribute("userSs"),"session"));
             if(dao.getLogOutAccessHistorySum(ah)) { 
             dao.insAccessHistory(ah);
-            pu.removeAttribute("userSs");            
+            pu.removeAttribute("userSs");     
+            pu.removeAttribute("browser");
             mav.setViewName("redirect:/");
             mav.addObject("message","alert('로그아웃 되었습니다.');");
             System.out.println("로그아웃ctl성공");
