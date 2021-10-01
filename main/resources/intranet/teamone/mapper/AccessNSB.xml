@@ -23,7 +23,9 @@
    </select>
    
    <select id="getLastAccessInfo" parameterType="intranet.teamone.bean.AccessHistoryBean" resultType="string">
-      SELECT AH_BROWSER||AH_PUBLICIP||AH_PRIVATEIP FROM(SELECT * FROM AH WHERE AH_EPCODE =#{ah_epcode} ORDER BY AH_DATE DESC) WHERE ROWNUM = 1
+      SELECT AH_BROWSER||AH_PUBLICIP||AH_PRIVATEIP 
+	  FROM(SELECT * FROM AH WHERE AH_EPCODE =#{ah_epcode} AND AH_METHOD ='1'
+	  ORDER BY AH_DATE DESC) WHERE ROWNUM = 1
    </select>
    
    

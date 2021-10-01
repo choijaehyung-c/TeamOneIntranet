@@ -71,14 +71,13 @@ public class Authentication {
                if(dao.checkPwd(ab)){
                   System.out.println("로그인성공");
                   if(tf = dao.insAccessHistory(ah)) {
-                     System.out.println("기록성공");
-                     
+                     System.out.println("기록성공");                    
                      mav.setViewName("redirect:/");
-
                         ck.setValue("mro"+enc.aesEncode(ah.getAh_epcode(),"session"));                  
                      }
                      ck.setMaxAge(60*60*12); // 쿠키 유효기간 설정 (초 단위) : 반나절
                      pu.setAttribute("userSs",enc.aesEncode(ah.getAh_epcode(),"session"));
+                     pu.setAttribute("browser",enc.aesEncode(ah.getAh_browser()+ah.getAh_publicip()+ah.getAh_privateip(),"session"));
                      System.out.println(dao.getUserInfo(ah.getAh_epcode()));
                      pu.setAttribute("userCp",dao.getUserInfo(ah.getAh_epcode()).getEp_cpcode());
                      pu.setAttribute("userOf",dao.getUserInfo(ah.getAh_epcode()).getEp_ofcode());
@@ -143,7 +142,7 @@ public class Authentication {
          if(pu.getAttribute("userSs")!=null){
             ah.setAh_epcode(enc.aesDecode((String)pu.getAttribute("userSs"),"session"));
             //남아 있는 세션이(해당아이디가) DB에 로그인 되어 있는상태 => 마이페이지로
-            if(dao.getAccessHistorySum(ah) && ck.getValue().substring(3,ck.getValue().length()).equals((String)pu.getAttribute("userSs"))) {
+            if(dao.getAccessHistorySum(ah) && dao.getLastAccessInfo(ah).equals(enc.aesDecode((String)pu.getAttribute("browser"),"session"))) {
                mav.setViewName("home");
                mav.addObject("Name",dao.getUserInfo(ah.getAh_epcode()).getEp_name());
                mav.addObject("Dp",dao.getUserInfo(ah.getAh_epcode()).getDp_name());
@@ -152,6 +151,11 @@ public class Authentication {
             //남아 있는 세션이(해당아이디가) DB에선 이미 로그아웃된경우 =>해당브라우저에 남아있던 세션도 죽임(꼭 새로고침 안해줘도됨 인터넷창 닫으면 어차피 세션 사라짐)
             }else{
                pu.removeAttribute("userSs");
+               pu.removeAttribute("userCp");
+               pu.removeAttribute("userOf");
+               pu.removeAttribute("userDp");
+               pu.removeAttribute("cld");
+               pu.removeAttribute("clp");
                mav.setViewName("accessForm");
                ck.setMaxAge(0);//쿠키소멸
                ck.setValue(null);//쿠키소멸
