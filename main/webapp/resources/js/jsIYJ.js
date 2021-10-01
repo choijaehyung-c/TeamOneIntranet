@@ -174,7 +174,13 @@ const main = new Vue({
 							setCookie(name + prr, vall, 7);												
 						}
 					}								
-				}	alert('장바구니에 담겼습니다.');				
+				}	if(confirm('장바구니에 담겼습니다.장바구니로 이동하시겠습니까?')){
+						this.changePage(2);
+						this.getCartPage();
+						
+				}else{
+					$("#space").empty();
+				};			
 		},
 		getCartPage:function(){
 			loadingClose();
@@ -225,6 +231,10 @@ const main = new Vue({
 			chk_val = $(this).val();
 			alert(chk_val);
 		});
+			
+			main.nsbchangePage();
+  			 main.changePage(5);
+   			postAjaxJson('rest/getDrafter','oDrafterVue2','j');
 
 	},
 	getPrDetail:function(prcode){//각 상품의 상세정보
@@ -354,37 +364,38 @@ const main = new Vue({
          postAjaxJson('rest/getBudgetList','getBudgetList','j');
          
       },
-	issueApproval:function(){
+	
+issueApproval:function(){
 
-		let sendJsonData = { ap_fromdpcode: this.sendbean.ep_dpcode, ap_fromofcode: this.sendbean.ep_ofcode, cp_code: this.sendbean.ep_cpcode, ap_todpcode: this.sendbean2.ep_dpcode, ap_toofcode: this.sendbean2.ep_ofcode, cg_type: document.getElementById("div_apv_sq").value, cart: this.inputcart };
-
-		if (this.sendbean2.ep_dpcode == null) {
-			alert("수신자는 필수선택사항입니다.");
+      let sendJsonData = {ap_fromdpcode:this.sendbean.ep_dpcode, ap_fromofcode:this.sendbean.ep_ofcode, cp_code:this.sendbean.ep_cpcode, ap_todpcode:this.sendbean2.ep_dpcode, ap_toofcode:this.sendbean2.ep_ofcode, cg_type:document.getElementById("div_apv_sq").value, cart:this.inputcart};
+		
+		if(this.sendbean2.ep_dpcode==null){
+			alert("수신자는 필수선택사항입니다.");			
 			return;
-		} else if (this.sendbean2.ep_ofcode == null) {
+		}else if(this.sendbean2.ep_ofcode==null){
 			alert("수신자는 필수 선택사항입니다.");
 			return;
 		}
-
-		if (this.sendbean2.ep_dpcode == this.sendbean.ep_dpcode) {
-			alert("기안자와 수신자가 같습니다. 다시 선택해주세요.");
-			document.getElementById('id01').style.display = 'block';
+		
+		if(this.sendbean2.ep_dpcode==this.sendbean.ep_dpcode){
+			alert("기안자와 수신자의 부서가 같습니다. 다시 선택해주세요.");
+			document.getElementById('id01').style.display='block';
 			return;
 		}
+	
 
-
-		if (this.inputcart == "") {
+      if(this.inputcart==""){
 			alert("상품이 선택되지않았습니다.");
 			return;
-		}
+	}
 
-		let clientData = JSON.stringify(sendJsonData);
-		postAjaxJson('rest/issueApproval', 'ApprovalPage2', 's', clientData);
-
+      let clientData = JSON.stringify(sendJsonData);      
+      postAjaxJson('rest/issueApproval','ApprovalPage2','s', clientData);
      },
 	issueApproval2:function(){
 		const text = document.getElementsByName("text")[0];
-
+		let sender = this.sendbean.ep_name;
+		let receiver = this.sendbean2.ep_name;
 
 	  let sendJsonData = {ap_fromdpcode:this.sendbean.ep_dpcode, ap_fromofcode:this.sendbean.ep_ofcode, cp_code:this.sendbean.ep_cpcode, ap_todpcode:this.sendbean2.ep_dpcode, ap_toofcode:this.sendbean2.ep_ofcode, cg_type:document.getElementById("div_apv_sq").value, an_text:text.value};
 		
@@ -396,7 +407,7 @@ const main = new Vue({
 			return;
 		}
 		
-		if(this.sendbean2.ep_dpcode==this.sendbean.ep_dpcode){
+		if(sender==receiver){
 			alert("기안자와 수신자가 같습니다. 다시 선택해주세요.");
 			document.getElementById('id01').style.display='block';
 			return;
@@ -800,6 +811,12 @@ function oDrafterVue(jsondata){
    main.sendbeanPush(jsondata);
 	loadingClose();
 }
+
+function oDrafterVue2(jsondata){
+   main.sendbeanPush(jsondata);
+   main.nsbPage[1].show =true;
+}
+
 
 //부서찾기모달
 function DPVue(jsondata){

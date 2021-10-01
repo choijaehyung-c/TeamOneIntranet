@@ -31,7 +31,14 @@
 	<script src="${pageContext.request.contextPath}/resources/js/jquery.js"></script> 
 	<script src="${pageContext.request.contextPath}/resources/js/toast.js"></script> 
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
- 
+
+
+<%@ page import="java.util.Date" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+	<%
+	Date nowTime = new Date();
+	SimpleDateFormat sf = new SimpleDateFormat("MM월");
+%>
 <script>
 
 $(window).scroll(function(){
@@ -349,7 +356,7 @@ function getcl(){
                      <div class="col-lg-5" style="max-width:35%; float:left;" >
 						<div class="mb-4 card" >
 							<div class="card-header">
-								<h6 class="card-heading">베스트 상품 </h6></div>
+								<h6 class="card-heading"><span style="font-weight:bold; text-decoration:underline;">[<%= sf.format(nowTime) %>]</span> 베스트 상품 </h6></div>
 					
 						<div class="container card-body" >
 							<div class="row">
@@ -430,7 +437,9 @@ function getcl(){
 
 									<div id="sidebarLayer"
 										style="position: absolute; right:0.4%; top: 80px; width: 120px;  border: 1px solid #ddd; text-align: center; background-color: #FFFFFF; z-index: 1;">
-									<div>My Cart<br><br>
+								<div style="overflow-y:auto; height: expression( this.scrollHeight > 99 ? '100px' : 'auto' );
+        max-height: 500px; padding:4px;">My Cart<br><br>
+
 										<div id="space"></div>
 										<div id="add" style="display:none; border:1px solid #000;" @click="addCart()">담기</div>
 									</div>																					
