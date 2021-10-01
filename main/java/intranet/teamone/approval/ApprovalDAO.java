@@ -28,6 +28,11 @@ public class ApprovalDAO {
 	@Qualifier("intranetDB")
 	SqlSessionTemplate sql2;
 
+	
+	public String getOfDpName(ApprovalBean ab) {
+		return sql2.selectOne("getOfDpName",ab);
+	}
+	
 	public List<ApprovalBean> getApprovalList(ApprovalBean ab) {
 		
 		return sql2.selectList("getApprovalList", ab);

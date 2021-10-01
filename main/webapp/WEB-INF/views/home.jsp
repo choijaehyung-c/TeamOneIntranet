@@ -19,8 +19,8 @@
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" >
    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
 
-	
     <link href="${pageContext.request.contextPath}/resources/css/IYJ.css" rel="stylesheet" type="text/css">
+    <link href="${pageContext.request.contextPath}/resources/css/toast.css" rel="stylesheet" type="text/css">
     <link href="${pageContext.request.contextPath}/resources/css/CJH.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -29,6 +29,7 @@
     <!-- Custom styles for this template-->
     <link href="${pageContext.request.contextPath}/resources/css/sb-admin-2.min.css" rel="stylesheet">
 	<script src="${pageContext.request.contextPath}/resources/js/jquery.js"></script> 
+	<script src="${pageContext.request.contextPath}/resources/js/toast.js"></script> 
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
  
 <script>
@@ -50,42 +51,15 @@ function getcl(){
 		String cld = (String) session.getAttribute("cld");
 		String clp = (String) session.getAttribute("clp");
 		String region = (String)session.getAttribute("userCp") + (String)session.getAttribute("userOf") + (String)session.getAttribute("userDp");
+		
 	%>
 	return {cld:'<%=cld%>', clp:'<%=clp%>', region:'<%=region%>'};
 }
+
 </script>
 
 
- <script>
- 
-  	$(document).ready(function(){
- 		connectWs();
- 	});
- 
- 	let socket = null; 
- 	function connectWs(){
- 		
- 	let ws = new Websocket("ws://localhost/cEcho");
- 	socket = ws;
- 	
- 	ws.onopen = function(){
- 		console.log('connection opened');
- 	}
- 	
- 	ws.onmessage = function(event){
- 		console.log(event.data+'\n');
- 	}
- 	
- 	ws.onclose = function(event){
- 		console.log('connection close');
- 		setTimeout(function(){connectWs();},1000);
- 	}
- 	ws.onerror = function(err){console.log('Error : '+err);}
- 	}
- 	
- 	//if(socket)
- 	//socket.send()
- </script>
+
 
 
 </head>
@@ -1922,7 +1896,11 @@ function getcl(){
 	<script src="${pageContext.request.contextPath}/resources/vue/vue.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/jsIYJ.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/js.js"></script>
-	
+	 <script>
+		$(document).ready(function(){
+	 		connectWs();
+	 	});
+ 	</script>
 	
 	<!-- Bootstrap core JavaScript-->
     <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>

@@ -244,17 +244,13 @@ public class ApprovalServiceCtl {
 
 
 	 String issueApprovalCtl(ApprovalBean ab) {
-		   String message = "Try Again";   
-		   
-		   
+		   String message = "failed";   
 		   ab.setAp_fromdpcode(ab.getAp_fromdpcode() ); 
 		   ab.setAp_fromofcode(ab.getAp_fromofcode() );
-		   ab.setAp_todpcode(ab.getAp_todpcode() );
+		   ab.setAp_todpcode(ab.getAp_todpcode());
 		   ab.setAp_toofcode(ab.getAp_toofcode());
 		   ab.setCg_type(ab.getCg_type());
 		   ab.setCp_code(ab.getCp_code());
-		   
-
 		   if(dao.insOs(ab)) {
 		      ab.setAp_oscode(dao.getoscode());
 		         if(dao.issueApproval(ab)) {
@@ -267,7 +263,7 @@ public class ApprovalServiceCtl {
 
 		            }         
 		         }
-		         message="SUCCESS";
+		         message=ab.getAp_toofcode()+ab.getAp_todpcode()+dao.getOfDpName(ab);
 		      }
 		      return message;
 		}

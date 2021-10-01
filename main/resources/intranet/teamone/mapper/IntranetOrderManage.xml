@@ -13,5 +13,10 @@
  		INSERT INTO RL VALUES(#{ios},#{mos},SYSDATE,#{region})
  	</insert>
  	
+ 	<select id="getOfDpName" parameterType="intranet.teamone.bean.ApprovalBean" resultType="string">
+ 		SELECT OF_NAME || ' ' || DP_NAME FROM DEPARTMENT INNER JOIN OFFICE ON
+ 		 DEPARTMENT.DP_OFCODE = OFFICE.OF_CODE 
+ 		 WHERE DP_CODE = #{ap_fromdpcode} AND DP_OFCODE = #{ap_fromofcode}
+ 	</select>
  	
  </mapper>

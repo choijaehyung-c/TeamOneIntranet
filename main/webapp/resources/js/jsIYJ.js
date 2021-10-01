@@ -356,30 +356,31 @@ const main = new Vue({
       },
 	issueApproval:function(){
 
-      let sendJsonData = {ap_fromdpcode:this.sendbean.ep_dpcode, ap_fromofcode:this.sendbean.ep_ofcode, cp_code:this.sendbean.ep_cpcode, ap_todpcode:this.sendbean2.ep_dpcode, ap_toofcode:this.sendbean2.ep_ofcode, cg_type:document.getElementById("div_apv_sq").value, cart:this.inputcart};
-		
-		if(this.sendbean2.ep_dpcode==null){
-			alert("수신자는 필수선택사항입니다.");			
+		let sendJsonData = { ap_fromdpcode: this.sendbean.ep_dpcode, ap_fromofcode: this.sendbean.ep_ofcode, cp_code: this.sendbean.ep_cpcode, ap_todpcode: this.sendbean2.ep_dpcode, ap_toofcode: this.sendbean2.ep_ofcode, cg_type: document.getElementById("div_apv_sq").value, cart: this.inputcart };
+
+		if (this.sendbean2.ep_dpcode == null) {
+			alert("수신자는 필수선택사항입니다.");
 			return;
-		}else if(this.sendbean2.ep_ofcode==null){
+		} else if (this.sendbean2.ep_ofcode == null) {
 			alert("수신자는 필수 선택사항입니다.");
 			return;
 		}
-		
-		if(this.sendbean2.ep_dpcode==this.sendbean.ep_dpcode){
+
+		if (this.sendbean2.ep_dpcode == this.sendbean.ep_dpcode) {
 			alert("기안자와 수신자가 같습니다. 다시 선택해주세요.");
-			document.getElementById('id01').style.display='block';
+			document.getElementById('id01').style.display = 'block';
 			return;
 		}
-	
 
-      if(this.inputcart==""){
+
+		if (this.inputcart == "") {
 			alert("상품이 선택되지않았습니다.");
 			return;
-	}
+		}
 
-      let clientData = JSON.stringify(sendJsonData);      
-      postAjaxJson('rest/issueApproval','ApprovalPage2','s', clientData);
+		let clientData = JSON.stringify(sendJsonData);
+		postAjaxJson('rest/issueApproval', 'ApprovalPage2', 's', clientData);
+
      },
 	issueApproval2:function(){
 		const text = document.getElementsByName("text")[0];
@@ -768,15 +769,22 @@ function ApprovalPage(){
 }
 
 function ApprovalPage2(message){
-   alert(message);
-main.nsbchangePage();
-   main.changePage(5);
-   document.getElementById('id01').style.display='none';
-   document.getElementById('id02').style.display='none';
-   
-   for(i=0; i<main.inputcart.length; i++){
-   this.delCookie(main.inputcart[i].prcode);   
-   }  
+	//here
+	if(message != "failed"){
+		alert("전송성공");
+		console.log(message);
+		sendWebSocketMessage(message+"주문");
+	}else{
+		alert("전송실패");
+	}
+	main.nsbchangePage();
+	main.changePage(5);
+	document.getElementById('id01').style.display = 'none';
+	document.getElementById('id02').style.display = 'none';
+
+	for (i = 0; i < main.inputcart.length; i++) {
+		this.delCookie(main.inputcart[i].prcode);
+	}  
 }
 
 function ApprovalPage3(message){
@@ -866,6 +874,42 @@ function getBudget(){
 }
 
 /////////////////////cjh/////////////////////////
+	//here
+	
+ 	let socket = null;
+
+ 	function connectWs(){
+ 		
+	 	let ws = new WebSocket("ws://192.168.0.22/cEcho");
+	 	
+	 	socket = ws;
+	 	
+	 	ws.onopen = function(){
+	 		console.log('connection opened');
+	 	}
+	 	
+	 	ws.onmessage = function(event){
+	 		console.log(event.data+'\n');
+	 		//$('#result').append(event.data); 토스트
+			let Length = event.data.length;
+			toastr.options.extendedTimeOut = 14000;
+			toastr.info(event.data.substring(5,Length-2)+" "+event.data.substring(0,5),event.data.substring(Length-2,Length) + "결재 요청", {timeOut: 7000});
+	 	}
+	 	ws.onclose = function(event){
+	 		console.log('connection close');
+			setTimeout(function(){connectWs();},5000);
+	 	}
+	 	ws.onerror = function(err){console.log('Error : '+err);}
+	 	
+ 	}
+
+ 	function sendWebSocketMessage(data1){
+		if(socket){
+			socket.send(data1); 
+		}
+ 	}
+
+
 
 function getResultAs(data){
 	if(main.relOs==null){
@@ -995,4 +1039,6 @@ function loadingCloseCallback(){
 		if(main.loading){loadingClose();}
 	},300);
 }
+
+
 

@@ -27,11 +27,5 @@ public class HomeControllerCJH {
 		pu.setAttribute("clp","53D1d7E5HaiPOYKNcQs+jw==");
 		return "homeCJH";
 	}
-	
-	@GetMapping("/socket")
-	public String hhh() {
-		return "socket";
-	}
-	
 	 
 }

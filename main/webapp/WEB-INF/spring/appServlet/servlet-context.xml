@@ -60,7 +60,6 @@
 	<beans:bean id="clevercEchoHandler" class="intranet.teamone.handler.clevercEchoHandler"/>
 	
 	<websocket:handlers>
-	
 		<websocket:mapping handler="clevercEchoHandler" path="/cEcho"/>
 		<websocket:handshake-interceptors>
 			<beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
