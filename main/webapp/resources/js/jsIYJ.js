@@ -893,6 +893,7 @@ function getBudget(){
 	 		//$('#result').append(event.data); 토스트
 			let Length = event.data.length;
 			toastr.options.extendedTimeOut = 14000;
+			toastr.options.onclick = function() { console.log('clicked'); }
 			toastr.info(event.data.substring(5,Length-2)+" "+event.data.substring(0,5),event.data.substring(Length-2,Length) + "결재 요청", {timeOut: 7000});
 	 	}
 	 	ws.onclose = function(event){
