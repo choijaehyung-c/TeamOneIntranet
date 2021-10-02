@@ -29,6 +29,8 @@ public class OrderManageServiceCtl {
 		 * os_region=(String)pu.getAttribute("cp") + (String)pu.getAttribute("of") +
 		 * (String)pu.getAttribute("dp");
 		 */
+		
+		System.out.println(os_region);
 		List<MroneOrderBean> mos = null;
 		if(type.equals("O")) {
 			mos = dao.getOrderList(os_region);
@@ -53,8 +55,8 @@ public class OrderManageServiceCtl {
 		
 		Map<String,String> map = new HashMap<String,String>();
 		
-		map.put("OC", "거래완료");
-		map.put("OF", "거래거절");
+		map.put("OC", "주문완료");
+		map.put("OF", "주문거절");
 		map.put("OR", "주문접수중");
 		map.put("OA", "주문수락");
 		
@@ -85,7 +87,6 @@ public class OrderManageServiceCtl {
 				mos.get(i).setOs_summary("od없");
 			}
 		}
-		
 		return mos;
 	}
 	

@@ -10,15 +10,15 @@
  	</select>
  
  	<select id="getOrderList" parameterType="string" resultType="intranet.teamone.bean.MroneOrderBean">
- 		SELECT OS_CODE,OS_DATE,OS_STATE,OS_REGION FROM CHLCHL.ORDERS WHERE OS_STATE = 'OA' OR OS_STATE = 'OR'  AND OS_REGION = #{os_region} 
+ 		SELECT OS_CODE,OS_DATE,OS_STATE,OS_REGION FROM CHLCHL.ORDERS WHERE (OS_STATE = 'OA' OR OS_STATE = 'OR')  AND OS_REGION = #{os_region} 
  	</select>
  	
  	<select id="getASList" parameterType="string" resultType="string">
- 		SELECT NVL(OS_ORIGIN,'NONE') FROM CHLCHL.ORDERS WHERE OS_STATE = 'RR' OR OS_STATE = 'ER' AND OS_REGION = #{os_region}
+ 		SELECT NVL(OS_ORIGIN,'NONE') FROM CHLCHL.ORDERS WHERE (OS_STATE = 'RR' OR OS_STATE = 'ER') AND OS_REGION = #{os_region}
  	</select>
 
  	<select id="getOrderCompleteList" parameterType="string" resultType="intranet.teamone.bean.MroneOrderBean">
- 		SELECT OS_CODE,OS_DATE,OS_STATE,OS_REGION FROM CHLCHL.ORDERS WHERE OS_STATE = 'OC' OR OS_STATE = 'OF' AND OS_REGION = #{os_region}
+ 		SELECT OS_CODE,OS_DATE,OS_STATE,OS_REGION FROM CHLCHL.ORDERS WHERE (OS_STATE = 'OC' OR OS_STATE = 'OF') AND OS_REGION = #{os_region}
  	</select>
  	 	
  	<select id="getRefundList" parameterType="string" resultType="intranet.teamone.bean.MroneOrderBean">
@@ -26,7 +26,7 @@
  	</select>
  	
  	 <select id="getRefundCompleteList" parameterType="string" resultType="intranet.teamone.bean.MroneOrderBean">
- 		SELECT OS_CODE,OS_DATE,OS_STATE,OS_REGION FROM CHLCHL.ORDERS WHERE OS_STATE = 'RA' OR OS_STATE = 'FF' AND OS_REGION = #{os_region}
+ 		SELECT OS_CODE,OS_DATE,OS_STATE,OS_REGION FROM CHLCHL.ORDERS WHERE (OS_STATE = 'RA' OR OS_STATE = 'FF') AND OS_REGION = #{os_region}
  	</select>
  	
  	<select id="getExchangeList" parameterType="string" resultType="intranet.teamone.bean.MroneOrderBean">
@@ -34,7 +34,7 @@
  	</select>
  	
  	<select id="getExchangeCompleteList" parameterType="string" resultType="intranet.teamone.bean.MroneOrderBean">
- 		SELECT OS_CODE,OS_DATE,OS_STATE,OS_REGION FROM CHLCHL.ORDERS WHERE OS_STATE = 'EA' OR OS_STATE = 'EF' AND OS_REGION = #{os_region}
+ 		SELECT OS_CODE,OS_DATE,OS_STATE,OS_REGION FROM CHLCHL.ORDERS WHERE (OS_STATE = 'EA' OR OS_STATE = 'EF') AND OS_REGION = #{os_region}
  	</select>
  	
  	<select id="getPrnameAndCount" parameterType="string" resultType="string">
