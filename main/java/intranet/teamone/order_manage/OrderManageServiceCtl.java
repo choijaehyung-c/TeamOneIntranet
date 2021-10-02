@@ -22,8 +22,14 @@ public class OrderManageServiceCtl {
 	@Autowired
 	OrderManageDAO dao;
 	
+	
+	List<String> getAlreadyAsPrcode(String os_code){
+		return dao.getAlreadyAsPrcode(os_code);
+	}
+	
+	
 	List<MroneOrderBean> getOrderList(String type) throws Exception {
-		String os_region = (String)pu.getAttribute("userCp")+(String)pu.getAttribute("userOf")+(String)pu.getAttribute("userDp");// 임시저장
+		String os_region = (String)pu.getAttribute("userCp")+(String)pu.getAttribute("userOf")+(String)pu.getAttribute("userDp");
 		/*
 		 * os_region=(String)pu.getAttribute("cp") + (String)pu.getAttribute("of") +
 		 * (String)pu.getAttribute("dp");
@@ -31,10 +37,10 @@ public class OrderManageServiceCtl {
 		List<MroneOrderBean> mos = null;
 		if(type.equals("O")) {
 			mos = dao.getOrderList(os_region);
-			List<String>rrList = dao.getRRList(os_region);
+			List<String>ASList = dao.getASList(os_region);
 			int mCount = mos.size();
 				for(int i = mCount-1 ; i >= 0 ; i--) {
-					if(rrList.contains(mos.get(i).getOs_code())) {
+					if(ASList.contains(mos.get(i).getOs_code())) {
 						mos.remove(i);
 					}
 				}
@@ -89,11 +95,14 @@ public class OrderManageServiceCtl {
 	}
 	
 	String connectOs(connectionBean cb) {
-		cb.setRegion("KOR001SEO01BMK");
-		/*
-		 * try { cb.setRegion((String)pu.getAttribute("region")); } catch (Exception e)
-		 * { // TODO Auto-generated catch block e.printStackTrace(); }
-		 */
+		String os_region = "";
+		try {
+			 os_region = (String)pu.getAttribute("userCp")+(String)pu.getAttribute("userOf")+(String)pu.getAttribute("userDp");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		cb.setRegion(os_region);
 		return dao.connectOs(cb)?"successs":"failed";
 	}
 	

@@ -5,12 +5,16 @@
  
  <mapper namespace="mrone.teamone.mapper.MroneOrderManage">
  
+ 	<select id="getAlreadyAsPrcode" parameterType="string" resultType="string">
+ 		SELECT OD_PRCODE FROM CHLCHL.ORDERSDETAIL WHERE OD_OSCODE = #{os_code}
+ 	</select>
+ 
  	<select id="getOrderList" parameterType="string" resultType="intranet.teamone.bean.MroneOrderBean">
  		SELECT OS_CODE,OS_DATE,OS_STATE,OS_REGION FROM CHLCHL.ORDERS WHERE OS_STATE = 'OA' OR OS_STATE = 'OR'  AND OS_REGION = #{os_region} 
  	</select>
  	
- 	<select id="getRRList" parameterType="string" resultType="string">
- 		SELECT NVL(OS_ORIGIN,'NONE') FROM CHLCHL.ORDERS WHERE OS_STATE = 'RR' AND OS_REGION = #{os_region}
+ 	<select id="getASList" parameterType="string" resultType="string">
+ 		SELECT NVL(OS_ORIGIN,'NONE') FROM CHLCHL.ORDERS WHERE OS_STATE = 'RR' OR OS_STATE = 'ER' AND OS_REGION = #{os_region}
  	</select>
 
  	<select id="getOrderCompleteList" parameterType="string" resultType="intranet.teamone.bean.MroneOrderBean">

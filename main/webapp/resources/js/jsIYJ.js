@@ -930,7 +930,7 @@ function getBudget(){
 
 
 function getResultAs(data){
-	if(main.relOs==null){
+	if(main.relOs==''){
 		return alert("에라");
 	}
 	let cData = {ios:main.relOs,mos:data[0]};

@@ -14,6 +14,9 @@ import intranet.teamone.bean.connectionBean;
 public class OrderManageServiceEntrance {
 	@Autowired
 	OrderManageServiceCtl omc;
+	public List<String> getAlreadyAsPrcode(String os_code){
+		return omc.getAlreadyAsPrcode(os_code);
+	}
 	
 	public List<MroneOrderBean> getOrderList() throws Exception{
 		return omc.getOrderList("O");

@@ -849,7 +849,7 @@ function getcl(){
                                             <th style="width: 37%; text-align:center;"><a>상품정보</a></th>
                                             <th style="width: 10%; text-align:center;"><a>가격(원)</a></th>
                                             <th style="width: 6%; text-align:center;"><a>수량</a></th>
-                                            <th style="width: 10%; text-align:center;"><a>원산지</a></th>                                          
+                                            <th style="width: 10%; text-align:center;"><a>상태</a></th>                                          
                                         </tr>
                                     </thead>
 									<tbody><!-- OD_PRSPCODE,OD_OSCODE AS "OS_ORIGIN",OD_PRCODE,OD_QUANTITY,PR_NAME,PR_IMAGE,PR_PRICE,PR_TAX,PR_INFO,PR_ORIGIN,OD_STCODE -->
@@ -942,7 +942,7 @@ function getcl(){
                                             <th style="width: 37%; text-align:center;"><a>상품정보</a></th>
                                             <th style="width: 10%; text-align:center;"><a>가격(원)</a></th>
                                             <th style="width: 6%; text-align:center;"><a>수량</a></th>
-                                            <th style="width: 10%; text-align:center;"><a>원산지</a></th>                                          
+                                            <th style="width: 10%; text-align:center;"><a>상태</a></th>                                          
                                         </tr>
                                     </thead>
 									<tbody><!-- OD_PRSPCODE,OD_OSCODE AS "OS_ORIGIN",OD_PRCODE,OD_QUANTITY,PR_NAME,PR_IMAGE,PR_PRICE,PR_TAX,PR_INFO,PR_ORIGIN,OD_STCODE -->
@@ -952,7 +952,9 @@ function getcl(){
 											<td style="text-align:center; vertical-align:middle;">{{item.pr_info}}</td>
 											<td style="text-align:center; vertical-align:middle;">{{item.perPrice}}</td>
 											<td style="text-align:center; vertical-align:middle;">{{item.od_quantity}}</td>
-											<td style="text-align:center; vertical-align:middle;">{{item.pr_origin}}</td>
+											<td style="text-align:center; vertical-align:middle;" v-if="item.od_stcode==='ER'">교환요청</td>
+											<td style="text-align:center; vertical-align:middle;" v-else-if="item.od_stcode==='EA'">교환수락</td>
+											<td style="text-align:center; vertical-align:middle;" v-else>&nbsp</td>
 										</tr>
 										<tr><td colspan="6" style="text-align:center; vertical-align:middle;"> 총 가격(VAT포함) : {{modalList.ttPrice}} 원</td></tr>
 									</tbody>

@@ -27,8 +27,8 @@ public class OrderManageDAO {
 		return mSql.selectList("getOrderList",os_region);
 	}
 	
-	List<String> getRRList(String os_region){
-		return mSql.selectList("getRRList",os_region);
+	List<String> getASList(String os_region){
+		return mSql.selectList("getASList",os_region);
 	}
 	
 	List<MroneOrderBean> getOrderCompleteList(String os_region){
@@ -87,6 +87,10 @@ public class OrderManageDAO {
 	
 	boolean connectOs(connectionBean cb) {
 		return this.convertToBoolean(iSql.insert("connectOs", cb));
+	}
+	
+	List<String> getAlreadyAsPrcode(String os_code){
+		return mSql.selectList("getAlreadyAsPrcode", os_code);
 	}
 	
 }
