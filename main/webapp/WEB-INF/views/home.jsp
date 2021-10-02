@@ -660,7 +660,7 @@ function getcl(){
 							
 							<div style="float: left; width:95%; color:#000; font-weight: 900; font-size:35px">&nbsp&nbsp주문 정보</div>
 							<button @click="modalClose()" type="button" class="btn btn-dark" style="font-weight: 900; font-size:16px;">X</button>
-										<hr style="display:block;">{{modalList}}
+										<hr style="display:block;">
 								<table class="dataTable-table" id="modalTable">
 								     <thead>
                                         <tr>
@@ -880,7 +880,8 @@ function getcl(){
 					</div>
 					<div v-if="display2[0].show">
 					<div style="margin:1%; padding:1%; box-shadow: 0px 0px 10px #222;" v-for="ios in list3">
-								<p style="color:#000; font-weight:bold;">내부 주문 번호 {{ios}}</p><br>
+								<p style="color:#000; font-weight:bold;" v-if="!ios || ios==='99999999999'">AS로인한 새주문<br></p>
+								<p style="color:#000; font-weight:bold;" v-else>내부 주문 번호 {{ios}}<br></p>
 									<table id="datatablesSimple" class="dataTable-table">
 	 										<thead>
 												<tr>
@@ -905,7 +906,8 @@ function getcl(){
 					</div>
 					<div v-if="display2[1].show">
 					<div style="margin:1%; padding:1%; box-shadow: 0px 0px 10px #222;" v-for="ios in list2">
-								<p style="color:#000; font-weight:bold;">내부 주문 번호 {{ios}}</p><br>
+								<p style="color:#000; font-weight:bold;" v-if="!ios || ios==='99999999999'">AS로인한 새주문<br></p>
+								<p style="color:#000; font-weight:bold;" v-else>내부 주문 번호 {{ios}}<br></p>
 									<table id="datatablesSimple" class="dataTable-table">
 	 										<thead>
 												<tr>
@@ -1016,7 +1018,8 @@ function getcl(){
 					</div>
 					<div v-if="display2[0].show">
 					<div style="margin:1%; padding:1%; box-shadow: 0px 0px 10px #222;" v-for="ios in list3">
-								<p style="color:#000; font-weight:bold;">내부 주문 번호 {{ios}}</p><br>
+								<p style="color:#000; font-weight:bold;" v-if="!ios || ios==='99999999999'">AS로인한 새주문<br></p>
+								<p style="color:#000; font-weight:bold;" v-else>내부 주문 번호 {{ios}}<br></p>
 									<table id="datatablesSimple" class="dataTable-table">
 	 										<thead>
 												<tr>
@@ -1041,7 +1044,8 @@ function getcl(){
 					</div>
 					<div v-if="display2[1].show">
 					<div style="margin:1%; padding:1%; box-shadow: 0px 0px 10px #222;" v-for="ios in list2">
-								<p style="color:#000; font-weight:bold;">내부 주문 번호 {{ios}}</p><br>
+								<p style="color:#000; font-weight:bold;" v-if="!ios || ios==='99999999999'">AS로인한 새주문<br></p>
+								<p style="color:#000; font-weight:bold;" v-else>내부 주문 번호 {{ios}}<br></p>
 									<table id="datatablesSimple" class="dataTable-table">
 	 										<thead>
 												<tr>
