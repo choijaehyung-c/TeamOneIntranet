@@ -6,7 +6,7 @@
  <mapper namespace="mrone.teamone.mapper.MroneOrderManage">
  
  	<select id="getAlreadyAsPrcode" parameterType="string" resultType="string">
- 		SELECT OD_PRCODE FROM CHLCHL.ORDERSDETAIL WHERE OD_OSCODE = #{os_code}
+ 		SELECT OD_PRCODE,OD_STCODE FROM CHLCHL.ORDERSDETAIL WHERE OD_OSCODE = #{os_code}
  	</select>
  
  	<select id="getOrderList" parameterType="string" resultType="intranet.teamone.bean.MroneOrderBean">

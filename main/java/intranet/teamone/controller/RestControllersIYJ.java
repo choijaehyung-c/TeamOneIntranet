@@ -207,8 +207,5 @@ public class RestControllersIYJ {
 			return ome.connectOs(cb);
 		}
 		
-		@PostMapping("/getAlreadyAsPrcode")
-		public List<String> getAlreadyAsPrcode(@RequestBody String os_code){
-			return ome.getAlreadyAsPrcode(os_code);
-		}
+		
 }

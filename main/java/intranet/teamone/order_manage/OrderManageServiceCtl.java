@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import intranet.teamone.bean.AsBean;
 import intranet.teamone.bean.DeliveryBean;
 import intranet.teamone.bean.MroneOrderBean;
 import intranet.teamone.bean.MroneOrderDetailBean;
@@ -21,12 +22,6 @@ public class OrderManageServiceCtl {
 	
 	@Autowired
 	OrderManageDAO dao;
-	
-	
-	List<String> getAlreadyAsPrcode(String os_code){
-		return dao.getAlreadyAsPrcode(os_code);
-	}
-	
 	
 	List<MroneOrderBean> getOrderList(String type) throws Exception {
 		String os_region = (String)pu.getAttribute("userCp")+(String)pu.getAttribute("userOf")+(String)pu.getAttribute("userDp");
@@ -102,12 +97,25 @@ public class OrderManageServiceCtl {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		if(cb.getIos()==null) {
+			cb.setIos("99999999999");
+		}
 		cb.setRegion(os_region);
 		return dao.connectOs(cb)?"successs":"failed";
 	}
 	
 	List<MroneOrderDetailBean> getOrderDetail(String os_code){
+		/*
+		 * List<String> as = dao.getAlreadyAsPrcode(os_code);
+		 * System.out.println(os_code+":::"+as);
+		 */
 		List<MroneOrderDetailBean> list = dao.getOrderDetail(os_code);
+		/*
+		 * int listSize = list.size(); for(int i = 0 ; i < listSize ; i++) {
+		 * if(as.contains(list.get(i).getOd_prcode())) {
+		 * System.out.println("testsetsetsetset"); } }
+		 */
+		
 		return list;
 	}
 	

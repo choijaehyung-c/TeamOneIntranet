@@ -660,16 +660,17 @@ function getcl(){
 							
 							<div style="float: left; width:95%; color:#000; font-weight: 900; font-size:35px">&nbsp&nbsp주문 정보</div>
 							<button @click="modalClose()" type="button" class="btn btn-dark" style="font-weight: 900; font-size:16px;">X</button>
-										<hr style="display:block;">
+										<hr style="display:block;">{{modalList}}
 								<table class="dataTable-table" id="modalTable">
 								     <thead>
                                         <tr>
                                             <th style="width: 10%; text-align:center;"><a>이미지</a></th>
                                             <th style="width: 27%; text-align:center;"><a>상품명</a></th>
-                                            <th style="width: 37%; text-align:center;"><a>상품정보</a></th>
+                                            <th style="width: 35%; text-align:center;"><a>상품정보</a></th>
                                             <th style="width: 10%; text-align:center;"><a>가격(원)</a></th>
                                             <th style="width: 6%; text-align:center;"><a>수량</a></th>
-                                            <th style="width: 10%; text-align:center;"><a>원산지</a></th>                                          
+                                            <th style="width: 7%; text-align:center;"><a>원산지</a></th>                                          
+                                            <th style="width: 5%; text-align:center;"><a>상태</a></th>                                          
                                         </tr>
                                     </thead>
 									<tbody>
@@ -679,6 +680,7 @@ function getcl(){
 											<td style="text-align:center; vertical-align:middle;">{{item.pr_info}}</td>
 											<td style="text-align:center; vertical-align:middle;">{{item.perPrice}}</td>
 											<td style="text-align:center; vertical-align:middle;">{{item.od_quantity}}</td>
+											<td style="text-align:center; vertical-align:middle;">{{item.pr_origin}}</td>
 											<td style="text-align:center; vertical-align:middle;">{{item.pr_origin}}</td>
 										</tr>
 										<tr><td colspan="6" style="text-align:center; vertical-align:middle;"> 총 가격(VAT포함) : {{modalList.ttPrice}} 원</td></tr>
@@ -730,7 +732,8 @@ function getcl(){
 					</div>
 					<div v-if="display2[0].show">
 					<div style="margin:1%; padding:1%; box-shadow: 0px 0px 10px #222;" v-for="ios in list3">
-								<p style="color:#000; font-weight:bold;">내부 주문 번호 {{ios}}</p><br>
+								<p style="color:#000; font-weight:bold;" v-if="!ios || ios==='99999999999'">AS로인한 새주문<br></p>
+								<p style="color:#000; font-weight:bold;" v-else>내부 주문 번호 {{ios}}<br></p>
 									<table id="datatablesSimple" class="dataTable-table">
 	 										<thead>
 												<tr>
@@ -762,7 +765,8 @@ function getcl(){
 					</div>
 					<div v-if="display2[1].show">
 					<div style="margin:1%; padding:1%; box-shadow: 0px 0px 10px #222;" v-for="ios in list2">
-								<p style="color:#000; font-weight:bold;">내부 주문 번호 {{ios}}</p><br>
+								<p style="color:#000; font-weight:bold;" v-if="!ios || ios==='99999999999'">AS로인한 새주문<br></p>
+								<p style="color:#000; font-weight:bold;" v-else>내부 주문 번호 {{ios}}<br></p>
 									<table id="datatablesSimple" class="dataTable-table">
 	 										<thead>
 												<tr>
