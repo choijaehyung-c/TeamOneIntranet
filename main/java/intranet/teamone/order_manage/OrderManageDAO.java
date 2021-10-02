@@ -63,9 +63,19 @@ public class OrderManageDAO {
 		return mSql.selectList("getOrderDetail",os_code);
 	}
 	
+	/*
+	 * List<MroneOrderDetailBean> getOrderDetailAS(String os_code){ return
+	 * mSql.selectList("getOrderDetailAS",os_code); }
+	 */
+	
 	DeliveryBean getDelivery(String os_code) {
 		return mSql.selectOne("getDelivery",os_code);
 	}
+	
+	DeliveryBean getDeliveryAS(String os_code) {
+		return mSql.selectOne("getDeliveryAS",os_code);
+	}
+	
 	
 	List<DeliveryLocationBean> getDeliveryLocation(String lc_code) {
 		return mSql.selectList("getDeliveryLocation",lc_code);

@@ -23,7 +23,7 @@ public class OrderManageServiceCtl {
 	OrderManageDAO dao;
 	
 	List<MroneOrderBean> getOrderList(String type) throws Exception {
-		String os_region = "KOR001SEO01BMK";// 임시저장
+		String os_region = (String)pu.getAttribute("userCp")+(String)pu.getAttribute("userOf")+(String)pu.getAttribute("userDp");// 임시저장
 		/*
 		 * os_region=(String)pu.getAttribute("cp") + (String)pu.getAttribute("of") +
 		 * (String)pu.getAttribute("dp");
@@ -98,12 +98,14 @@ public class OrderManageServiceCtl {
 	}
 	
 	List<MroneOrderDetailBean> getOrderDetail(String os_code){
-		return dao.getOrderDetail(os_code);
+		List<MroneOrderDetailBean> list = dao.getOrderDetail(os_code);
+		return list;
 	}
 	
 	DeliveryBean getDelivery(String os_code) {
 		DeliveryBean dl = new DeliveryBean();
 		dl = dao.getDelivery(os_code);
+		if(dl==null)dl = dao.getDeliveryAS(os_code);
 		dl.setLc(dao.getDeliveryLocation(dl.getDl_lccode()));
 		return dl;
 	}

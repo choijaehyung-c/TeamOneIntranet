@@ -47,12 +47,27 @@
  		WHERE PR_STCODE='PC' AND OD_OSCODE=#{os_code}
  	</select>
  	
+ 	<!-- <select id="getOrderDetailAS" parameterType="string" resultType="intranet.teamone.bean.MroneOrderDetailBean">
+ 		SELECT OD_PRSPCODE,OD_OSCODE AS "OS_ORIGIN",OD_PRCODE,OD_QUANTITY,PR_NAME,PR_IMAGE,PR_PRICE,PR_TAX,PR_INFO,PR_ORIGIN,OD_STCODE 
+ 		FROM CHLCHL.ORDERSDETAIL INNER JOIN CHLCHL.PRODUCT ON CHLCHL.ORDERSDETAIL.OD_PRCODE = CHLCHL.PRODUCT.PR_CODE 
+ 		WHERE PR_STCODE='PC' AND OD_OSCODE=(SELECT OS_CODE FROM CHLCHL.ORDERS WHERE OS_ORIGIN = #{os_code})
+ 	</select> -->
+ 	
+ 	
  	<select id="getDelivery" parameterType="string" resultType="intranet.teamone.bean.DeliveryBean">
  		SELECT DL_CODE,DL_OSCODE,DL_DSCODE,DL_LCCODE,DV_NAME,DV_HP 
  		FROM CHLCHL.DELIVERY 
  		INNER JOIN CHLCHL.DRIVER 
  		ON DL_DVCODE = DV_CODE 
  		WHERE DL_OSCODE = #{os_code}
+ 	</select>
+ 	
+ 	<select id="getDeliveryAS" parameterType="string" resultType="intranet.teamone.bean.DeliveryBean">
+ 		SELECT DL_CODE,DL_OSCODE,DL_DSCODE,DL_LCCODE,DV_NAME,DV_HP 
+ 		FROM CHLCHL.DELIVERY 
+ 		INNER JOIN CHLCHL.DRIVER 
+ 		ON DL_DVCODE = DV_CODE 
+ 		WHERE DL_OSCODE = (SELECT OS_CODE FROM CHLCHL.ORDERS WHERE OS_ORIGIN = #{os_code})
  	</select>
  	
  	<select id="getDeliveryLocation" parameterType="string" resultType="intranet.teamone.bean.DeliveryLocationBean">

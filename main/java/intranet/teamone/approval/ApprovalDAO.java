@@ -29,74 +29,62 @@ public class ApprovalDAO {
 	SqlSessionTemplate sql2;
 
 	
-	public String getOfDpName(ApprovalBean ab) {
+	String getOsRegion(String os_code) {
+		return sql2.selectOne("getOsRegion",os_code);
+	}
+	
+	String getOfDpName(ApprovalBean ab) {
 		return sql2.selectOne("getOfDpName",ab);
 	}
 	
-	public List<ApprovalBean> getApprovalList(ApprovalBean ab) {
-		
+	List<ApprovalBean> getApprovalList(ApprovalBean ab) {
 		return sql2.selectList("getApprovalList", ab);
 	}
 
 
-	public List<OrderDetailBean> getApprovalDetail(ApprovalBean ab) {
-		
+	List<OrderDetailBean> getApprovalDetail(ApprovalBean ab) {
 		return sql2.selectList("getApprovalDetail", ab);
 	}
 
-	 String getPrname(String prcode) {
-		 
+	String getPrname(String prcode) {
 		return sql.selectOne("getPrname",prcode);
 	}
 	
 
-	public List<ApprovalBean> getAnyApprovalList(ApprovalBean ab) {
-		
+	List<ApprovalBean> getAnyApprovalList(ApprovalBean ab) {
 		return sql2.selectList("getAnyApprovalList", ab);
 	}
 	
-	public Boolean responseAppovalRefuse(ApprovalBean ab) {
-		
+	boolean responseAppovalRefuse(ApprovalBean ab) {
 		return convertToBoolean(sql2.update("responseAppovalRefuse", ab));
 	}
 	
-	public List<ApprovalBean> getSendApprovalList(ApprovalBean ab) {
-		
+	List<ApprovalBean> getSendApprovalList(ApprovalBean ab) {
 		return sql2.selectList("getSendApprovalList", ab);
 	}
 	
-
-	
-	public Boolean insAA(IntranetOrderBean iob) {
-		
+	boolean insAA(IntranetOrderBean iob) {
 		return convertToBoolean(sql2.insert("insAA", iob));
 	}
 	
-	public Boolean updateAP(IntranetOrderBean iob) {
+	boolean updateAP(IntranetOrderBean iob) {
 		
 		return convertToBoolean(sql2.update("updateAP", iob));
 	}
 
-	public int totalPrice(IntranetOrderBean iob) {
-	
+	int totalPrice(IntranetOrderBean iob) {
 		return sql2.selectOne("totalPrice", iob);
 	}
 	
-	
-	public String getBudget(IntranetOrderBean iob) {
-		
+	String getBudget(IntranetOrderBean iob) {
 		return sql2.selectOne("getBudget", iob);
 	}
 	
-	
-	public Boolean updateBudget(IntranetOrderBean iob) {
-		
+	boolean updateBudget(IntranetOrderBean iob) {
 		return convertToBoolean(sql2.update("updateBudget", iob));
 	}
 	
-	
-	public Boolean insRL(MroneOrderBean mob) {
-	
+	boolean insRL(MroneOrderBean mob) {
 		return convertToBoolean(sql2.insert("insRL", mob));
 	}
 	
@@ -104,81 +92,75 @@ public class ApprovalDAO {
 		return data > 0 ? true : false;
 	}
 
-
-	public List<OrderDetailBean> getAnyApprovalDetail(ApprovalBean ab) {
-		
+	List<OrderDetailBean> getAnyApprovalDetail(ApprovalBean ab) {
 		return sql2.selectList("getAnyApprovalDetail", ab);
 	}
 
 
-	public boolean responseAnyAppoval(ApprovalBean ab) {
-		
+	boolean responseAnyAppoval(ApprovalBean ab) {
 		return convertToBoolean(sql2.update("responseAnyAppoval", ab));
 	}
 
 
-	public List<ApprovalBean> getSendAnyApprovalList(ApprovalBean ab) {
-		
+	List<ApprovalBean> getSendAnyApprovalList(ApprovalBean ab) {
 		return sql2.selectList("getSendAnyApprovalList", ab);
 	}
 
-
-
-	 public EmployeeBean getDrafter(String epcode) {      
+	EmployeeBean getDrafter(String epcode) {      
 	      return sql2.selectOne("getDrafter", epcode);
 	   }
 	   
-	   public List<EmployeeBean> getDP() {      
+	   List<EmployeeBean> getDP() {      
 	      return sql2.selectList("getDP");
 	   }
 	   
-	   public EmployeeBean inputDP(String epcode) {      
+	   EmployeeBean inputDP(String epcode) {      
 	      return sql2.selectOne("inputDP", epcode);
 	   }
 
-	   public List<OrderBean> getApprovalOrderList(String ofcode) {
+	   List<OrderBean> getApprovalOrderList(String ofcode) {
 	      return sql.selectList("getApprovalOrderList", ofcode);
 	   }
 
-	   public OrderBean inputOrder(String oscode) {
+	   OrderBean inputOrder(String oscode) {
 	      return sql.selectOne("inputOrder", oscode);
 	   }
 
-	   public List<TaxBean> getIssuedTax(String ofcode) {
+	   List<TaxBean> getIssuedTax(String ofcode) {
 		return sql.selectList("getIssuedTax", ofcode);
 	   }
 
-	public String getofcode(String epcode) {
+	String getofcode(String epcode) {
 		return sql2.selectOne("getofcode", epcode);
 	}
 
-	public TaxBean getIssuedTaxDetail(String tbcode) {
+	TaxBean getIssuedTaxDetail(String tbcode) {
 		return sql.selectOne("getIssuedTaxDetail", tbcode);
 	}
 
-	public List<OrderDetailBean> getTaxProduct(String oscode) {
+	List<OrderDetailBean> getTaxProduct(String oscode) {
 		return sql.selectList("getTaxProduct", oscode);
 	}
 
 
-	public boolean issueApproval(ApprovalBean ab) {   
+	boolean issueApproval(ApprovalBean ab) {   
 		   return convertToBoolean(sql2.insert("issueApproval", ab));
 		}
 
-		public boolean insOs(ApprovalBean ab) {   
+		boolean insOs(ApprovalBean ab) {   
 		   return convertToBoolean(sql2.insert("insOs", ab));
 		}
 
-		public boolean insOd(ApprovalBean ab) {
+		boolean insOd(ApprovalBean ab) {
 		   return convertToBoolean(sql2.insert("insOd", ab));
 		}
 
-		public String getoscode() {
+		String getoscode() {
 		   return sql2.selectOne("getoscode");
 		}
 
 
-		public boolean insAn(ApprovalBean ab) {
+		boolean insAn(ApprovalBean ab) {
 			return convertToBoolean(sql2.insert("insAn", ab));
 		}
 

@@ -119,7 +119,7 @@
     </insert>
     
       <insert id="insOs" parameterType="intranet.teamone.bean.ApprovalBean">
-     INSERT INTO OS VALUES(TO_CHAR(SYSDATE,'YYMMDD')||SEQ_ORDER_NUM.NEXTVAL, #{ap_fromdpcode}, #{ap_fromofcode}, #{cp_code}, SYSDATE, #{cg_type})
+     INSERT INTO OS VALUES(TO_CHAR(SYSDATE,'YYMMDD')||SEQ_ORDER_NUM.NEXTVAL, #{ap_fromdpcode}, #{ap_fromofcode}, #{cp_code}, SYSDATE, #{cg_type},#{region})
         </insert>
         
       <select id="getoscode" resultType="string">
@@ -135,5 +135,9 @@
     <insert id="insAn" parameterType="intranet.teamone.bean.ApprovalBean">
     INSERT INTO ANYAPPROVAL VALUES('AN'||TO_CHAR(SYSDATE,'YYMMDD')||#{ap_fromdpcode}||SEQ_ANYAPPROVAL_NUM.NEXTVAL, #{ap_fromdpcode}, #{ap_todpcode}, sysdate, #{cg_type}, 'NR',  #{ap_fromofcode}, #{ap_toofcode}, #{an_text})
     </insert>
+    
+    <select id="getOsRegion" parameterType="string" resultType="string">
+    	SELECT REGION FROM OS WHERE OS_CODE = #{os_code}
+    </select>
     
 </mapper>

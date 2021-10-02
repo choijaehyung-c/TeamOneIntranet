@@ -91,7 +91,6 @@ public class ApprovalServiceEntrance {
 	}
 
 	public TaxBean getIssuedTaxDetail(String tbcode) {
-		System.out.println(asc.getIssuedTaxDetailCtl(tbcode));
 		return asc.getIssuedTaxDetailCtl(tbcode);
 	}
 

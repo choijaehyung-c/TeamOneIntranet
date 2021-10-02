@@ -28,4 +28,5 @@ public class ApprovalBean {
 	   private int od_quantity;
 	   private int od_price;
 	   private String sp_code;
+	   private String region;
 }

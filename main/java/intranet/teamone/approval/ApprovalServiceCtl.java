@@ -56,11 +56,7 @@ public class ApprovalServiceCtl {
 
 		//return된 데이터
 		List<OrderDetailBean> list = dao.getApprovalDetail(ab);
-		for(int i=0; i<list.size();i++) {
-			 list.get(i).setPr_name(this.getPrname(list.get(i).getOd_prcode()));
-		
-		}
-		
+		list.get(0).setRegion(dao.getOsRegion(ab.getAp_oscode()));
 		return list;
 	}
 
@@ -244,13 +240,13 @@ public class ApprovalServiceCtl {
 
 
 	 String issueApprovalCtl(ApprovalBean ab) {
-		   String message = "failed";   
-		   ab.setAp_fromdpcode(ab.getAp_fromdpcode() ); 
-		   ab.setAp_fromofcode(ab.getAp_fromofcode() );
-		   ab.setAp_todpcode(ab.getAp_todpcode());
-		   ab.setAp_toofcode(ab.getAp_toofcode());
-		   ab.setCg_type(ab.getCg_type());
-		   ab.setCp_code(ab.getCp_code());
+		   String message = "failed";
+		   try {
+			ab.setRegion((String)pu.getAttribute("userCp")+(String)pu.getAttribute("userOf")+(String)pu.getAttribute("userDp"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		   System.out.println(ab.getRegion());
 		   if(dao.insOs(ab)) {
 		      ab.setAp_oscode(dao.getoscode());
 		         if(dao.issueApproval(ab)) {

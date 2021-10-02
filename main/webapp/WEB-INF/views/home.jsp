@@ -791,6 +791,51 @@ function getcl(){
 					<input id="detectRandering" type="hidden" value="ccc"/>
 				</template>
 				<template v-if="display[4].show">
+				<div id="modalBack" v-if="modalcjh2.show" :style="styleObject">
+							<div style="width:70%; max-height:80%; background: #fff; transform:translate(-50%,0%);
+							border-radius: 10px; padding: 20px; z-index:1; position: absolute; margin-top:3%; left:50%; overflow:auto;">
+							<div style="float: left; width:95%; color:#000; font-weight: 900; font-size:35px">&nbsp&nbsp배송 조회</div>
+							<button @click="modalcjh2Close()" type="button" class="btn btn-dark" style="font-weight: 900; font-size:16px;">X</button>
+										<hr style="display:block;">
+								<table class="dataTable-table">
+									<tr>
+										<td style="text-align:center; vertical-align:middle;">운송장 번호</td>
+										<td style="text-align:center; vertical-align:middle;">{{modalList.dl_code}}</td>
+										<td style="text-align:center; vertical-align:middle;">주문서 번호</td>
+										<td style="text-align:center; vertical-align:middle;">{{modalList.dl_oscode}}</td>
+									</tr>
+									<tr>
+										<td style="text-align:center; vertical-align:middle;">배송 기사</td>
+										<td style="text-align:center; vertical-align:middle;">{{modalList.dv_name}}</td>
+										<td style="text-align:center; vertical-align:middle;">연락처</td>
+										<td style="text-align:center; vertical-align:middle;">{{modalList.dv_hp}}</td>
+									</tr>
+									<tr>
+										<td style="text-align:center; vertical-align:middle;" colspan="4" v-if="modalList.dl_dscode == 1">상품준비중</td>
+										<td style="text-align:center; vertical-align:middle;" colspan="4" v-else-if="modalList.dl_dscode == 2">배송중</td>
+										<td style="text-align:center; vertical-align:middle;" colspan="4" v-else>배송완료</td>
+									</tr>
+								</table>
+								<table class="dataTable-table">
+								     <thead>
+                                        <tr>
+                                            <th style="width: 25%; text-align:center;"><a>x좌표</a></th>
+                                            <th style="width: 25%; text-align:center;"><a>y좌표</a></th>
+                                            <th style="width: 50%; text-align:center;"><a>날짜</a></th>
+                                        </tr>
+                                    </thead>
+									<tbody>
+										<tr v-for="item in modalList.lc">
+											<td style="text-align:center; vertical-align:middle;">{{item.lc_x}}</td>
+											<td style="text-align:center; vertical-align:middle;">{{item.lc_y}}</td>
+											<td style="text-align:center; vertical-align:middle;">{{item.lc_date}}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+					 </div>
+				
+				
 					<div id="modalBack" v-if="modal.show" :style="styleObject">
 							<div style="width:70%; max-height:80%; background: #fff; transform:translate(-50%,0%);
 							border-radius: 10px; padding: 20px; z-index:1; position: absolute; margin-top:3%; left:50%; overflow:auto;">
@@ -808,13 +853,15 @@ function getcl(){
                                         </tr>
                                     </thead>
 									<tbody><!-- OD_PRSPCODE,OD_OSCODE AS "OS_ORIGIN",OD_PRCODE,OD_QUANTITY,PR_NAME,PR_IMAGE,PR_PRICE,PR_TAX,PR_INFO,PR_ORIGIN,OD_STCODE -->
-										<tr v-for="(item,index) in modalList" v-if="item.od_stcode ==='RR'">
+										<tr v-for="(item,index) in modalList">
 											<td><img :src="item.pr_image" width="100%" height="100%" alt="no search image"></td>
 											<td style="text-align:center; vertical-align:middle;">{{item.pr_name}}</td>
 											<td style="text-align:center; vertical-align:middle;">{{item.pr_info}}</td>
 											<td style="text-align:center; vertical-align:middle;">{{item.perPrice}}</td>
 											<td style="text-align:center; vertical-align:middle;">{{item.od_quantity}}</td>
-											<td style="text-align:center; vertical-align:middle;">{{item.pr_origin}}</td>
+											<td style="text-align:center; vertical-align:middle;" v-if="item.od_stcode==='RR'">반품요청</td>
+											<td style="text-align:center; vertical-align:middle;" v-else-if="item.od_stcode==='RA'">반품수락</td>
+											<td style="text-align:center; vertical-align:middle;" v-else>&nbsp</td>
 										</tr>
 										<tr><td colspan="6" style="text-align:center; vertical-align:middle;"> 총 가격(VAT포함) : {{modalList.ttPrice}} 원</td></tr>
 									</tbody>
@@ -860,9 +907,8 @@ function getcl(){
 												<tr>
 													<th style="width: 15%;"><a>외부 주문 번호</a></th>
 													<th style="width: 12%;"><a>상태</a></th>
-													<th style="width: 47%;"><a>상품명</a></th>
-													<th style="width: 18%;"><a>날짜</a></th>
-													<th style="width: 7%;"><a>Click!</a></th>
+													<th style="width: 52%;"><a>상품명</a></th>
+													<th style="width: 20%;"><a>날짜</a></th>
 												</tr>
 												</thead> 
 
@@ -872,7 +918,6 @@ function getcl(){
 													<td  @click="getOrderDetail(order.os_code)">{{order.os_stname}}</td>
 													<td  @click="getOrderDetail(order.os_code)">{{order.os_summary}}</td>
 													<td  @click="getOrderDetail(order.os_code)">{{order.os_date}}</td>
-													<td><div v-if="order.os_state==='RA'" @click="getDelivery(order.os_code)">배송 조회</div><div v-else>-</div></td>
 												</tr>
 											</tbody>
 											

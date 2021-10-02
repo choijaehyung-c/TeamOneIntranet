@@ -38,7 +38,8 @@ const main = new Vue({
 		},
 		dupCheck:[],
 		loading:false,
-		relOs:''
+		relOs:'',
+		RlRegion:''
 	},
 	methods:{
 		changePage:function(page){
@@ -477,7 +478,7 @@ issueApproval:function(){
 			let data = getcl();
 			let cData = {os_code:code,clcode:data.cld,clpwd:data.clp};
 			console.log(cData);
-			postAjaxJson('https://cleverc.online/vue/clientOrderDecide','getReload','s',JSON.stringify(cData));
+			postAjaxJson('http://172.30.1.13/vue/clientOrderDecide','getReload','s',JSON.stringify(cData));
 		},
 		exchangeCheckbox:function(){
 			let check = document.getElementsByName("As_Checkbox");
@@ -496,7 +497,7 @@ issueApproval:function(){
 			let data = getcl();
 			let cData = {os_clcode:data.cld,cl_pwd:data.clp,os_origin:this.modalList[0].os_origin,os_region:data.region,od:odData};
 			console.log(cData);
-			postAjaxJson('https://cleverc.online/vue/clientExchange','getResultAs','j',JSON.stringify(cData));
+			postAjaxJson('http://172.30.1.13/vue/clientExchange','getResultAs','j',JSON.stringify(cData));
 			this.modalcjh.show = false;
 			orderList();
 		},
@@ -524,7 +525,7 @@ issueApproval:function(){
 			let data = getcl();
 			let cData = {os_clcode:data.cld,cl_pwd:data.clp,os_origin:this.modalList[0].os_origin,os_region:data.region,od:odData};
 			console.log(cData);
-			postAjaxJson('https://cleverc.online/vue/clientRefund','getResultAs','j',JSON.stringify(cData));
+			postAjaxJson('http://172.30.1.13/vue/clientRefund','getResultAs','j',JSON.stringify(cData));
 			this.modalcjh.show = false;
 		}
 
@@ -744,19 +745,18 @@ function sendToMro(jsondata){
 		OD.push({od_prspcode:jsondata[i].od_prspcode, od_quantity:jsondata[i].od_quantity, od_prcode:jsondata[i].od_prcode})
 	}
 	let CL = getcl();
-	let sendJsonData = { os_clcode: CL.cld, cl_pwd:CL.clp, os_region:CL.region, od:OD };
+	let sendJsonData = { os_clcode: CL.cld, cl_pwd:CL.clp, os_region:jsondata[0].region, od:OD };
 	let clientData = JSON.stringify(sendJsonData);
-	alert(clientData);
+	main.RlRegion = sendJsonData.os_region;
 	console.log(CL);
-	postAjaxJson("https://cleverc.online/vue/clientOrder", 'returnStringData', 'j', clientData);
+	postAjaxJson("http://172.30.1.13/vue/clientOrder", 'returnStringData', 'j', clientData);
 }
 
 function returnStringData(jsondata){
-	let CL = getcl();
 	let jsondataLength = jsondata.length;
 	let MOS = [];
 	 for(i=0; i<jsondataLength; i++){
-		MOS.push({os_code:jsondata[i], os_region:CL.region})
+		MOS.push({os_code:jsondata[i], os_region:main.RlRegion})
 	}
 	let sendJsonData = { rl_ioscode: main.list2.os_code,
 						 aa_apcode: main.list2.ap_code, 
@@ -897,7 +897,7 @@ function getBudget(){
 
  	function connectWs(){
  		
-	 	let ws = new WebSocket("ws://192.168.0.22/cEcho");
+	 	let ws = new WebSocket("ws://172.30.1.43/cEcho");
 	 	
 	 	socket = ws;
 	 	
