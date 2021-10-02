@@ -265,18 +265,16 @@ public class ApprovalServiceCtl {
 		}
 	 
 	 String issueApprovalCtl2(ApprovalBean ab) {
-		   String message = "Try Again";   
-		   
-		   ab.setAp_fromdpcode(ab.getAp_fromdpcode() ); 
-		   ab.setAp_fromofcode(ab.getAp_fromofcode() );
-		   ab.setAp_todpcode(ab.getAp_todpcode() );
-		   ab.setAp_toofcode(ab.getAp_toofcode());
-		   ab.setCg_type(ab.getCg_type());
-		   ab.setCp_code(ab.getCp_code());
-		   ab.setAn_text(ab.getAn_text());
+		   String message = "failed";   
+		   try {
+				ab.setRegion((String)pu.getAttribute("userCp")+(String)pu.getAttribute("userOf")+(String)pu.getAttribute("userDp"));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		   if(dao.insAn(ab)) {
-		         message="SUCCESS";
+			   message=ab.getAp_toofcode()+ab.getAp_todpcode()+dao.getOfDpName(ab);
 		   }
+		   
 		      return message;
 		}
 

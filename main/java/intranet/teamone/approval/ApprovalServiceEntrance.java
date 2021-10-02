@@ -99,8 +99,8 @@ public class ApprovalServiceEntrance {
 		}
 	
 	public String issueApproval2(ApprovalBean ab) {
-		System.out.println(ab);
-		   return null;//asc.issueApprovalCtl2(ab);
+		
+		   return asc.issueApprovalCtl2(ab);
 		}
 
 

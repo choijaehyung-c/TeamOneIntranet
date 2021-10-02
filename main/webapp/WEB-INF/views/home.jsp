@@ -1450,7 +1450,7 @@ function getcl(){
                    		<table id="datatablesSimple" class="dataTable-table">
 											<thead>
 												<tr>
-													<th style="width: 100%; text-align: center;"><a>사유</a></th>													
+													<th style="width: 100%; text-align: center;"><a>내용</a></th>													
 												</tr>
 											</thead>
 										
@@ -1475,8 +1475,8 @@ function getcl(){
 								class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
 								<div class="dataTable-top">
 									<div>
-									<select @change="changeSendApprovalList()" id="changeSendApproval" class="form-control">
-  										<option value="0">구매</option>
+									<select @change="changeReceiveApproval()" id="changeSendApproval" class="form-control">
+  										<option value="0" selected>구매</option>
     									<option value="1">일반</option>
 									</select>
 									</div>

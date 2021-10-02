@@ -265,7 +265,8 @@ const main = new Vue({
 			let clientData = JSON.stringify(sendJsonData);
 			postAjaxJson('rest/GetApprovalDetail', 'sendToMro', 'j', clientData);
 		},
-		changeReceiveApproval:function(){//*//
+		changeReceiveApproval:function(){
+			console.log("?a?");
 			let num = document.getElementById("changeList").value;
 			if(num == 0){
 				postAjaxJson('rest/GetApprovalList', 'getApprovalListPush', 'j');
@@ -783,7 +784,6 @@ function ApprovalPage2(message){
 	//here
 	if(message != "failed"){
 		alert("전송성공");
-		console.log(message);
 		sendWebSocketMessage(message+"주문");
 	}else{
 		alert("전송실패");
@@ -799,11 +799,15 @@ function ApprovalPage2(message){
 }
 
 function ApprovalPage3(message){
-   alert(message);
+   if(message != "failed"){
+		alert("전송성공");
+		sendWebSocketMessage(message+"일반");
+	}else{
+		alert("전송실패");
+	}
    main.nsbchangePage();
    main.changePage(6);
    document.getElementById('id01').style.display='none';
-   document.getElementById('id02').style.display='none';
 }
 
 //기안자세션기입
@@ -891,6 +895,21 @@ function getBudget(){
 }
 
 /////////////////////cjh/////////////////////////
+	
+
+
+	function anyApPage(){
+		console.log("appage");
+		main.changePage(7);
+		postAjaxJson('rest/GetAnyApprovalList', 'anyApPagePush', 'j');
+	}
+	function anyApPagePush(jsondata){
+		main.list2Push(jsondata);
+		main.selectPage[0].show=false;
+		main.selectPage[1].show=true;
+		setTimeout(function(){$("#changeList").val("1").prop("selected", true);},1000);
+	}
+	
 	//here
 	
  	let socket = null;
@@ -910,7 +929,12 @@ function getBudget(){
 	 		//$('#result').append(event.data); 토스트
 			let Length = event.data.length;
 			toastr.options.extendedTimeOut = 14000;
-			toastr.options.onclick = function() { console.log('clicked'); }
+			if(event.data.substring(Length-2,Length)=='주문'){
+				toastr.options.onclick = function() { receiveApprovalPage(''); }
+			}else{
+				toastr.options.onclick = function() { anyApPage(); }
+			}
+			
 			toastr.info(event.data.substring(5,Length-2)+" "+event.data.substring(0,5),event.data.substring(Length-2,Length) + "결재 요청", {timeOut: 7000});
 	 	}
 	 	ws.onclose = function(event){
