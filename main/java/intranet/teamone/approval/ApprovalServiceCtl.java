@@ -40,7 +40,7 @@ public class ApprovalServiceCtl {
 	@Autowired
 	Encryption enc;
 
-	public List<ApprovalBean> getApprovalList() {   
+	List<ApprovalBean> getApprovalList() {   
 	      ApprovalBean ab = new ApprovalBean();
 	      try {
 	         ab.setAp_todpcode((String)pu.getAttribute("userDp"));
@@ -52,7 +52,7 @@ public class ApprovalServiceCtl {
 	   }
 
 
-	public List<OrderDetailBean> getApprovalDetail(ApprovalBean ab) {
+	List<OrderDetailBean> getApprovalDetail(ApprovalBean ab) {
 
 		//return된 데이터
 		List<OrderDetailBean> list = dao.getApprovalDetail(ab);
@@ -65,7 +65,7 @@ public class ApprovalServiceCtl {
 		return dao.getPrname(prcode);
 	}
 
-	public List<ApprovalBean> getAnyApprovalList() {
+	List<ApprovalBean> getAnyApprovalList() {
 	      ApprovalBean ab = new ApprovalBean();
 	      try {
 	         ab.setAp_todpcode((String)pu.getAttribute("userDp"));
@@ -77,7 +77,7 @@ public class ApprovalServiceCtl {
 	   }
 
 
-	public String responseAppovalRefuse(ApprovalBean ab) {
+	String responseAppovalRefuse(ApprovalBean ab) {
 		String msg = null;
 		if(dao.responseAppovalRefuse(ab)){
 			msg="success";
@@ -88,7 +88,7 @@ public class ApprovalServiceCtl {
 	}
 
 
-	public List<ApprovalBean> getSendApprovalList() {
+	List<ApprovalBean> getSendApprovalList() {
 	      ApprovalBean ab = new ApprovalBean();
 	      try {
 	         ab.setAp_fromdpcode((String)pu.getAttribute("userDp"));
@@ -103,7 +103,7 @@ public class ApprovalServiceCtl {
 	
 
 
-	public String IntranetOrderBean(IntranetOrderBean iob) {
+	String IntranetOrderBean(IntranetOrderBean iob) {
 		String msg = null;
 		int check = 0;
 		try {
@@ -156,13 +156,13 @@ public class ApprovalServiceCtl {
 	}
 
 
-	public List<OrderDetailBean> getAnyApprovalDetail(ApprovalBean ab) {
+	List<OrderDetailBean> getAnyApprovalDetail(ApprovalBean ab) {
 
 		return dao.getAnyApprovalDetail(ab);
 	}
 
 
-	public String responseAnyAppoval(ApprovalBean ab) {
+	String responseAnyAppoval(ApprovalBean ab) {
 		String msg = null;
 		if(dao.responseAnyAppoval(ab)) {
 			msg="success";
@@ -173,7 +173,7 @@ public class ApprovalServiceCtl {
 	}
 
 
-	public List<ApprovalBean> getSendAnyApprovalList() {
+	List<ApprovalBean> getSendAnyApprovalList() {
 	      ApprovalBean ab = new ApprovalBean();
 	      try {
 	         ab.setAp_fromdpcode((String)pu.getAttribute("userDp"));

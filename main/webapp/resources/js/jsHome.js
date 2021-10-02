@@ -165,10 +165,7 @@ const main = new Vue({
 						if(cart[i].search(name+prr)!=-1){
 							ct = cart[i];
 								ogCount = parseInt(ct.split('@@')[1].split('^^')[0]) + parseInt(vall.split('@@')[1].split('^^')[0]);
-								alert(ogCount);
-								
 								vall=vall.substring(0,vall.indexOf("@@"))+"@@"+ ogCount +"^^"+ vall.substring(vall.indexOf("^^")+2,vall.length);
-								console.log(vall);
 								setCookie(name + prr, vall, 7);	
 						
 						}else{
@@ -192,7 +189,7 @@ const main = new Vue({
 		//이름찾는 
 		for(var i in ck) {
             if(ck[i].search('addCart-')!=-1) {
-				//alert(ck[i].search('addCart-')); //모든 쿠키를 확인해서 쿠키당 addCart가 들어가면 1을반환 없으면 0을반환  
+				//모든 쿠키를 확인해서 쿠키당 addCart가 들어가면 1을반환 없으면 0을반환  
                 cookie = ck[i]								
            	   	let img = cookie.split('#')[1];
 				let spcode = cookie.split('>')[1].split('@@')[0];
@@ -230,7 +227,7 @@ const main = new Vue({
 
 		$('input:checkbox[name=chkYn]:checked').each(function(){
 			chk_val = $(this).val();
-			alert(chk_val);
+			
 		});
 			
 			main.nsbchangePage();
@@ -282,7 +279,6 @@ const main = new Vue({
 		responseAnyAppoval:function(apcode, atcode){
 			let sendJsonData = { ap_code: apcode, at_code:atcode};
 			let clientData = JSON.stringify(sendJsonData);
-			alert(clientData);
 			postAjaxJson('rest/ResponseAnyAppoval', 'getAnyApprovalList', 's', clientData);	
 		},
 		changeSendApprovalList:function(){//*//
@@ -319,7 +315,7 @@ const main = new Vue({
       //이름찾는 
       for(var i in ck) {
             if(ck[i].search('addCart-')!=-1) {
-            //alert(ck[i].search('addCart-')); //모든 쿠키를 확인해서 쿠키당 addCart가 들어가면 1을반환 없으면 0을반환  
+            //모든 쿠키를 확인해서 쿠키당 addCart가 들어가면 1을반환 없으면 0을반환  
                 cookie = ck[i]                        
            	   	let img = cookie.split('#')[1];
 				let spcode = cookie.split('>')[1].split('@@')[0];
@@ -479,7 +475,7 @@ issueApproval:function(){
 			let data = getcl();
 			let cData = {os_code:code,clcode:data.cld,clpwd:data.clp};
 			console.log(cData);
-			postAjaxJson('http://172.30.1.13/vue/clientOrderDecide','getReload','s',JSON.stringify(cData));
+			postAjaxJson('https://cleverc.online/vue/clientOrderDecide','getReload','s',JSON.stringify(cData));
 		},
 		exchangeCheckbox:function(){
 			let check = document.getElementsByName("As_Checkbox");
@@ -498,7 +494,7 @@ issueApproval:function(){
 			let data = getcl();
 			let cData = {os_clcode:data.cld,cl_pwd:data.clp,os_origin:this.modalList[0].os_origin,os_region:data.region,od:odData};
 			console.log(cData);
-			postAjaxJson('http://172.30.1.13/vue/clientExchange','getResultAs','j',JSON.stringify(cData));
+			postAjaxJson('https://cleverc.online/vue/clientExchange','getResultAs','j',JSON.stringify(cData));
 			this.modalcjh.show = false;
 			orderList();
 		},
@@ -526,7 +522,7 @@ issueApproval:function(){
 			let data = getcl();
 			let cData = {os_clcode:data.cld,cl_pwd:data.clp,os_origin:this.modalList[0].os_origin,os_region:data.region,od:odData};
 			console.log(cData);
-			postAjaxJson('http://172.30.1.13/vue/clientRefund','getResultAs','j',JSON.stringify(cData));
+			postAjaxJson('https://cleverc.online/vue/clientRefund','getResultAs','j',JSON.stringify(cData));
 			this.modalcjh.show = false;
 		}
 
@@ -750,7 +746,7 @@ function sendToMro(jsondata){
 	let clientData = JSON.stringify(sendJsonData);
 	main.RlRegion = sendJsonData.os_region;
 	console.log(CL);
-	postAjaxJson("http://172.30.1.13/vue/clientOrder", 'returnStringData', 'j', clientData);
+	postAjaxJson("https://cleverc.online/vue/clientOrder", 'returnStringData', 'j', clientData);
 }
 
 function returnStringData(jsondata){
@@ -764,7 +760,6 @@ function returnStringData(jsondata){
 						 of_code: main.list2.of_code,
 						 mos: MOS};
 	let clientData = JSON.stringify(sendJsonData);
-	alert(clientData);
 	postAjaxJson('rest/ResponseAppovalAccept', 'receiveApprovalPage', 's', clientData);
 }
 
@@ -916,7 +911,7 @@ function getBudget(){
 
  	function connectWs(){
  		
-	 	let ws = new WebSocket("ws://172.30.1.43/cEcho");
+	 	let ws = new WebSocket("ws://mrone.hoonzzang.com:9010/cEcho");
 	 	
 	 	socket = ws;
 	 	
@@ -962,7 +957,6 @@ function getResultAs(data){
 }
 
 function getReload(data){
-	alert(data);
 	orderList();
 }
 

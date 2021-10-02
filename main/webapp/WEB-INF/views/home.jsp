@@ -1873,7 +1873,7 @@ function getcl(){
   </script>
 		
 	<script src="${pageContext.request.contextPath}/resources/vue/vue.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/jsIYJ.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/jsHome.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/js.js"></script>
 	 <script>
 		$(document).ready(function(){
