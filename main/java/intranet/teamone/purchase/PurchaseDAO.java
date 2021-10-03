@@ -1,6 +1,5 @@
 package intranet.teamone.purchase;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -9,6 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import intranet.teamone.bean.AccessInfoBean;
+import intranet.teamone.bean.Bkind;
 import intranet.teamone.bean.OrderBean;
 import intranet.teamone.bean.ProductBean;
 
@@ -28,10 +28,11 @@ public class PurchaseDAO {
 		return sql.selectList("getBkind");
 	}
 
-	List<ProductBean> getCateName(String code) {
-		
-		return sql.selectList("getCateName", code);
-	}
+
+		List<Bkind> getCateName(String code) {
+			
+			return sql.selectList("getCateName", code);
+		}
 
 	 List<ProductBean> getCateItem(String cate) {
 		

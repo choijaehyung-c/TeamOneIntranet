@@ -19,15 +19,21 @@ ul, li{
 	list-style:none;
 	display:inline-block;
 	
+	
 }
 a{
   text-decoration:none;
   color:inherit;
 }
 
+
+.menu_wrap{
+	     position: relative;
+    display: inline-block;
+}
+
 .menu_wrap .dep1{
 	font-size:0;
-	
 }
 
 .menu_wrap .dep1>li {
@@ -38,10 +44,11 @@ a{
 	text-align:center;
 	font-size:16px;
 	position:relative;
+	 
 }
 
 .menu_wrap .dep1 > li:hover >a{
-	background:purple;
+	background:#000;
 	color:#fff;
 }
 
@@ -53,28 +60,31 @@ a{
 .menu_wrap .dep2{
 	position:absolute;
 	display:none;
-	background: rgba(238, 130, 200, 0.8);
-	color:#fff;
+	background-color: #f9f9f9;
+	color:#000;
 	z-index:1;
 	cursor:pointer;
+	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+	min-width: 100px;
+
 
 }
 
 .menu_wrap .dep1 > li:hover > .dep2{
-	display:block;
-	width:100%;
-	
+	display:block;	
 }
 
 .menu_wrap .dep2 a {
-	display:block;
-	padding:10px 0;
-	
+    color: black;
+    padding: 12px 0px;
+    text-decoration: none;
+    display: inline-block;
+    
 }
 
 .menu_wrap .dep2 a:hover{
 	text-decoration : underline;
-	
+
 }
 
 

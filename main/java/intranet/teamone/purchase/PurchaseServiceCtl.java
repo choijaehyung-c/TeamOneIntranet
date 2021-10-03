@@ -1,12 +1,12 @@
 package intranet.teamone.purchase;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import intranet.teamone.bean.AccessInfoBean;
+import intranet.teamone.bean.Bkind;
 import intranet.teamone.bean.OrderBean;
 import intranet.teamone.bean.ProductBean;
 import intranet.teamone.utils.ProjectUtils;
@@ -21,11 +21,16 @@ public class PurchaseServiceCtl {
 	ProjectUtils pu;
 
 	List<ProductBean> getBkind() {
-
-		return dao.getBkind();
+		List<ProductBean> list = dao.getBkind();
+			for(int i=0; i<list.size(); i++) {
+				list.get(i).setCate_name(this.getCateName(list.get(i).getBk_code()));
+				//System.out.println(list.get(i));
+			}
+		
+		return list;
 	}
 
-	List<ProductBean> getCateName(String code) {
+	List<Bkind> getCateName(String code) {
 	
 		return dao.getCateName(code);
 	}

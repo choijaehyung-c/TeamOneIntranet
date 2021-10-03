@@ -20,10 +20,7 @@ public class PurchaseServiceEntrance {
 		return psc.getBkind();
 	}
 
-	public List<ProductBean> getCateName(String code) {
-		
-		return psc.getCateName(code);
-	}
+
 
 	public List<ProductBean> getCateItem(String cate) {
 		

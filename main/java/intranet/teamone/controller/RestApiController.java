@@ -47,10 +47,7 @@ public class RestApiController {
 		return pse.getBkind();
 	}
 
-	@PostMapping("/GetCateName")
-	public List<ProductBean> GetCateName(@RequestBody String code) {
-		return pse.getCateName(code);
-	}
+
 
 	@PostMapping("/GetCateItem")
 	public List<ProductBean> GetCateItem(@RequestBody String cate) {

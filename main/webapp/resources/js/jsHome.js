@@ -113,9 +113,7 @@ const main = new Vue({
 		getBkindPage:function(){			
 				postAjaxJson('rest/getBkind', 'getBkindList','j',clientData='');
 		},
-		getCateName:function(bkcode){
-			postAjaxJson('rest/GetCateName', 'getCateDetail','j',bkcode);
-		},
+		
 		getCateItem:function(cate){
 			postAjaxJson('rest/GetCateItem','cateItemList','j',cate);
 		},
@@ -612,7 +610,13 @@ function myCartView(){
 
 //상위 카테고리 목록 불러오기
 function getBkindList(data){
+	//console.log(data)
+	
 	main.list = data;
+
+for(i=0; i<data.length; i++){
+	main.list1.push(data[i].cate_name);
+}
 	loadingClose();
 }
 

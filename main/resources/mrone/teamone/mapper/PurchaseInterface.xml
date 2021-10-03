@@ -8,7 +8,7 @@
 		SELECT * FROM CHLCHL.BKIND WHERE BK_CODE!='GB'
 	</select>
 	
-	<select id="getCateName" parameterType="string" resultType="intranet.teamone.bean.ProductBean">		
+	<select id="getCateName" parameterType="string" resultType="intranet.teamone.bean.Bkind">		
 		SELECT CATE_NAME, CATE FROM CHLCHL.PRODUCT WHERE PR_SPBKIND=#{code} GROUP BY CATE_NAME, CATE
 	</select>
 	

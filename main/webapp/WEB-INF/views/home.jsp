@@ -422,10 +422,10 @@ function getcl(){
 						<div class="menu_wrap" style="margin-left:23%; ">
 								
 									<ul  class="dep1">
-										<li v-for="li in list">										
-											<a @click="getCateName(li.bk_code)">{{li.bk_name}}</a>
+										<li v-for="(li,index) in list">										
+											<a >{{li.bk_name}}</a>
 												<ul  class="dep2">
-													<li v-for="ll in detail">
+													<li v-for="ll in list1[index]">
 														<a  @click="getCateItem(ll.cate)">{{ll.cate_name}}</a>
 													</li>
 												</ul>

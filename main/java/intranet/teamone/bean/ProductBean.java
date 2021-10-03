@@ -1,5 +1,7 @@
 package intranet.teamone.bean;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
@@ -15,10 +17,11 @@ public class ProductBean {
 	private String pr_spbkind;
 	private String pr_stcode;
 	private String cate;
-	private String cate_name;
+	private List<Bkind> cate_name;
 	private String bk_name;
 	private String bk_code;
 	private String pr_stock;
 	private String pr_origin;
 	private String word;
 }
+
