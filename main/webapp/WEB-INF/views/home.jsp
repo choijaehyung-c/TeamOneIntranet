@@ -1479,7 +1479,7 @@ function getcl(){
 								class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
 								<div class="dataTable-top">
 									<div>
-									<select @change="changeReceiveApproval()" id="changeSendApproval" class="form-control">
+									<select @change="changeSendApprovalList()" id="changeSendApproval" class="form-control">
   										<option value="0" selected>구매</option>
     									<option value="1">일반</option>
 									</select>
