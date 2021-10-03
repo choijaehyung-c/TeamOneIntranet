@@ -12,14 +12,33 @@
 				INNER JOIN "OF" ON AP.AP_FROMOFCODE = "OF".OF_CODE
 		WHERE AP_TODPCODE = #{ap_todpcode} AND AP_TOOFCODE = #{ap_toofcode} AND AP_ATCODE = 'OR'
 	</select>
+	
+		<select id="getApprovalList2" parameterType="intranet.teamone.bean.ApprovalBean" resultType="intranet.teamone.bean.ApprovalBean">
+		SELECT AP_CODE, AP_OSCODE, AP_DATE, CG_TYPE, CG_NAME, DP_NAME, OF_NAME, OF_CODE, AP_ATCODE AS AT_CODE, AT_NAME 
+		FROM AP INNER JOIN CG ON AP.AP_CGTYPE = CG.CG_TYPE 
+        		INNER JOIN DP ON AP.AP_FROMDPCODE = DP.DP_CODE  AND AP.AP_FROMOFCODE = DP.DP_OFCODE  
+				INNER JOIN "OF" ON AP.AP_FROMOFCODE = "OF".OF_CODE 
+                INNER JOIN "AT" ON AP.AP_ATCODE = "AT".AT_CODE 
+		WHERE AP_TODPCODE = #{ap_todpcode} AND AP_TOOFCODE = #{ap_toofcode} AND AP_ATCODE = 'OA' OR AP_ATCODE='OF' 
+		</select>
 
 	<select id="getAnyApprovalList" parameterType="intranet.teamone.bean.ApprovalBean" resultType="intranet.teamone.bean.ApprovalBean">
-		SELECT AN_CODE AS AP_CODE, AN_DATE AS AP_DATE, CG_TYPE, CG_NAME, DP_NAME, OF_NAME
+		SELECT AN_CODE AS AP_CODE, AN_DATE AS AP_DATE, CG_TYPE, CG_NAME, DP_NAME, OF_NAME 
 		FROM ANYAPPROVAL 
 				INNER JOIN CG ON ANYAPPROVAL.AN_CGTYPE = CG.CG_TYPE
         		INNER JOIN DP ON ANYAPPROVAL.AN_FROMDPCODE = DP.DP_CODE  AND ANYAPPROVAL.AN_FROMOFCODE = DP.DP_OFCODE 
 				INNER JOIN "OF" ON ANYAPPROVAL.AN_FROMOFCODE = "OF".OF_CODE
 		WHERE AN_TODPCODE = #{ap_todpcode} AND AN_TOOFCODE = #{ap_toofcode} AND AN_ATCODE = 'NR'	 
+	</select>
+	
+	<select id="getAnyApprovalList2" parameterType="intranet.teamone.bean.ApprovalBean" resultType="intranet.teamone.bean.ApprovalBean">
+        SELECT AN_CODE AS AP_CODE, AN_DATE AS AP_DATE, CG_TYPE, CG_NAME, DP_NAME, OF_NAME, AN_ATCODE AS AT_CODE, AT_NAME 
+		FROM ANYAPPROVAL  
+				INNER JOIN CG ON ANYAPPROVAL.AN_CGTYPE = CG.CG_TYPE 
+        		INNER JOIN DP ON ANYAPPROVAL.AN_FROMDPCODE = DP.DP_CODE  AND ANYAPPROVAL.AN_FROMOFCODE = DP.DP_OFCODE  
+				INNER JOIN "OF" ON ANYAPPROVAL.AN_FROMOFCODE = "OF".OF_CODE 
+				INNER JOIN "AT" ON ANYAPPROVAL.AN_ATCODE = "AT".AT_CODE 
+		WHERE AN_TODPCODE = #{ap_todpcode} AND AN_TOOFCODE = #{ap_toofcode} AND AN_ATCODE = 'NA' OR AN_ATCODE='NF' 
 	</select>
 	
 	

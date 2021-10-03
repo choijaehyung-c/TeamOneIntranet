@@ -1348,6 +1348,60 @@ function getcl(){
                   		</div>
                    		
                   	</div>
+                   	</div>	
+                   	
+                   	<div id="modalBack" v-if="modal3.show" :style="styleObject">
+                     <div style="width:70%; max-height:80%; background: #fff; transform:translate(-50%,0%);
+                     border-radius: 10px; padding: 20px; z-index:1; position: absolute; margin-top:3%; left:50%; overflow:auto;">
+                     <div style="float: left; width:95%; color:#000; font-weight: 900; font-size:35px">&nbsp&nbsp</div>
+                     <button @click="modal3.show=false" type="button" class="btn btn-dark" style="font-weight: 900; font-size:16px;">X</button>
+                   		<table id="datatablesSimple" class="dataTable-table">
+											<thead>
+												<tr>
+													<th style="width: 20%;"><a>상품명</a></th>
+													<th style="width: 20%;"><a>주문수량</a></th>
+													<th style="width: 20%;"><a>상품가격</a></th>													
+												</tr>
+											</thead>
+
+											<tbody>
+												<tr v-for="ALD in detail">
+													<td>{{ALD.pr_name}}</td>
+													<td>{{ALD.od_quantity}}개</td>
+													<td>{{ALD.pr_price}}원</td>
+												</tr>
+											</tbody>
+										</table>
+                   		<div  style="text-align: center">              
+                   		
+                  		</div>
+                   		
+                  	</div>
+                   	</div>	
+                   	
+                   	<div id="modalBack" v-if="modal4.show" :style="styleObject">
+                     <div style="width:70%; max-height:80%; background: #fff; transform:translate(-50%,0%);
+                     border-radius: 10px; padding: 20px; z-index:1; position: absolute; margin-top:3%; left:50%; overflow:auto;">
+                     <div style="float: left; width:95%; color:#000; font-weight: 900; font-size:35px">&nbsp&nbsp</div>
+                     <button @click="modal4.show=false" type="button" class="btn btn-dark" style="font-weight: 900; font-size:16px;">X</button>
+                       
+                   		<table id="datatablesSimple" class="dataTable-table">
+											<thead>
+												<tr>
+													<th style="width: 100%; text-align: center;"><a>사유</a></th>													
+												</tr>
+											</thead>
+										
+											<tbody>
+												<tr v-for="ANLD in detail">
+
+													<td>{{ANLD.an_text}}</td>
+		
+												</tr>
+											</tbody>
+										</table>
+                   		
+                  	</div>
                    	</div>				
 		
 				
@@ -1405,6 +1459,41 @@ function getcl(){
 														<button @click="responseAnyAppoval(ANL.ap_code, 'NF')"
 															type="button" class="btn btn-dark">반려</button>
 													</td>
+												</tr>
+										
+											</tbody>
+										</table>
+									</div>
+								</div>
+								
+								<div class="card mb-4">
+									<div class="card-header">처리완료결재</div>
+									<div class="card-body">
+										<table id="datatablesSimple" class="dataTable-table">
+											<thead>
+												<tr>
+													<th style="width: 20%;"><a>결재신청부서</a></th>
+													<th style="width: 20%;"><a>결재구분</a></th>													
+													<th style="width: 20%;"><a>날짜</a></th>
+													<th style="width: 20%;"><a>처리상태</a></th>
+												</tr>
+											</thead>
+
+											<tbody v-if="selectPage[0].show">
+												<tr v-for="AL in donelist">
+													<td @click="getApprovalDetail2(AL.ap_oscode, AL.ap_code, AL.of_code)">{{AL.of_name}} {{AL.dp_name}}</td>
+													<td @click="getApprovalDetail2(AL.ap_oscode, AL.ap_code, AL.of_code)">{{AL.cg_name}}</td>
+													<td @click="getApprovalDetail2(AL.ap_oscode, AL.ap_code, AL.of_code)">{{AL.ap_date}}</td>
+													<td @click="getApprovalDetail2(AL.ap_oscode, AL.ap_code, AL.of_code)">{{AL.at_name}}</td>
+												</tr>
+										
+											</tbody>
+											<tbody v-if="selectPage[1].show">
+												<tr v-for="ANL in donelist2">
+													<td @click="getAnyApprovalDetail2(ANL.ap_code)">{{ANL.of_name}} {{ANL.dp_name}}</td>
+													<td @click="getAnyApprovalDetail2(ANL.ap_code)">{{ANL.cg_name}}</td>
+													<td @click="getAnyApprovalDetail2(ANL.ap_code)">{{ANL.ap_date}}</td>
+													<td @click="getAnyApprovalDetail2(ANL.ap_code)">{{ANL.at_name}}</td>
 												</tr>
 										
 											</tbody>

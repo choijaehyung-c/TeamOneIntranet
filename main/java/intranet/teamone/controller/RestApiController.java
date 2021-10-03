@@ -73,10 +73,18 @@ public class RestApiController {
 	public List<ApprovalBean> getApprovalList() {
 		return ase.getApprovalList();
 	}
+	@PostMapping("/GetApprovalList2")
+	public List<ApprovalBean> getApprovalList2() {
+		return ase.getApprovalList2();
+	}
 
 	@PostMapping("/GetAnyApprovalList")
 	public List<ApprovalBean> getAnyApprovalList() {
 		return ase.getAnyApprovalList();
+	}
+	@PostMapping("/GetAnyApprovalList2")
+	public List<ApprovalBean> getAnyApprovalList2() {
+		return ase.getAnyApprovalList2();
 	}
 
 	@PostMapping("/GetApprovalDetail")

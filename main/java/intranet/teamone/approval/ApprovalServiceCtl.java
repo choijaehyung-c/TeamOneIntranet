@@ -50,6 +50,16 @@ public class ApprovalServiceCtl {
 	         }
 	      return dao.getApprovalList(ab);
 	   }
+	List<ApprovalBean> getApprovalList2() {   
+	      ApprovalBean ab = new ApprovalBean();
+	      try {
+	         ab.setAp_todpcode((String)pu.getAttribute("userDp"));
+	         ab.setAp_toofcode((String)pu.getAttribute("userOf"));
+	         } catch (Exception e) {
+	            e.printStackTrace();
+	         }
+	      return dao.getApprovalList2(ab);
+	   }
 
 
 	List<OrderDetailBean> getApprovalDetail(ApprovalBean ab) {
@@ -74,6 +84,16 @@ public class ApprovalServiceCtl {
 	            e.printStackTrace();
 	         }
 	      return dao.getAnyApprovalList(ab);
+	   }
+	List<ApprovalBean> getAnyApprovalList2() {
+	      ApprovalBean ab = new ApprovalBean();
+	      try {
+	         ab.setAp_todpcode((String)pu.getAttribute("userDp"));
+	         ab.setAp_toofcode((String)pu.getAttribute("userOf"));
+	         } catch (Exception e) {
+	            e.printStackTrace();
+	         }
+	      return dao.getAnyApprovalList2(ab);
 	   }
 
 

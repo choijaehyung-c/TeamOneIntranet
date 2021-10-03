@@ -24,6 +24,11 @@ public class ApprovalServiceEntrance {
 
 		return asc.getApprovalList();
 	}
+	
+	public List<ApprovalBean> getApprovalList2() {
+
+		return asc.getApprovalList2();
+	}
 
 	//해당 os코드의 주문디테일 가져오기
 	public List<OrderDetailBean> getApprovalDetail(ApprovalBean ab) {
@@ -34,6 +39,9 @@ public class ApprovalServiceEntrance {
 	public List<ApprovalBean> getAnyApprovalList() {
 
 		return asc.getAnyApprovalList();
+	}
+	public List<ApprovalBean> getAnyApprovalList2() {
+		return asc.getAnyApprovalList2();
 	}
 
 	public String responseAppovalRefuse(ApprovalBean ab) {

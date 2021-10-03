@@ -40,6 +40,9 @@ public class ApprovalDAO {
 	List<ApprovalBean> getApprovalList(ApprovalBean ab) {
 		return sql2.selectList("getApprovalList", ab);
 	}
+	List<ApprovalBean> getApprovalList2(ApprovalBean ab) {
+		return sql2.selectList("getApprovalList2", ab);
+	}
 
 
 	List<OrderDetailBean> getApprovalDetail(ApprovalBean ab) {
@@ -53,6 +56,9 @@ public class ApprovalDAO {
 
 	List<ApprovalBean> getAnyApprovalList(ApprovalBean ab) {
 		return sql2.selectList("getAnyApprovalList", ab);
+	}
+	List<ApprovalBean> getAnyApprovalList2(ApprovalBean ab) {
+		return sql2.selectList("getAnyApprovalList2", ab);
 	}
 	
 	boolean responseAppovalRefuse(ApprovalBean ab) {

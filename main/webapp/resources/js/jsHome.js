@@ -8,8 +8,12 @@ const main = new Vue({
 		nsbPage:[{show:false}/*주문결재부서기입*/, {show:false}/*거래내역기입*/, {show:false}/*일반결재부서기입*/],
 		modal:{show:false},
 		modal2:{show:false},
+		modal3:{show:false},
+		modal4:{show:false},
 		modalcjh:{show:false},
 		modalcjh2:{show:false},
+		donelist:[],
+		donelist2:[],
 		list:[],
 		list1:[],
 		list2:[],
@@ -79,6 +83,12 @@ const main = new Vue({
 		},
 		detailPush2:function(jsondata){
 			this.detail = jsondata;
+		},
+		donelistPush:function(jsondata){
+			this.donelist = jsondata;
+		},
+		donelist2Push:function(jsondata){
+			this.donelist2 = jsondata;
 		},
 		listPush:function(jsondata){
 			this.list = jsondata;
@@ -247,6 +257,14 @@ const main = new Vue({
 			let clientData = JSON.stringify(sendJsonData);
 			postAjaxJson('rest/GetApprovalDetail', 'getApprovalDetailPush', 'j', clientData);
 		},
+	getApprovalDetail2:function(oscode, apcode='', ofcode=''){
+			if(ofcode !=''){				
+			this.list2 = {ap_code:apcode, os_code:oscode, of_code:ofcode};
+			}	
+			let sendJsonData = { ap_oscode: oscode};
+			let clientData = JSON.stringify(sendJsonData);
+			postAjaxJson('rest/GetApprovalDetail', 'getApprovalDetailPush2', 'j', clientData);
+		},
 		responseAppovalRefuse:function(apcode){
 			let sendJsonData = { ap_code:apcode, at_code: "OF"};
 			let clientData = JSON.stringify(sendJsonData);
@@ -267,6 +285,7 @@ const main = new Vue({
 				postAjaxJson('rest/GetApprovalList', 'getApprovalListPush', 'j');
 			}else{
 				postAjaxJson('rest/GetAnyApprovalList', 'getAnyApprovalListPush', 'j');
+				postAjaxJson('rest/GetAnyApprovalList2', 'getAnyApprovalListPush2', 'j');
 			}
 		},
 		getAnyApprovalDetail:function(apcode){
@@ -274,6 +293,12 @@ const main = new Vue({
 			let sendJsonData = { ap_code: apcode};
 			let clientData = JSON.stringify(sendJsonData);
 			postAjaxJson('rest/GetAnyApprovalDetail', 'getAnyApprovalDetailPush', 'j', clientData);
+		},
+		getAnyApprovalDetail2:function(apcode){
+			this.list3 = {ap_code:apcode};
+			let sendJsonData = { ap_code: apcode};
+			let clientData = JSON.stringify(sendJsonData);
+			postAjaxJson('rest/GetAnyApprovalDetail', 'getAnyApprovalDetailPush2', 'j', clientData);
 		},
 		responseAnyAppoval:function(apcode, atcode){
 			let sendJsonData = { ap_code: apcode, at_code:atcode};
@@ -676,6 +701,7 @@ function receiveApprovalPage(msg){//*//
 		alert(msg);
 	}
 	postAjaxJson('rest/GetApprovalList', 'getApprovalListPush', 'j');
+	postAjaxJson('rest/GetApprovalList2', 'getApprovalListPush2', 'j');
 }
 
 function getAnyApprovalList(msg){//*//
@@ -684,6 +710,7 @@ function getAnyApprovalList(msg){//*//
 		alert(msg);
 	}
 	postAjaxJson('rest/GetAnyApprovalList', 'getAnyApprovalListPush', 'j');
+	postAjaxJson('rest/GetAnyApprovalList2', 'getAnyApprovalListPush2', 'j');
 }
 
 function getApprovalListPush(jsondata){
@@ -694,11 +721,27 @@ function getApprovalListPush(jsondata){
 	main.selectPage[1].show=false;
 	loadingClose();
 }
+function getApprovalListPush2(jsondata){
+	main.donelistPush(jsondata);
+	main.nsbchangePage();
+	main.changePage(7);
+	main.selectPage[0].show=true;
+	main.selectPage[1].show=false;
+	loadingClose();
+}
 
 function getAnyApprovalListPush(jsondata){
+	console.log(jsondata);
 	main.selectPage[0].show=false;
 	main.selectPage[1].show=true;
 	main.list2Push(jsondata);
+}
+function getAnyApprovalListPush2(jsondata){
+	main.donelist2Push(jsondata);
+	console.log(jsondata);
+	main.selectPage[0].show=false;
+	main.selectPage[1].show=true;
+
 }
 
 
@@ -707,10 +750,20 @@ function getApprovalDetailPush(jsondata){
 	main.detailPush2(jsondata);
 	main.modalOpen();
 }
+function getApprovalDetailPush2(jsondata){
+	modalStyle();
+	main.detailPush2(jsondata);
+	main.modal3.show = true;
+}
 function getAnyApprovalDetailPush(jsondata){
 	modalStyle();
 	main.detailPush2(jsondata);
 	main.modal2.show = true;
+}
+function getAnyApprovalDetailPush2(jsondata){
+	modalStyle();
+	main.detailPush2(jsondata);
+	main.modal4.show = true;
 }
 
 function sendApprovalPage(){
@@ -806,6 +859,7 @@ function ApprovalPage3(message){
 	}else{
 		alert("전송실패");
 	}
+   document.getElementById("text").value='';
    main.nsbchangePage();
    main.changePage(6);
    document.getElementById('id01').style.display='none';
