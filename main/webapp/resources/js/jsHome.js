@@ -270,6 +270,7 @@ const main = new Vue({
 			}
 		},
 		getAnyApprovalDetail:function(apcode){
+			this.list3 = {ap_code:apcode};
 			let sendJsonData = { ap_code: apcode};
 			let clientData = JSON.stringify(sendJsonData);
 			postAjaxJson('rest/GetAnyApprovalDetail', 'getAnyApprovalDetailPush', 'j', clientData);
@@ -678,6 +679,7 @@ function receiveApprovalPage(msg){//*//
 }
 
 function getAnyApprovalList(msg){//*//
+	main.modal2 = false;
 	if(msg !=''){
 		alert(msg);
 	}

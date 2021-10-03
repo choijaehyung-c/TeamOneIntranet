@@ -1343,8 +1343,8 @@ function getcl(){
 											</tbody>
 										</table>
                    		<div  style="text-align: center">
-                   		<button @click="responseAnyAppoval(list2.ap_code, 'NA')" type="button" class="btn btn-dark">허가</button>
-                   		<button @click="responseAnyAppoval(list2.ap_code, 'NF')" type="button" class="btn btn-dark">반려</button>
+                   		<button @click="responseAnyAppoval(list3.ap_code, 'NA')" type="button" class="btn btn-dark">허가</button>
+                   		<button @click="responseAnyAppoval(list3.ap_code, 'NF')" type="button" class="btn btn-dark">반려</button>
                   		</div>
                    		
                   	</div>
