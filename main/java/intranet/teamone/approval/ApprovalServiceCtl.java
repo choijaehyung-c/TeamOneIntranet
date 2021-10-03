@@ -215,21 +215,23 @@ public class ApprovalServiceCtl {
 		return dao.inputOrder(oscode);   
 	}
 
-	 List<TaxBean> getIssuedTaxCtl() {
-		String epcode = null;
-		String ofcode = null;
+	 List<TaxBean> getIssuedTaxCtl() {	
+			try {
+				if(pu.getAttribute("userSs") != null) {				
+					enc.aesDecode((String)pu.getAttribute("userSs"),"session");	
+					if((boolean)pu.getAttribute("userCp").equals("KOR001")) {					
+								if((boolean)pu.getAttribute("userDp").equals("MT")) {
+									return dao.getIssuedTax();
+								}				
 
-		try {
-			if(pu.getAttribute("userSs") != null) {
-				epcode=enc.aesDecode((String)pu.getAttribute("userSs"),"session");
-				ofcode = dao.getofcode(epcode);
+					}
+				}
+			} catch (Exception e) {
+
+				e.printStackTrace();
 			}
-		} catch (Exception e) {
-
-			e.printStackTrace();
+			return dao.notAccess();
 		}
-		return dao.getIssuedTax(ofcode);
-	}
 
 	 TaxBean getIssuedTaxDetailCtl(String tbcode) {
 		TaxBean tb = dao.getIssuedTaxDetail(tbcode);

@@ -868,6 +868,9 @@ function IssuedTaxVue(jsondata){
 	main.changePage(9);
 	main.listPush(jsondata);
 	loadingClose();
+	if(jsondata == ''){
+		alert("권한이 없습니다.");
+	}
 }
 
 function IssuedTaxDetailVue(jsondata){

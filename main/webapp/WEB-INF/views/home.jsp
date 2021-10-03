@@ -1615,12 +1615,12 @@ function getcl(){
       <td class='border_up' align='center' width='122' height='33'>합계금액</td>
       </tr>
       
-      <tr>
-      <td class='border_up' align='center' width='195' height='33'  v-for="od in od">{{od.pr_name}}</td>      
-      <td class='border_up' align='center' width='65' height='33'  v-for="od in od">{{od.od_quantity}}</td>      
-      <td class='border_up' align='center' width='150' height='33'  v-for="od in od">{{od.pr_price}}</td>      
-      <td class='border_up' align='center' width='83' height='33'  v-for="od in od">{{od.pr_tax}}</td>
-      <td class='border_up' align='center' width='83'height='33'  v-for="od in od">{{od.od_quantity*(od.pr_tax+od.pr_price)}}</td>            
+      <tr v-for="od in od">
+      <td class='border_up' align='center' width='195' height='33'  >{{od.pr_name}}</td>      
+      <td class='border_up' align='center' width='65' height='33' >{{od.od_quantity}}</td>      
+      <td class='border_up' align='center' width='150' height='33' >{{od.pr_price}}</td>      
+      <td class='border_up' align='center' width='83' height='33' >{{od.pr_tax}}</td>
+      <td class='border_up' align='center' width='83'height='33' >{{od.od_quantity*(od.pr_tax+od.pr_price)}}</td>            
       </tr>
  
     </table>
@@ -1719,12 +1719,12 @@ function getcl(){
       <td class='border_up_red' align='center' width='122' height='33'>합계금액</td>
       </tr>
       
-      <tr>
-      <td class='border_up_red' align='center' width='195' height='33' v-for="od in od">{{od.pr_name}}</td>      
-      <td class='border_up_red' align='center' width='65' height='33' v-for="od in od">{{od.od_quantity}}</td>      
-      <td class='border_up_red' align='center' width='150' height='33' v-for="od in od">{{od.pr_price}}</td>      
-      <td class='border_up_red' align='center' width='83' height='33' v-for="od in od">{{od.pr_tax}}</td>
-      <td class='border_up_red' align='center' width='83'height='33' v-for="od in od">{{od.od_quantity*(od.pr_tax+od.pr_price)}}</td>            
+      <tr v-for="od in od">
+      <td class='border_up_red' align='center' width='195' height='33' >{{od.pr_name}}</td>      
+      <td class='border_up_red' align='center' width='65' height='33' >{{od.od_quantity}}</td>      
+      <td class='border_up_red' align='center' width='150' height='33'>{{od.pr_price}}</td>      
+      <td class='border_up_red' align='center' width='83' height='33' >{{od.pr_tax}}</td>
+      <td class='border_up_red' align='center' width='83'height='33' >{{od.od_quantity*(od.pr_tax+od.pr_price)}}</td>            
       </tr>
  
     </table>

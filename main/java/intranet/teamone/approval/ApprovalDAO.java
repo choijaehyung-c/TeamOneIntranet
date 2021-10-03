@@ -126,9 +126,13 @@ public class ApprovalDAO {
 	      return sql.selectOne("inputOrder", oscode);
 	   }
 
-	   List<TaxBean> getIssuedTax(String ofcode) {
-		return sql.selectList("getIssuedTax", ofcode);
-	   }
+	   List<TaxBean> getIssuedTax() {
+			return sql.selectList("getIssuedTax");
+		   }
+	   
+	   List<TaxBean> notAccess() {
+			return sql.selectList("getIssuedTax2");
+		}
 
 	String getofcode(String epcode) {
 		return sql2.selectOne("getofcode", epcode);
