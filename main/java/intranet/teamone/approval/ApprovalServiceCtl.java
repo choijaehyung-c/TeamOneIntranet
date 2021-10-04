@@ -121,6 +121,7 @@ public class ApprovalServiceCtl {
 		int check = 0;
 		BudgetBean bg = new BudgetBean();
 		try {
+			iob.setEp_code(enc.aesDecode((String)pu.getAttribute("userSs"),"session"));
 			bg.setBg_ofcode((String)pu.getAttribute("userOf"));
 			bg.setBg_dpcode((String)pu.getAttribute("userDp"));
 		} catch (Exception e1) {
@@ -136,7 +137,7 @@ public class ApprovalServiceCtl {
 				try {
 					int budget = Integer.parseInt(enc.aesDecode(dao.getBudget(bg), "mrone"));
 					budget = budget-totalPrice;
-					bg.setBg_budget(enc.aesEncode(budget+"", "mrone"));
+					bg.setBg_budget(enc.aesEncode(Integer.toString(budget), "mrone"));
 					if(dao.updateBudget(bg)) {
 						for(int i=0; i<iob.getMos().size(); i++) {
 							iob.getMos().get(i).setIos(iob.getRl_ioscode());

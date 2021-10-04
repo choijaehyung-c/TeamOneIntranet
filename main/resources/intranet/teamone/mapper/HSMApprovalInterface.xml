@@ -91,7 +91,7 @@
 		SELECT BG_BUDGET FROM BG WHERE BG_OFCODE = #{bg_ofcode} AND BG_DPCODE = #{bg_dpcode}
 	</select>
 	
-	<select id="updateBudget" parameterType="intranet.teamone.bean.IntranetOrderBean">
+	<select id="updateBudget" parameterType="intranet.teamone.bean.BudgetBean">
 		UPDATE BG SET BG_BUDGET = #{bg_budget} WHERE BG_OFCODE = #{bg_ofcode} AND BG_DPCODE = #{bg_dpcode}
 	</select>
 	
