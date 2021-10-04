@@ -147,7 +147,7 @@ const main = new Vue({
 				
 				html += `<div id="setDiv${index}">`
 				html += "<img src='"+img+"' style='width:90px;'/>";
-				html += "<div style='font-size:12px;'>"+prname+"</div><span style='font-size:10px;'>("+prcode+")</span>";
+				html += "<div style='font-size:12px;'>"+prname+"</div>";
 				html += "<div style='font-size:12px;'>" + count +"개</div>";
 				html += `<div id="delCart" onClick="delCarts(${index})" style='font-size:13px; cursor:pointer;'>[삭제]</div>`;
 				html +=	"<input type='hidden' value='"+value+"' name='ckval'/>";
@@ -833,6 +833,7 @@ function returnStringData(jsondata){
 //주문결재 탭
 function ApprovalPage(){
 	loadingOpen();
+	main.inputcart = [];
 	main.nsbchangePage();
    main.changePage(5);
    postAjaxJson('rest/getDrafter','oDrafterVue','j');

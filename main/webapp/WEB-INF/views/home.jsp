@@ -108,7 +108,7 @@ function getcl(){
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                Interface
+                Order
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
@@ -149,6 +149,9 @@ function getcl(){
             </li>
 
             <hr class="sidebar-divider">
+            <div class="sidebar-heading">
+                Approval
+            </div>
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
@@ -171,6 +174,18 @@ function getcl(){
                 </div>
             </li>
          
+            
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Accountancy
+            </div>
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            
+            
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities3"
                     aria-expanded="true" aria-controls="collapseUtilities3">
@@ -185,31 +200,6 @@ function getcl(){
                         <h6 class="collapse-header">accountancy</h6>
                         <div class="collapse-item" onClick="taxbillPage()">세금계산서 조회</div>
                         <div class="collapse-item" onClick="getBudget()">예산조회</div>
-                    </div>
-                </div>
-            </li>
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Addons
-            </div>
-
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                    aria-expanded="true" aria-controls="collapsePages">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-plus" viewBox="0 0 16 16">
-  <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
-  <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
-</svg>
-                    <span>관리</span>
-                </a>
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">지사관리</h6>
-                        <div class="collapse-item" >지사목록</div>
                     </div>
                 </div>
             </li>
@@ -422,12 +412,12 @@ function getcl(){
 
 						<div class="menu_wrap" style="margin-left:23%; ">
 								
-									<ul  class="dep1">
+									<ul class="dep1">
 										<li v-for="(li,index) in list">										
 											<a >{{li.bk_name}}</a>
-												<ul  class="dep2">
+												<ul class="dep2">
 													<li v-for="ll in list1[index]">
-														<a  @click="getCateItem(ll.cate)">{{ll.cate_name}}</a>
+														<a style="text-align: center;" @click="getCateItem(ll.cate)">{{ll.cate_name}}</a>
 													</li>
 												</ul>
 										</li>
@@ -446,7 +436,7 @@ function getcl(){
 									</div>																					
 								</div>
 
-								<div class="row" v-for="(item,index) in items" style="margin-bottom:10px; ">
+								<div class="row" v-for="(item,index) in items" style="margin-bottom:10px;">
 									<img class="img-fluid fit-cover w-sm-100 h-sm-100 rounded-1 absolute-sm-centered"
 										:src="item.pr_image" alt="" style="width:220px; height:250px; border-radius:20px;">
 								<div class="col-sm-7 col-md-8">
@@ -484,16 +474,18 @@ function getcl(){
 													
 														<input name="quantity" 
 															class="form-control text-center input-quantity input-spin-none"
-															type="number" min="1" max="10" value="1" style="max-width: 50px">
+															type="number" min="1" max="10" value="1" style="max-width: 70px">
 													</div>
+													<br>
 													<div class="mt-2">
 													<div  @click="addSideBar(item.pr_code,index,item.pr_spcode,item.pr_price,item.pr_tax,item.pr_image,item.pr_name)">
-														<button type="button" class="btn btn-danger ms-2">장바구니 담기</button>
+														<button type="button" class="btn btn-primary ms-2">장바구니 담기</button>
 												</div>
 											</div>
 										</div>
 									</div>
 								</div>
+								<hr>
 							</div>
 							<input id="detectRandering" type="hidden" value="ccc"/>
 							</template>
@@ -537,7 +529,7 @@ function getcl(){
 
                     <!-- Page Heading -->
                     <h1 class="h3 mb-2 text-gray-800">Shopping Cart</h1>
-                    <p class="mb-4">※장바구니는 7일까지만 보관이 됩니다.</p>
+                    <p class="mb-4">※장바구니는 7일까지 보관이 됩니다.</p>
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
@@ -545,14 +537,13 @@ function getcl(){
                             <h6 class="m-0 font-weight-bold text-primary" >Cart List</h6>
                         </div>
                          <div class="card-body">
-                            <div class="table-responsive">
+                            <div>
                                 <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4"><div class="row"><div class="col-sm-12"><table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
-                                <button type="button" class="btn btn-success mb-2 me-1" style="float:right;" @click="sendApproval()">결재하기</button>
+                                <button type="button" class="btn btn-primary mb-2 me-1" style="float:right;" @click="sendApproval()">결재하기</button>
                                     <thead>
 										<tr role="row">
 											<th class="sorting sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
 												aria-sort="ascending" aria-label="Image: activate to sort column descending" style="width: 70px;">
-											<input type="checkbox" id="check_all" name="chkYn" onclick="selectAll(this)" >
 											Image </th>
 											<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
 												aria-label="Supply Code: activate to sort column ascending" style="width: 100px;">
@@ -574,7 +565,7 @@ function getcl(){
 											Total Price<br>(VAT포함)</th>
 											<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
 												aria-label="Total Price: activate to sort column ascending" style="width: 100px;">
-											구문</th>
+											Delete</th>
 										</tr>
 									</thead>
                                     
@@ -1278,12 +1269,12 @@ function getcl(){
                               <th colspan="2">기안내용</th>
                               </tr>
                               <tr>
-                              <td style= width:80%><textarea id="text" name="text" style="text-align:center; width:100%; height:400px;" ></textarea></td>
-                              <td style= width:20%><button class="btn btn-dark" @click="issueApproval2()">기안하기</button></td>
+                              <td style= width:80%><textarea id="text" name="text" style="text-align:left; width:100%; height:400px;" ></textarea></td>
                               </tr>
                               </table>                                    
                </tbody>
-            </table>   
+            </table>
+            <div align="right"><button class="btn btn-dark" @click="issueApproval2()">기안하기</button></div>
             <input id="detectRandering" type="hidden" value="ccc"/>            
             </template>
 							
@@ -1884,7 +1875,7 @@ function getcl(){
                                  </thead>
                                  <tbody>
                                     <tr>
-                                       <td>{{list.of_name}}</td>
+                                       <td>인천일보아카데미</td>
                                        <td>{{list.bg_ofcode}}</td>
                                        <td>{{list.bg_dpcode}}</td>
                                        <td>{{list.bg_budget}}</td>
