@@ -13,7 +13,7 @@
 	</select>
 	
 	<select id="getCateItem" parameterType="string" resultType="intranet.teamone.bean.ProductBean">
-		SELECT * FROM CHLCHL.PRODUCT WHERE CATE=#{cate}
+		SELECT * FROM CHLCHL.PRODUCT WHERE CATE=#{cate} AND PR_STCODE = 'PC'
 	</select>
 	
 	<select id="getPrDetail" parameterType="intranet.teamone.bean.ProductBean" resultType="intranet.teamone.bean.ProductBean">
