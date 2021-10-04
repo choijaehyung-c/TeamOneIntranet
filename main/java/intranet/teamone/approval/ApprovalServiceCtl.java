@@ -60,6 +60,10 @@ public class ApprovalServiceCtl {
 		//return된 데이터
 		List<OrderDetailBean> list = dao.getApprovalDetail(ab);
 		list.get(0).setRegion(dao.getOsRegion(ab.getAp_oscode()));
+		
+		for(int i =0; i<list.size(); i++) {
+			list.get(i).setPr_name(this.getPrname(list.get(i).getOd_prcode()));
+		}
 		return list;
 	}
 
