@@ -271,9 +271,9 @@ const main = new Vue({
 			postAjaxJson('rest/ResponseAppovalRefuse', 'receiveApprovalPage', 's', clientData);
 			this.modalClose();
 		},
-		getDetailInfo:function(oscode, apcode, ofcode){
+		getDetailInfo:function(oscode, apcode, ofcode,dpcode){
 			this.modalClose();
-			this.list2 = {os_code:oscode, ap_code:apcode, of_code:ofcode};
+			this.list2 = {os_code:oscode, ap_code:apcode, of_code:ofcode ,dp_code :dpcode};
 			let sendJsonData = {ap_oscode: oscode};
 			let clientData = JSON.stringify(sendJsonData);
 			postAjaxJson('rest/GetApprovalDetail', 'sendToMro', 'j', clientData);
@@ -817,6 +817,7 @@ function returnStringData(jsondata){
 	let sendJsonData = { rl_ioscode: main.list2.os_code,
 						 aa_apcode: main.list2.ap_code, 
 						 of_code: main.list2.of_code,
+						 dp_code: main.list2.dp_code,
 						 mos: MOS};
 	let clientData = JSON.stringify(sendJsonData);
 	postAjaxJson('rest/ResponseAppovalAccept', 'receiveApprovalPage', 's', clientData);

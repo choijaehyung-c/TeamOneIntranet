@@ -1313,7 +1313,7 @@ function getcl(){
 											</tbody>
 										</table>
                    		<div  style="text-align: center">
-                   		<button @click="getDetailInfo(list2.os_code, list2.ap_code, list2.of_code)" type="button" class="btn btn-dark">허가</button>
+                   		<button @click="getDetailInfo(list2.os_code, list2.ap_code, list2.of_code , list2.dp_code)" type="button" class="btn btn-dark">허가</button>
                    		<button @click="responseAppovalRefuse(list2.ap_code)" type="button" class="btn btn-dark">반려</button>
                    		
                   		</div>
@@ -1440,7 +1440,7 @@ function getcl(){
 													<td @click="getApprovalDetail(AL.ap_oscode, AL.ap_code, AL.of_code)">{{AL.cg_name}}</td>
 													<td @click="getApprovalDetail(AL.ap_oscode, AL.ap_code, AL.of_code)">{{AL.ap_date}}</td>
 													<td style="text-align: center">
-														<button @click="getDetailInfo(AL.ap_oscode, AL.ap_code, AL.of_code)"
+														<button @click="getDetailInfo(AL.ap_oscode, AL.ap_code, AL.of_code , AL.dp_code)"
 															type="button" class="btn btn-dark">허가</button>
 														<button @click="responseAppovalRefuse(AL.ap_code)"
 															type="button" class="btn btn-dark">반려</button>

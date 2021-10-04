@@ -18,6 +18,7 @@ public class ApprovalBean {
 	   private String dp_name;
 	   private String of_name;
 	   private String of_code;
+	   private String dp_code;
 	   private String od_code;
 	   private String at_code;
 	   private String at_name;

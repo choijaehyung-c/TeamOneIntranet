@@ -122,8 +122,8 @@ public class ApprovalServiceCtl {
 		BudgetBean bg = new BudgetBean();
 		try {
 			iob.setEp_code(enc.aesDecode((String)pu.getAttribute("userSs"),"session"));
-			bg.setBg_ofcode((String)pu.getAttribute("userOf"));
-			bg.setBg_dpcode((String)pu.getAttribute("userDp"));
+			bg.setBg_ofcode(iob.getOf_code());
+			bg.setBg_dpcode(iob.getDp_code());
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
