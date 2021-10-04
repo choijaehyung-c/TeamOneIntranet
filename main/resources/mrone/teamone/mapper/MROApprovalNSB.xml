@@ -30,15 +30,6 @@
 	WHERE CHLCHL.TAXBILL.TB_CLCODE = 'INC10H'
     </select>
     
-    <select id="getIssuedTax2"  resultType="intranet.teamone.bean.TaxBean">
-	SELECT  
-	CHLCHL.TAXBILL.TB_CODE, 
-	CHLCHL.TAXBILL.TB_OSCODE, 
-	CHLCHL.TAXBILL.TB_CLCODE, 
-	CHLCHL.TAXBILL.TB_CLNAME 
-	FROM CHLCHL.TAXBILL 
-	WHERE CHLCHL.TAXBILL.TB_CLCODE = 'GMT12H'
-    </select>
     
     <select id="getIssuedTaxDetail"  parameterType="string" resultType="intranet.teamone.bean.TaxBean">
     SELECT  

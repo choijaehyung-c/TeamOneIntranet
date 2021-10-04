@@ -5,9 +5,9 @@
 
 
 <mapper namespace="intranet.teamone.mapper.Accountancy"> 
-<select id="getBudgetList" parameterType="string" resultType="intranet.teamone.bean.BudgetBean">
+<select id="getBudgetList" parameterType="intranet.teamone.bean.BudgetBean" resultType="intranet.teamone.bean.BudgetBean">
       SELECT BG_CPCODE, BG_OFCODE, BG_DPCODE, BG_BUDGET, OF_NAME
       FROM BG INNER JOIN OFFICE ON BG.BG_OFCODE = OFFICE.OF_CODE
-      WHERE BG_OFCODE = #{ofcode}
+      WHERE BG_OFCODE = #{bg_ofcode} AND BG_DPCODE = #{bg_dpcode}
    </select> 
 </mapper>

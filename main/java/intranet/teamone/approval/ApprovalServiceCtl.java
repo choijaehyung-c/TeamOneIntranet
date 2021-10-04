@@ -3,9 +3,11 @@ package intranet.teamone.approval;
 
 
 import java.io.UnsupportedEncodingException;
+import java.nio.file.StandardOpenOption;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.crypto.BadPaddingException;
@@ -139,15 +141,10 @@ public class ApprovalServiceCtl {
 				int totalPrice = dao.totalPrice(iob);
 				System.out.println(totalPrice);
 				try {
-					int budget = Integer.parseInt(enc.aesDecode(dao.getBudget(iob), iob.getOf_code()));
-					System.out.println(budget);
-
+					int budget = Integer.parseInt(enc.aesDecode(dao.getBudget(iob), "mrone"));
 					budget = budget-totalPrice;
-					System.out.println(budget);
-
-					iob.setBg_budget(enc.aesEncode(Integer.toString(budget), iob.getOf_code()));
+					iob.setBg_budget(enc.aesEncode(Integer.toString(budget), "mrone"));
 					if(dao.updateBudget(iob)) {
-
 						for(int i=0; i<iob.getMos().size(); i++) {
 							iob.getMos().get(i).setIos(iob.getRl_ioscode());
 							if(dao.insRL(iob.getMos().get(i))) {
@@ -235,22 +232,30 @@ public class ApprovalServiceCtl {
 		return dao.inputOrder(oscode);   
 	}
 
-	 List<TaxBean> getIssuedTaxCtl() {	
+	 List<TaxBean> getIssuedTaxCtl() {
+		 boolean tf = false;
 			try {
 				if(pu.getAttribute("userSs") != null) {				
 					enc.aesDecode((String)pu.getAttribute("userSs"),"session");	
-					if((boolean)pu.getAttribute("userCp").equals("KOR001")) {					
-								if((boolean)pu.getAttribute("userDp").equals("MT")) {
-									return dao.getIssuedTax();
-								}				
-
+					if(((String)pu.getAttribute("userCp")).equals("KOR001")) {					
+								if(((String)pu.getAttribute("userDp")).equals("MT")) {
+									System.out.print("aaaaaaaaa");
+									tf = true;
+								}
 					}
 				}
 			} catch (Exception e) {
 
 				e.printStackTrace();
 			}
-			return dao.notAccess();
+			List<TaxBean> list = null;
+			if(!tf) {
+			list = new ArrayList<TaxBean>();
+			TaxBean tb = new TaxBean();
+			tb.setTb_code("none");
+			list.add(tb);
+	 		}
+			return tf?dao.getIssuedTax():list;
 		}
 
 	 TaxBean getIssuedTaxDetailCtl(String tbcode) {

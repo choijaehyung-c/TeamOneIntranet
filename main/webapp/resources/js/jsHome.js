@@ -919,14 +919,16 @@ function taxbillPage(){
 	main.taxbillPage();
 }
 //세금계산서 리스트 출력
-function IssuedTaxVue(jsondata){
+function IssuedTaxVue(jsondata){	
+	if(jsondata[0].tb_code == 'none'){
+		loadingClose();
+		alert("권한이 없습니다.");
+		return
+	}
 	main.nsbchangePage();
 	main.changePage(9);
 	main.listPush(jsondata);
 	loadingClose();
-	if(jsondata == ''){
-		alert("권한이 없습니다.");
-	}
 }
 
 function IssuedTaxDetailVue(jsondata){

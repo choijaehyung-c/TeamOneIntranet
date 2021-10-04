@@ -19,8 +19,8 @@ public class AccountancyServiceDao {
 	SqlSessionTemplate sql2;
 
    //암호화 된 부분 가져오기
-   public BudgetBean getBudgetList(String ofcode){
-      return sql2.selectOne("getBudgetList", ofcode);
+   public BudgetBean getBudgetList(BudgetBean bg){
+      return sql2.selectOne("getBudgetList", bg);
    }
 
 
