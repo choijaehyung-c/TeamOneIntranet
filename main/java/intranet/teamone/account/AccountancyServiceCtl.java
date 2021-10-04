@@ -29,7 +29,6 @@ public class AccountancyServiceCtl {
 	
       //암호화 -> 복호화 system으로 확인 필수
       try {
-    	  System.out.println(enc.aesEncode("50000000", "mrone"));
          bg.setBg_budget(enc.aesDecode(dao.getBudgetList(bg).getBg_budget(),"mrone"));
          //수정해야함
       } catch (Exception e) {

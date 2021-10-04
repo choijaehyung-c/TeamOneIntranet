@@ -87,12 +87,12 @@
 		SELECT SUM(OD_PRICE) FROM OD WHERE OD_OSCODE = #{rl_ioscode}
 	</select>
 
-	<select id="getBudget" parameterType="intranet.teamone.bean.IntranetOrderBean" resultType="string">
-		SELECT BG_BUDGET FROM BG WHERE BG_OFCODE = #{of_code}
+	<select id="getBudget" parameterType="intranet.teamone.bean.BudgetBean" resultType="string">
+		SELECT BG_BUDGET FROM BG WHERE BG_OFCODE = #{bg_ofcode} AND BG_DPCODE = #{bg_dpcode}
 	</select>
 	
 	<select id="updateBudget" parameterType="intranet.teamone.bean.IntranetOrderBean">
-		UPDATE BG SET BG_BUDGET = #{bg_budget} WHERE BG_OFCODE = #{of_code}
+		UPDATE BG SET BG_BUDGET = #{bg_budget} WHERE BG_OFCODE = #{bg_ofcode} AND BG_DPCODE = #{bg_dpcode}
 	</select>
 	
 	<insert id="insRL" parameterType="intranet.teamone.bean.MroneOrderBean">

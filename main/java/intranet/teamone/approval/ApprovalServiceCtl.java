@@ -2,26 +2,17 @@ package intranet.teamone.approval;
 
 
 
-import java.io.UnsupportedEncodingException;
-import java.nio.file.StandardOpenOption;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionDefinition;
 
 import intranet.teamone.bean.ApprovalBean;
+import intranet.teamone.bean.BudgetBean;
 import intranet.teamone.bean.EmployeeBean;
 import intranet.teamone.bean.IntranetOrderBean;
-import intranet.teamone.bean.MroneOrderBean;
 import intranet.teamone.bean.OrderBean;
 import intranet.teamone.bean.OrderDetailBean;
 import intranet.teamone.bean.TaxBean;
@@ -128,8 +119,10 @@ public class ApprovalServiceCtl {
 	String IntranetOrderBean(IntranetOrderBean iob) {
 		String msg = null;
 		int check = 0;
+		BudgetBean bg = new BudgetBean();
 		try {
-			iob.setEp_code(enc.aesDecode((String)pu.getAttribute("userSs"),"session"));
+			bg.setBg_ofcode((String)pu.getAttribute("userOf"));
+			bg.setBg_dpcode((String)pu.getAttribute("userDp"));
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
@@ -141,10 +134,10 @@ public class ApprovalServiceCtl {
 				int totalPrice = dao.totalPrice(iob);
 				System.out.println(totalPrice);
 				try {
-					int budget = Integer.parseInt(enc.aesDecode(dao.getBudget(iob), "mrone"));
+					int budget = Integer.parseInt(enc.aesDecode(dao.getBudget(bg), "mrone"));
 					budget = budget-totalPrice;
-					iob.setBg_budget(enc.aesEncode(Integer.toString(budget), "mrone"));
-					if(dao.updateBudget(iob)) {
+					bg.setBg_budget(enc.aesEncode(budget+"", "mrone"));
+					if(dao.updateBudget(bg)) {
 						for(int i=0; i<iob.getMos().size(); i++) {
 							iob.getMos().get(i).setIos(iob.getRl_ioscode());
 							if(dao.insRL(iob.getMos().get(i))) {
@@ -239,7 +232,6 @@ public class ApprovalServiceCtl {
 					enc.aesDecode((String)pu.getAttribute("userSs"),"session");	
 					if(((String)pu.getAttribute("userCp")).equals("KOR001")) {					
 								if(((String)pu.getAttribute("userDp")).equals("MT")) {
-									System.out.print("aaaaaaaaa");
 									tf = true;
 								}
 					}

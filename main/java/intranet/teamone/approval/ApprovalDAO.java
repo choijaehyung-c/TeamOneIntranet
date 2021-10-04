@@ -8,12 +8,12 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import intranet.teamone.bean.ApprovalBean;
+import intranet.teamone.bean.BudgetBean;
 import intranet.teamone.bean.EmployeeBean;
 import intranet.teamone.bean.IntranetOrderBean;
 import intranet.teamone.bean.MroneOrderBean;
 import intranet.teamone.bean.OrderBean;
 import intranet.teamone.bean.OrderDetailBean;
-import intranet.teamone.bean.ProductBean;
 import intranet.teamone.bean.TaxBean;
 
 
@@ -82,11 +82,11 @@ public class ApprovalDAO {
 		return sql2.selectOne("totalPrice", iob);
 	}
 	
-	String getBudget(IntranetOrderBean iob) {
+	String getBudget(BudgetBean iob) {
 		return sql2.selectOne("getBudget", iob);
 	}
 	
-	boolean updateBudget(IntranetOrderBean iob) {
+	boolean updateBudget(BudgetBean iob) {
 		return convertToBoolean(sql2.update("updateBudget", iob));
 	}
 	
