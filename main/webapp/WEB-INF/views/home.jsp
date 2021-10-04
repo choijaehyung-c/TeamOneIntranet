@@ -33,6 +33,7 @@
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 
+
 <%@ page import="java.util.Date" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 	<%
@@ -636,18 +637,18 @@ function getcl(){
 										<td style="text-align:center; vertical-align:middle;" colspan="4" v-else>배송완료</td>
 									</tr>
 								</table>
+								<div id="map" style="width:100%;height:300px;" v-if="lcData.lc_x != '0'"></div>
 								<table class="dataTable-table">
 								     <thead>
                                         <tr>
-                                            <th style="width: 25%; text-align:center;"><a>x좌표</a></th>
-                                            <th style="width: 25%; text-align:center;"><a>y좌표</a></th>
-                                            <th style="width: 50%; text-align:center;"><a>날짜</a></th>
+                                            <th style="width: 70%; text-align:center;"><a>위치</a></th>
+                                            <th style="width: 30%; text-align:center;"><a>날짜</a></th>
                                         </tr>
                                     </thead>
 									<tbody>
 										<tr v-for="item in modalList.lc">
-											<td style="text-align:center; vertical-align:middle;">{{item.lc_x}}</td>
-											<td style="text-align:center; vertical-align:middle;">{{item.lc_y}}</td>
+											<td style="text-align:center; vertical-align:middle;" v-if="lcData.lc_x != '0'">{{addName}}</td>
+											<td style="text-align:center; vertical-align:middle;" v-else>상품 출하 전</td>
 											<td style="text-align:center; vertical-align:middle;">{{item.lc_date}}</td>
 										</tr>
 									</tbody>
@@ -1964,7 +1965,8 @@ function getcl(){
 
 
   </script>
-		
+	
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f657a81b2699546b6ad9fa7ce25d90dc&libraries=services"></script>
 	<script src="${pageContext.request.contextPath}/resources/vue/vue.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/jsHome.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/js.js"></script>

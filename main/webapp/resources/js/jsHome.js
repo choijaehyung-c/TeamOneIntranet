@@ -43,7 +43,9 @@ const main = new Vue({
 		dupCheck:[],
 		loading:false,
 		relOs:'',
-		RlRegion:''
+		RlRegion:'',
+		lcData:{},
+		addName:''
 	},
 	methods:{
 		changePage:function(page){
@@ -57,7 +59,8 @@ const main = new Vue({
 				this.nsbPage[i].show=false;
 			}
 
-		},
+		}
+		,
 		modalOpen:function(){
 			this.modal.show = true;
 		},
@@ -956,8 +959,32 @@ function getBudget(){
 }
 
 /////////////////////cjh/////////////////////////
-	
 
+function getMap() {
+	let x = main.lcData.lc_x;
+	let y = main.lcData.lc_y;
+	let container = document.getElementById('map');
+	let options = {
+		center: new kakao.maps.LatLng(x, y),
+		level: 3
+	};
+	let map = new kakao.maps.Map(container, options);
+	let markerPosition = new kakao.maps.LatLng(x, y);
+	let marker = new kakao.maps.Marker({
+		position: markerPosition
+	});
+	marker.setMap(map);
+	
+	var geocoder = new kakao.maps.services.Geocoder();
+	var coord = new kakao.maps.LatLng(x,y);
+	var callback = function(result, status) {
+	    if (status === kakao.maps.services.Status.OK) {
+	        main.addName = result[0].address.address_name;
+	    }
+	};
+	
+	geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
+}
 
 	function anyApPage(){
 		console.log("appage");
@@ -1027,11 +1054,14 @@ function getReload(data){
 }
 
 function getDeliveryInfo(jsondata){
+	main.lcData = {};
 	modalStyle();
+	main.modalcjh2Open();
 	console.log(jsondata);
 	main.modalList = jsondata;
+	main.lcData = jsondata.lc[0];
 	console.log(main.modalList);
-	main.modalcjh2Open();
+	setTimeout(function(){getMap()},1000); 
 }
 
 function delReason(index){
