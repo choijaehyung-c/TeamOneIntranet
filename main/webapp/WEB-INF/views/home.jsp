@@ -539,7 +539,7 @@ function getcl(){
                          <div class="card-body">
                             <div>
                                 <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4"><div class="row"><div class="col-sm-12"><table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
-                                <button type="button" class="btn btn-primary mb-2 me-1" style="float:right;" @click="sendApproval()">결재하기</button>
+                                <button type="button" class="btn btn-primary mb-2 me-1" style="float:right;" @click="sendApproval()">결재신청</button>
                                     <thead>
 										<tr role="row">
 											<th class="sorting sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
@@ -1117,7 +1117,7 @@ function getcl(){
                                  </tr>
                               </thead>
                               <tbody>
-                                 <tr v-for="(list, index) in cartNSB"  @click="inputCart(list, index)">
+                                 <tr v-for="(list, index) in cartNSB"  @click="inputCart(list)">
                                     <td>{{list.spcode}}</td>
                                     <td>{{list.prname}}</td>
                                     <td>{{list.prcode}}</td>

@@ -240,10 +240,15 @@ const main = new Vue({
 			chk_val = $(this).val();
 			
 		});
-			
+			this.inputcar=[];
+			let cCount = this.cart.length;
+			for(i=0;i<cCount;i++){
+				this.inputcart.push(this.cart[i]);
+			}
 			main.nsbchangePage();
-  			 main.changePage(5);
+  			main.changePage(5);
    			postAjaxJson('rest/getDrafter','oDrafterVue2','j');
+
 
 	},
 	getPrDetail:function(prcode){//각 상품의 상세정보
@@ -409,7 +414,7 @@ issueApproval:function(){
 		}
 	
 
-      if(this.inputcart==""){
+      if(this.inputcart.length == 0){
 			alert("상품이 선택되지않았습니다.");
 			return;
 	}
