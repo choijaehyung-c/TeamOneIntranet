@@ -980,7 +980,6 @@ function getMap() {
 		position: markerPosition
 	});
 	marker.setMap(map);
-	
 	var geocoder = new kakao.maps.services.Geocoder();
 	var coord = new kakao.maps.LatLng(x,y);
 	var callback = function(result, status) {
@@ -1063,10 +1062,8 @@ function getDeliveryInfo(jsondata){
 	main.lcData = {};
 	modalStyle();
 	main.modalcjh2Open();
-	console.log(jsondata);
 	main.modalList = jsondata;
-	main.lcData = jsondata.lc[0];
-	console.log(main.modalList);
+	main.lcData = jsondata.lc[0]
 	setTimeout(function(){getMap()},1000); 
 }
 

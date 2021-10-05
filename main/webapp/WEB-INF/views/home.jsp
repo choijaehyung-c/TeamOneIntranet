@@ -637,7 +637,7 @@ function getcl(){
                                         </tr>
                                     </thead>
 									<tbody>
-										<tr v-for="item in modalList.lc">
+										<tr v-for="(item,index) in modalList.lc">
 											<td style="text-align:center; vertical-align:middle;" v-if="lcData.lc_x != '0'">{{addName}}</td>
 											<td style="text-align:center; vertical-align:middle;" v-else>상품 출하 전</td>
 											<td style="text-align:center; vertical-align:middle;">{{item.lc_date}}</td>

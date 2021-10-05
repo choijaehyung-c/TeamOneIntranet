@@ -75,7 +75,7 @@
  	</select>
  	
  	<select id="getDeliveryLocation" parameterType="string" resultType="intranet.teamone.bean.DeliveryLocationBean">
- 		SELECT * FROM CHLCHL.DLOCATION WHERE LC_CODE = #{lc_code}
+ 		SELECT * FROM (SELECT * FROM CHLCHL.DLOCATION order by LC_DATE DESC ) where LC_CODE = #{lc_code} AND ROWNUM = 1 
  	</select>
  	
  </mapper>
