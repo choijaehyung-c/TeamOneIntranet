@@ -658,11 +658,10 @@ function getcl(){
                                         <tr>
                                             <th style="width: 10%; text-align:center;"><a>이미지</a></th>
                                             <th style="width: 27%; text-align:center;"><a>상품명</a></th>
-                                            <th style="width: 35%; text-align:center;"><a>상품정보</a></th>
+                                            <th style="width: 40%; text-align:center;"><a>상품정보</a></th>
                                             <th style="width: 10%; text-align:center;"><a>가격(원)</a></th>
                                             <th style="width: 6%; text-align:center;"><a>수량</a></th>
-                                            <th style="width: 7%; text-align:center;"><a>원산지</a></th>                                          
-                                            <th style="width: 5%; text-align:center;"><a>상태</a></th>                                          
+                                            <th style="width: 7%; text-align:center;"><a>원산지</a></th>                                                                                    
                                         </tr>
                                     </thead>
 									<tbody>
@@ -672,7 +671,6 @@ function getcl(){
 											<td style="text-align:center; vertical-align:middle;">{{item.pr_info}}</td>
 											<td style="text-align:center; vertical-align:middle;">{{item.perPrice}}</td>
 											<td style="text-align:center; vertical-align:middle;">{{item.od_quantity}}</td>
-											<td style="text-align:center; vertical-align:middle;">{{item.pr_origin}}</td>
 											<td style="text-align:center; vertical-align:middle;">{{item.pr_origin}}</td>
 										</tr>
 										<tr><td colspan="6" style="text-align:center; vertical-align:middle;"> 총 가격(VAT포함) : {{modalList.ttPrice}} 원</td></tr>
@@ -842,7 +840,7 @@ function getcl(){
                                         <tr>
                                             <th style="width: 10%; text-align:center;"><a>이미지</a></th>
                                             <th style="width: 27%; text-align:center;"><a>상품명</a></th>
-                                            <th style="width: 37%; text-align:center;"><a>상품정보</a></th>
+                                            <th style="width: 37%; text-align:center;"><a>사유</a></th>
                                             <th style="width: 10%; text-align:center;"><a>가격(원)</a></th>
                                             <th style="width: 6%; text-align:center;"><a>수량</a></th>
                                             <th style="width: 10%; text-align:center;"><a>상태</a></th>                                          
@@ -852,12 +850,12 @@ function getcl(){
 										<tr v-for="(item,index) in modalList">
 											<td><img :src="item.pr_image" width="100%" height="100%" alt="no search image"></td>
 											<td style="text-align:center; vertical-align:middle;">{{item.pr_name}}</td>
-											<td style="text-align:center; vertical-align:middle;">{{item.pr_info}}</td>
+											<td style="text-align:center; vertical-align:middle;">{{item.od_note}}</td>
 											<td style="text-align:center; vertical-align:middle;">{{item.perPrice}}</td>
 											<td style="text-align:center; vertical-align:middle;">{{item.od_quantity}}</td>
 											<td style="text-align:center; vertical-align:middle;" v-if="item.od_stcode==='RR'">반품요청</td>
 											<td style="text-align:center; vertical-align:middle;" v-else-if="item.od_stcode==='RA'">반품수락</td>
-											<td style="text-align:center; vertical-align:middle;" v-else>&nbsp</td>
+											<td style="text-align:center; vertical-align:middle;" v-else>반품거절</td>
 										</tr>
 										<tr><td colspan="6" style="text-align:center; vertical-align:middle;"> 총 가격(VAT포함) : {{modalList.ttPrice}} 원</td></tr>
 									</tbody>
@@ -937,7 +935,7 @@ function getcl(){
                                         <tr>
                                             <th style="width: 10%; text-align:center;"><a>이미지</a></th>
                                             <th style="width: 27%; text-align:center;"><a>상품명</a></th>
-                                            <th style="width: 37%; text-align:center;"><a>상품정보</a></th>
+                                            <th style="width: 37%; text-align:center;"><a>사유</a></th>
                                             <th style="width: 10%; text-align:center;"><a>가격(원)</a></th>
                                             <th style="width: 6%; text-align:center;"><a>수량</a></th>
                                             <th style="width: 10%; text-align:center;"><a>상태</a></th>                                          
@@ -947,12 +945,12 @@ function getcl(){
 										<tr v-for="(item,index) in modalList">
 											<td><img :src="item.pr_image" width="100%" height="100%" alt="no search image"></td>
 											<td style="text-align:center; vertical-align:middle;">{{item.pr_name}}</td>
-											<td style="text-align:center; vertical-align:middle;">{{item.pr_info}}</td>
+											<td style="text-align:center; vertical-align:middle;">{{item.od_note}}</td>
 											<td style="text-align:center; vertical-align:middle;">{{item.perPrice}}</td>
 											<td style="text-align:center; vertical-align:middle;">{{item.od_quantity}}</td>
 											<td style="text-align:center; vertical-align:middle;" v-if="item.od_stcode==='ER'">교환요청</td>
 											<td style="text-align:center; vertical-align:middle;" v-else-if="item.od_stcode==='EA'">교환수락</td>
-											<td style="text-align:center; vertical-align:middle;" v-else>&nbsp</td>
+											<td style="text-align:center; vertical-align:middle;" v-else>교환거절</td>
 										</tr>
 										<tr><td colspan="6" style="text-align:center; vertical-align:middle;"> 총 가격(VAT포함) : {{modalList.ttPrice}} 원</td></tr>
 									</tbody>

@@ -7,6 +7,7 @@ public class MroneOrderDetailBean {
 	private String od_prspcode;
 	private String os_origin;
 	private String od_prcode;
+	private String od_note;
 	private int od_quantity;
 	private String od_stcode;
 	private String pr_name;
