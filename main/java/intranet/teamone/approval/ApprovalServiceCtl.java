@@ -125,7 +125,7 @@ public class ApprovalServiceCtl {
 		int check = 0;
 		BudgetBean bg = new BudgetBean();
 		try {
-			iob.setEp_code(enc.aesDecode((String)pu.getAttribute("userSs"),"session"));
+			iob.setEp_code(enc.aesDecode((String)pu.getAttribute("userSs2"),"session"));
 			bg.setBg_ofcode(iob.getOf_code());
 			bg.setBg_dpcode(iob.getDp_code());
 		} catch (Exception e1) {
@@ -203,8 +203,8 @@ public class ApprovalServiceCtl {
 
 		String epcode = null;
 		try {
-			if(pu.getAttribute("userSs") != null) {
-				epcode=enc.aesDecode((String)pu.getAttribute("userSs"),"session");
+			if(pu.getAttribute("userSs2") != null) {
+				epcode=enc.aesDecode((String)pu.getAttribute("userSs2"),"session");
 			}
 		} catch (Exception e) {
 
@@ -233,8 +233,8 @@ public class ApprovalServiceCtl {
 	 List<TaxBean> getIssuedTaxCtl() {
 		 boolean tf = false;
 			try {
-				if(pu.getAttribute("userSs") != null) {				
-					enc.aesDecode((String)pu.getAttribute("userSs"),"session");	
+				if(pu.getAttribute("userSs2") != null) {				
+					enc.aesDecode((String)pu.getAttribute("userSs2"),"session");	
 					if(((String)pu.getAttribute("userCp")).equals("KOR001")) {					
 								if(((String)pu.getAttribute("userDp")).equals("MT")) {
 									tf = true;

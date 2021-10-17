@@ -1009,7 +1009,7 @@ function getMap() {
 
  	function connectWs(){
  		
-	 	let ws = new WebSocket("ws://mrone.hoonzzang.com:9010/cEcho");
+	 	let ws = new WebSocket("ws://cjhc.online/cEcho");
 	 	
 	 	socket = ws;
 	 	

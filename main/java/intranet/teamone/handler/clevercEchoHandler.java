@@ -86,13 +86,13 @@ public class clevercEchoHandler extends TextWebSocketHandler{
 	
     private String getId(WebSocketSession session) {
     	Map<String,Object> httpSession = session.getAttributes();
-    	String userSs;
+    	String userSs2;
 		try {
-			userSs = (String)httpSession.get("userOf")+(String)httpSession.get("userDp");
+			userSs2 = (String)httpSession.get("userOf")+(String)httpSession.get("userDp");
 		} catch (Exception e) {
-			userSs="none";
+			userSs2="none";
 		}
-    	return userSs.equals("nullnull")?"none":userSs;
+    	return userSs2.equals("nullnull")?"none":userSs2;
     }
 	
 }

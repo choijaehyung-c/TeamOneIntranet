@@ -36,7 +36,7 @@ public class Authentication {
                   System.out.println("다른브라우저로그인성공");
                }
             }else {
-               if(pu.getAttribute("userSs")==null){//서버 로그인이 되어있지만 세션이 만료된 경우
+               if(pu.getAttribute("userSs2")==null){//서버 로그인이 되어있지만 세션이 만료된 경우
                   dao.forceLogout(ah);
                   loginProcessIntranet(mav,ah,ck);
                }else {//서버 로그인이 되어있고 세션이 살아 있는 경우(같은 브라우저,새탭 페이지안바뀐 로그인버튼)
@@ -63,7 +63,7 @@ public class Authentication {
       
       
       try {   
-         if(pu.getAttribute("userSs")==null){
+         if(pu.getAttribute("userSs2")==null){
             boolean tf = false;
             if(dao.isUserId(ab)){
                System.out.println("아이디검증성공");
@@ -76,8 +76,8 @@ public class Authentication {
                         ck.setValue("mro"+enc.aesEncode(ah.getAh_epcode(),"session"));                  
                      }
                      ck.setMaxAge(60*60*12); // 쿠키 유효기간 설정 (초 단위) : 반나절
-                     pu.setAttribute("userSs",enc.aesEncode(ah.getAh_epcode(),"session"));
-                     pu.setAttribute("browser",enc.aesEncode(ah.getAh_browser()+ah.getAh_publicip()+ah.getAh_privateip(),"session"));
+                     pu.setAttribute("userSs2",enc.aesEncode(ah.getAh_epcode(),"session"));
+                     pu.setAttribute("browser2",enc.aesEncode(ah.getAh_browser()+ah.getAh_publicip()+ah.getAh_privateip(),"session"));
                      System.out.println(dao.getUserInfo(ah.getAh_epcode()));
                      pu.setAttribute("userCp",dao.getUserInfo(ah.getAh_epcode()).getEp_cpcode());
                      pu.setAttribute("userOf",dao.getUserInfo(ah.getAh_epcode()).getEp_ofcode());
@@ -108,12 +108,12 @@ public class Authentication {
       if(ck != null)
       mav = new ModelAndView();
       try {
-         if(pu.getAttribute("userSs") != null) {
-            ah.setAh_epcode(enc.aesDecode((String)pu.getAttribute("userSs"),"session"));
+         if(pu.getAttribute("userSs2") != null) {
+            ah.setAh_epcode(enc.aesDecode((String)pu.getAttribute("userSs2"),"session"));
             if(dao.getLogOutAccessHistorySum(ah)) { 
             dao.insAccessHistory(ah);
-            pu.removeAttribute("userSs");     
-            pu.removeAttribute("browser");
+            pu.removeAttribute("userSs2");     
+            pu.removeAttribute("browser2");
             mav.setViewName("redirect:/");
             mav.addObject("message","alert('로그아웃 되었습니다.');");
             System.out.println("로그아웃ctl성공");
@@ -136,14 +136,14 @@ public class Authentication {
    public ModelAndView start(Cookie ck) {
       mav = new ModelAndView();
       AccessHistoryBean ah = new AccessHistoryBean();
-      // userSs 유저 세션
+      // userSs2 유저 세션
       if(ck != null) {         
       try {
          //브라우저에 일단 세션이 남아 있는 경우
-         if(pu.getAttribute("userSs")!=null){
-            ah.setAh_epcode(enc.aesDecode((String)pu.getAttribute("userSs"),"session"));
+         if(pu.getAttribute("userSs2")!=null){
+            ah.setAh_epcode(enc.aesDecode((String)pu.getAttribute("userSs2"),"session"));
             //남아 있는 세션이(해당아이디가) DB에 로그인 되어 있는상태 => 마이페이지로
-            if(dao.getAccessHistorySum(ah) && dao.getLastAccessInfo(ah).equals(enc.aesDecode((String)pu.getAttribute("browser"),"session"))) {
+            if(dao.getAccessHistorySum(ah) && dao.getLastAccessInfo(ah).equals(enc.aesDecode((String)pu.getAttribute("browser2"),"session"))) {
                mav.setViewName("home");
                mav.addObject("Name",dao.getUserInfo(ah.getAh_epcode()).getEp_name());
                mav.addObject("Dp",dao.getUserInfo(ah.getAh_epcode()).getDp_name());
@@ -151,7 +151,7 @@ public class Authentication {
                mav.addObject("email", dao.getUserInfo(ah.getAh_epcode()).getEp_email());
             //남아 있는 세션이(해당아이디가) DB에선 이미 로그아웃된경우 =>해당브라우저에 남아있던 세션도 죽임(꼭 새로고침 안해줘도됨 인터넷창 닫으면 어차피 세션 사라짐)
             }else{
-               pu.removeAttribute("userSs");
+               pu.removeAttribute("userSs2");
                pu.removeAttribute("userCp");
                pu.removeAttribute("userOf");
                pu.removeAttribute("userDp");
