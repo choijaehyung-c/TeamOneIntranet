@@ -144,7 +144,7 @@ public class Authentication {
       mav = new ModelAndView();
       AccessHistoryBean ah = new AccessHistoryBean();
       // userSs2 유저 세션
-      
+
       if(ck != null) {         
       try {
          //브라우저에 일단 세션이 남아 있는 경우
