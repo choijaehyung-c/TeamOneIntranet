@@ -29,7 +29,7 @@ public class HomeController {
    Encryption enc;
    
    @RequestMapping(value = "/", method = {RequestMethod.POST,RequestMethod.GET} )
-   public ModelAndView home(@CookieValue(value = "keykey", required = false)Cookie ck,HttpServletResponse res) {
+   public ModelAndView home(@CookieValue(value = "keykey2", required = false)Cookie ck,HttpServletResponse res) {
       mav = auth.start(ck);
       if(ck !=null)res.addCookie(ck);
       return mav;
@@ -37,22 +37,17 @@ public class HomeController {
    
    @PostMapping("/AccessIntranet")
    public ModelAndView accessIntranet(@ModelAttribute AccessHistoryBean ah,HttpServletResponse res) {
-      Cookie ck = new Cookie("keykey",null);
+      Cookie ck = new Cookie("keykey2",null);
       mav = auth.accessIntranetCtl(ah,ck);
       if(ck.getValue()!=null) res.addCookie(ck);
       return mav;
    }
    
    @PostMapping("/AccessOutIntranet")
-   public ModelAndView accessOutIntranet(@ModelAttribute AccessHistoryBean ah,@CookieValue(value = "keykey", required = false) Cookie ck,HttpServletResponse res) {
+   public ModelAndView accessOutIntranet(@ModelAttribute AccessHistoryBean ah,@CookieValue(value = "keykey2", required = false) Cookie ck,HttpServletResponse res) {
       mav = auth.accessOutIntranetCtl(ah,ck);
       res.addCookie(ck);
       return mav;
-   }
-   
-   @GetMapping("/home")
-   public String mainPage() {
-      return "homeNSB";
    }
    
    /*

@@ -1,5 +1,13 @@
 package intranet.teamone.auth;
 
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.servlet.http.Cookie;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,12 +81,11 @@ public class Authentication {
                   if(tf = dao.insAccessHistory(ah)) {
                      System.out.println("기록성공");                    
                      mav.setViewName("redirect:/");
-                        ck.setValue("mro"+enc.aesEncode(ah.getAh_epcode(),"session"));                  
+                        ck.setValue("intra"+enc.aesEncode(ah.getAh_epcode(),"session"));                  
                      }
                      ck.setMaxAge(60*60*12); // 쿠키 유효기간 설정 (초 단위) : 반나절
                      pu.setAttribute("userSs2",enc.aesEncode(ah.getAh_epcode(),"session"));
                      pu.setAttribute("browser2",enc.aesEncode(ah.getAh_browser()+ah.getAh_publicip()+ah.getAh_privateip(),"session"));
-                     System.out.println(dao.getUserInfo(ah.getAh_epcode()));
                      pu.setAttribute("userCp",dao.getUserInfo(ah.getAh_epcode()).getEp_cpcode());
                      pu.setAttribute("userOf",dao.getUserInfo(ah.getAh_epcode()).getEp_ofcode());
                      pu.setAttribute("userDp",dao.getUserInfo(ah.getAh_epcode()).getEp_dpcode());
@@ -137,6 +144,7 @@ public class Authentication {
       mav = new ModelAndView();
       AccessHistoryBean ah = new AccessHistoryBean();
       // userSs2 유저 세션
+      
       if(ck != null) {         
       try {
          //브라우저에 일단 세션이 남아 있는 경우

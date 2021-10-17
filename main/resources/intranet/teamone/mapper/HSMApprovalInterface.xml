@@ -19,7 +19,7 @@
         		INNER JOIN DP ON AP.AP_FROMDPCODE = DP.DP_CODE  AND AP.AP_FROMOFCODE = DP.DP_OFCODE  
 				INNER JOIN "OF" ON AP.AP_FROMOFCODE = "OF".OF_CODE 
                 INNER JOIN "AT" ON AP.AP_ATCODE = "AT".AT_CODE 
-		WHERE AP_TODPCODE = #{ap_todpcode} AND AP_TOOFCODE = #{ap_toofcode} AND AP_ATCODE = 'OA' OR AP_ATCODE='OF' 
+		WHERE AP_TODPCODE = #{ap_todpcode} AND AP_TOOFCODE = #{ap_toofcode} AND (AP_ATCODE = 'OA' OR AP_ATCODE='OF') 
 		</select>
 
 	<select id="getAnyApprovalList" parameterType="intranet.teamone.bean.ApprovalBean" resultType="intranet.teamone.bean.ApprovalBean">
@@ -38,7 +38,7 @@
         		INNER JOIN DP ON ANYAPPROVAL.AN_FROMDPCODE = DP.DP_CODE  AND ANYAPPROVAL.AN_FROMOFCODE = DP.DP_OFCODE  
 				INNER JOIN "OF" ON ANYAPPROVAL.AN_FROMOFCODE = "OF".OF_CODE 
 				INNER JOIN "AT" ON ANYAPPROVAL.AN_ATCODE = "AT".AT_CODE 
-		WHERE AN_TODPCODE = #{ap_todpcode} AND AN_TOOFCODE = #{ap_toofcode} AND AN_ATCODE = 'NA' OR AN_ATCODE='NF' 
+		WHERE AN_TODPCODE = #{ap_todpcode} AND AN_TOOFCODE = #{ap_toofcode} AND (AN_ATCODE = 'NA' OR AN_ATCODE='NF') 
 	</select>
 	
 	
@@ -51,10 +51,6 @@
 		SELECT AN_TEXT, AN_CODE AS AP_CODE
 		FROM ANYAPPROVAL WHERE AN_CODE = #{ap_code}
 	</select>
-	
-	<update id="responseAppovalRefuse" parameterType="intranet.teamone.bean.ApprovalBean">
-		UPDATE AP SET AP_ATCODE= #{at_code} WHERE AP_CODE = #{ap_code}
-	</update>
 	
 	<select id="getSendApprovalList" parameterType="intranet.teamone.bean.ApprovalBean" resultType="intranet.teamone.bean.ApprovalBean">
 		SELECT AP_CODE, AP_OSCODE, AP_DATE, CG_NAME, DP_NAME, OF_NAME, AT_NAME, CG_TYPE
@@ -75,14 +71,6 @@
 		WHERE AN_FROMDPCODE = #{ap_fromdpcode} AND AN_FROMOFCODE = #{ap_fromofcode}
 	</select>
 	
-	<update id="updateAP" parameterType="intranet.teamone.bean.IntranetOrderBean">
-		UPDATE AP SET AP_ATCODE = 'OA' WHERE AP_CODE = #{aa_apcode}
-	</update>
-
-	<insert id="insAA" parameterType="intranet.teamone.bean.IntranetOrderBean">
-		INSERT INTO AA VALUES(#{aa_apcode}, #{rl_ioscode}, 'O', SYSDATE, #{ep_code})
-	</insert>
-	
 	<select id="totalPrice" parameterType="intranet.teamone.bean.IntranetOrderBean" resultType="int">
 		SELECT SUM(OD_PRICE) FROM OD WHERE OD_OSCODE = #{rl_ioscode}
 	</select>
@@ -95,15 +83,14 @@
 		UPDATE BG SET BG_BUDGET = #{bg_budget} WHERE BG_OFCODE = #{bg_ofcode} AND BG_DPCODE = #{bg_dpcode}
 	</select>
 	
-	<insert id="insRL" parameterType="intranet.teamone.bean.MroneOrderBean">
-		INSERT INTO RL VALUES(#{ios}, #{os_code}, SYSDATE, #{os_region})
-	</insert>
-
-	<update id="responseAnyAppoval" parameterType="intranet.teamone.bean.ApprovalBean">
-		UPDATE ANYAPPROVAL SET AN_ATCODE = #{at_code} WHERE AN_CODE = #{ap_code}
-	</update>
-	
-	
+	<select id="getOsRegion" parameterType="string" resultType="string">
+    	SELECT REGION FROM OS WHERE OS_CODE = #{os_code}
+    </select>
+      <select id="getoscode" resultType="string">
+    SELECT  
+      OS_CODE 
+      FROM OS WHERE OS_DATE = (SELECT MAX(OS_DATE) FROM OS)
+    </select>
 	   <select id="getDrafter" parameterType="string" resultType="intranet.teamone.bean.EmployeeBean">
    SELECT  
    EP_CODE, EP_OFCODE, EP_DPCODE, EP_CPCODE, EP_NAME, OF_NAME, DP_NAME 
@@ -132,31 +119,44 @@
    EP_OFCODE 
    FROM EP WHERE EP_CODE = #{epcode}
     </select>
+	
+	<update id="responseAppovalRefuse" parameterType="intranet.teamone.bean.ApprovalBean">
+		UPDATE AP SET AP_ATCODE= #{at_code} WHERE AP_CODE = #{ap_code}
+	</update>
+	
+	<update id="updateAP" parameterType="intranet.teamone.bean.IntranetOrderBean">
+		UPDATE AP SET AP_ATCODE = 'OA' WHERE AP_CODE = #{aa_apcode}
+	</update>
+	
+	<update id="responseAnyAppoval" parameterType="intranet.teamone.bean.ApprovalBean">
+		UPDATE ANYAPPROVAL SET AN_ATCODE = #{at_code} WHERE AN_CODE = #{ap_code}
+	</update>
+	
+	<insert id="insAA" parameterType="intranet.teamone.bean.IntranetOrderBean">
+		INSERT INTO AA VALUES(#{aa_apcode}, #{rl_ioscode}, 'O', SYSDATE, #{ep_code})
+	</insert>
+	
+	<insert id="insRL" parameterType="intranet.teamone.bean.MroneOrderBean">
+		INSERT INTO RL VALUES(#{ios}, #{os_code}, SYSDATE, #{os_region})
+	</insert>
     
-        <insert id="issueApproval" parameterType="intranet.teamone.bean.ApprovalBean">
+    <insert id="issueApproval" parameterType="intranet.teamone.bean.ApprovalBean">
       INSERT INTO AP VALUES('AP'||TO_CHAR(SYSDATE,'YYMMDD')||#{ap_fromdpcode}||SEQ_APPROVAL_NUM.NEXTVAL, #{ap_oscode}, #{ap_fromdpcode}, #{ap_fromofcode}, #{ap_todpcode}, #{ap_toofcode}, sysdate, #{cg_type}, 'OR')
     </insert>
     
-      <insert id="insOs" parameterType="intranet.teamone.bean.ApprovalBean">
+    <insert id="insOs" parameterType="intranet.teamone.bean.ApprovalBean">
      INSERT INTO OS VALUES(TO_CHAR(SYSDATE,'YYMMDD')||SEQ_ORDER_NUM.NEXTVAL, #{ap_fromdpcode}, #{ap_fromofcode}, #{cp_code}, SYSDATE, #{cg_type},#{region})
-        </insert>
-        
-      <select id="getoscode" resultType="string">
-    SELECT  
-      OS_CODE 
-      FROM OS WHERE OS_DATE = (SELECT MAX(OS_DATE) FROM OS)
-    </select>
+    </insert>
+    
     
     <insert id="insOd" parameterType="intranet.teamone.bean.ApprovalBean">
      INSERT INTO OD VALUES(#{ap_oscode}, #{od_code}, #{od_quantity}, #{sp_code}, '', #{od_price})
-      </insert>
+    </insert>
       
     <insert id="insAn" parameterType="intranet.teamone.bean.ApprovalBean">
-    INSERT INTO ANYAPPROVAL VALUES('AN'||TO_CHAR(SYSDATE,'YYMMDD')||#{ap_fromdpcode}||SEQ_ANYAPPROVAL_NUM.NEXTVAL, #{ap_fromdpcode}, #{ap_todpcode}, sysdate, #{cg_type}, 'NR',  #{ap_fromofcode}, #{ap_toofcode}, #{an_text})
+   	 INSERT INTO ANYAPPROVAL VALUES('AN'||TO_CHAR(SYSDATE,'YYMMDD')||#{ap_fromdpcode}||SEQ_ANYAPPROVAL_NUM.NEXTVAL, #{ap_fromdpcode}, #{ap_todpcode}, sysdate, #{cg_type}, 'NR',  #{ap_fromofcode}, #{ap_toofcode}, #{an_text})
     </insert>
     
-    <select id="getOsRegion" parameterType="string" resultType="string">
-    	SELECT REGION FROM OS WHERE OS_CODE = #{os_code}
-    </select>
+   
     
 </mapper>
